@@ -18,7 +18,7 @@ const router = createRouter({
       path: '/site/onboarding',
       name: 'siteOnboarding',
       component: () => import('../views/SiteManagement/WorkerOnboardingView.vue'),
-      meta: meta('\uc791\uc5c5\uc790 \uc628\ubcf4\ub529'),
+      meta: meta('\uc791\uc5c5\uc790 \uc778\ub825 \uc628\ubcf4\ub529'),
     },
     {
       path: '/site/workers/manage',

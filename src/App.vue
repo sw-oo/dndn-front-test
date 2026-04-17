@@ -41,7 +41,11 @@ const L = {
 
 const personnelNavAll = [
   { path: '/site/dashboard', label: '\uc778\uc0ac \ub300\uc2dc\ubcf4\ub4dc', icon: LayoutDashboard },
-  { path: '/site/onboarding', label: '\uc791\uc5c5\uc790 \uc628\ubcf4\ub529', icon: UserPlus },
+  {
+    path: '/site/onboarding',
+    label: '\uc791\uc5c5\uc790 \uc778\ub825 \uc628\ubcf4\ub529',
+    icon: UserPlus,
+  },
   {
     path: '/site/workers/manage',
     label: '\uc791\uc5c5\uc790 \uad00\ub9ac',
@@ -225,8 +229,8 @@ function linkClass(item) {
       >
         <div class="min-w-0">
           <p class="text-[10px] font-bold tracking-[0.12em] text-flare-600 uppercase">{{ L.headerKicker }}</p>
-          <h1 class="text-gradient-brand mt-0.5 text-xl font-bold tracking-tight">{{ pageTitle }}</h1>
-          <div class="mt-2 h-0.5 w-14 rounded-full bg-gradient-to-r from-flare-400 to-forena-500" />
+                   <h1 class="mt-0.5 text-xl font-bold tracking-tight text-forena-900">{{ pageTitle }}</h1>
+          <div class="mt-2 h-0.5 w-14 rounded-full bg-forena-200" />
         </div>
         <div
           class="flex h-11 max-w-md flex-1 items-center gap-2 rounded-2xl border border-forena-100 bg-white/90 px-3 shadow-sm transition focus-within:border-flare-300 focus-within:shadow-glow"
