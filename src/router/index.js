@@ -50,7 +50,7 @@ const router = createRouter({
       path: '/site/staffing',
       name: 'siteStaffing',
       component: () => import('../views/SiteManagement/StaffingBoardView.vue'),
-      meta: meta('\uc778\ub825 \ubc30\uce58 (T.O)'),
+      meta: meta('\uc778\ub825 \ubc30\uce58'),
     },
     {
       path: '/site/man-days',
