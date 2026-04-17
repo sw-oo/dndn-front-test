@@ -356,13 +356,13 @@ const getStatusBadge = (status) => {
               <th class="px-6 py-4 font-semibold">{{ T.colTime }}</th>
               <th class="px-6 py-4 font-semibold">{{ T.colMan }}</th>
               <th class="px-6 py-4 text-center font-semibold">{{ T.colStatus }}</th>
-              <th class="px-6 py-4 text-center font-semibold">{{ T.colDetail }}</th>
+              <th v-if="!embed" class="px-6 py-4 text-center font-semibold">{{ T.colDetail }}</th>
               <th class="px-6 py-4 text-center font-semibold">{{ T.colDel }}</th>
             </tr>
           </thead>
           <tbody class="text-forena-800">
             <tr v-if="filteredAttendance.length === 0">
-              <td colspan="8" class="px-6 py-14 text-center text-sm text-slate-400">{{ T.empty }}</td>
+              <td :colspan="embed ? 7 : 8" class="px-6 py-14 text-center text-sm text-slate-400">{{ T.empty }}</td>
             </tr>
             <tr
               v-else
@@ -398,7 +398,7 @@ const getStatusBadge = (status) => {
                   T.closedTag
                 }}</span>
               </td>
-              <td class="px-6 py-4 text-center">
+              <td v-if="!embed" class="px-6 py-4 text-center">
                 <button
                   type="button"
                   class="inline-flex items-center gap-1.5 rounded-lg border border-forena-200 bg-white px-3 py-1.5 text-[11px] font-bold text-forena-700 shadow-sm transition hover:border-flare-300 hover:bg-flare-50/50"

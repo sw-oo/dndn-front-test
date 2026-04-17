@@ -50,7 +50,7 @@ const personnelNavAll = [
     path: '/site/workers/manage',
     label: '\uc791\uc5c5\uc790 \uad00\ub9ac',
     icon: Users,
-    activePrefix: '/site/workers',
+    activePrefix: '/site/workers/manage',
   },
   { path: '/site/staffing', label: '\uc778\ub825 \ubc30\uce58 (T.O)', icon: MapPin },
   { path: '/site/man-days', label: '\uacf5\uc218 \uad00\ub9ac', icon: Calculator },

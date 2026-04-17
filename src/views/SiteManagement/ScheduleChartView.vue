@@ -387,12 +387,12 @@ function barWidthPct(s, e, total) {
           <div v-for="(w, i) in weeklyCompare" :key="i" class="flex flex-1 flex-col items-center gap-2">
             <div class="flex h-32 w-full items-end justify-center gap-1">
               <div
-                class="w-1/2 max-w-[18px] rounded-t-md bg-slate-200"
+                class="w-1/2 max-w-[18px] rounded-t-md bg-blue-600"
                 :style="{ height: w.plan + '%' }"
                 :title="'plan'"
               />
               <div
-                class="w-1/2 max-w-[18px] rounded-t-md bg-gradient-to-t from-forena-900 to-forena-700"
+                class="w-1/2 max-w-[18px] rounded-t-md bg-red-600"
                 :style="{ height: w.actual + '%' }"
                 :title="'actual'"
               />
@@ -402,10 +402,10 @@ function barWidthPct(s, e, total) {
         </div>
         <div class="mt-3 flex flex-wrap items-center justify-center gap-4 text-[11px] text-slate-600">
           <span class="inline-flex items-center gap-1.5">
-            <span class="h-2 w-4 rounded bg-slate-200" /> {{ T.legendPlan }}
+            <span class="h-1.5 w-4 shrink-0 rounded-full bg-blue-600" /> {{ T.legendPlan }}
           </span>
           <span class="inline-flex items-center gap-1.5">
-            <span class="h-2 w-4 rounded bg-forena-800" /> {{ T.legendActual }}
+            <span class="h-1.5 w-4 shrink-0 rounded-full bg-red-600" /> {{ T.legendActual }}
           </span>
         </div>
       </div>
@@ -439,10 +439,10 @@ function barWidthPct(s, e, total) {
         </div>
         <div class="flex flex-wrap items-center gap-4 text-[11px] text-slate-600">
           <span class="inline-flex items-center gap-1.5">
-            <span class="h-px w-6 bg-slate-400" /> {{ T.legendPlan }}
+            <span class="h-1.5 w-6 shrink-0 rounded-full bg-blue-600" /> {{ T.legendPlan }}
           </span>
           <span class="inline-flex items-center gap-1.5">
-            <span class="h-2 w-6 rounded bg-forena-900" /> {{ T.legendActual }}
+            <span class="h-1.5 w-6 shrink-0 rounded-full bg-red-600" /> {{ T.legendActual }}
           </span>
         </div>
       </div>
@@ -483,14 +483,14 @@ function barWidthPct(s, e, total) {
               </div>
               <div class="relative h-full min-h-[44px] w-full px-0.5">
                 <div
-                  class="pointer-events-none absolute top-[30%] h-0.5 rounded-full bg-slate-300"
+                  class="pointer-events-none absolute top-[30%] h-1.5 -translate-y-1/2 rounded-full bg-blue-600"
                   :style="{
                     left: barLeftPct(row.plan.s, timeline.count) + '%',
                     width: barWidthPct(row.plan.s, row.plan.e, timeline.count) + '%',
                   }"
                 />
                 <div
-                  class="pointer-events-none absolute top-[52%] h-2 rounded-full bg-gradient-to-r from-forena-900 to-forena-700 shadow-sm"
+                  class="pointer-events-none absolute top-[52%] h-1.5 -translate-y-1/2 rounded-full bg-red-600"
                   :style="{
                     left: barLeftPct(row.actual.s, timeline.count) + '%',
                     width: barWidthPct(row.actual.s, row.actual.e, timeline.count) + '%',

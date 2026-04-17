@@ -144,6 +144,43 @@ export const workerProfilesById = {
       { date: '2025-09-10', type: '\uc81c\uc7ac', description: '\ubb34\ub2e8\uc18d\uc9c1 3\uc77c' },
     ],
   },
+  4: {
+    id: 4,
+    name: '\ucd5c\uc6a9\ud638',
+    company: '\ud0dc\uc591\uac74\uc124',
+    role: '\ube44\uacc4\uacf5',
+    deployStatus: '\ud22c\uc785 \uc81c\ud55c',
+    deployStatusVariant: 'block',
+    phone: '010-1111-2222',
+    emergency: '010-2222-3333',
+    bloodType: 'AB+',
+    registeredAt: '2025.02.01',
+    site: '\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c',
+    monthTotalMan: 12.0,
+    documents: [
+      {
+        title: '\uae30\ucd08\uc548\uc804\ubcf4\uac74\uad50\uc721 \uc774\uc218\uc99d',
+        status: '\uc774\uc218\uc644\ub8cc',
+        statusVariant: 'done',
+      },
+      {
+        title: '\uc2e0\ubd84\uc99d \uc0ac\ubcf8',
+        status: '\uc644\ub8cc',
+        statusVariant: 'done',
+      },
+    ],
+    attendanceRows: [
+      {
+        date: '2025-10-14',
+        clockIn: '06:55',
+        clockOut: '17:00',
+        manDays: 1.0,
+        site: '\uac15\ub0a8 A\uacf5\uad6c',
+      },
+    ],
+    zoneHistory: [{ date: '2025-10-05', zone: '\uc678\ubd80 \ube44\uacc4', note: '\uc77c\uc77c' }],
+    sanctions: [{ date: '2025-10-01', type: '\uc8fc\uc758', description: '\ud22c\uc785 \uc81c\ud55c \uc0c1\ud0dc' }],
+  },
 }
 
 export function getWorkerProfile(id) {
