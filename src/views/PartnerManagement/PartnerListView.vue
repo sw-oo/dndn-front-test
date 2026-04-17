@@ -51,9 +51,11 @@ const T = {
   labelEnd: '\uacc4\uc57d \uc885\ub8cc\uc77c *',
   submit: '\ub4f1\ub85d \uc644\ub8cc',
   alertFields: '\ud544\uc218 \uc815\ubcf4\ub97c \ubaa8\ub450 \uc785\ub825\ud574\uc8fc\uc138\uc694.',
-  alertAi: 'AI \ubb38\uc11c \uc778\uc2dd\uc774 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ucd94\ucd9c\ub41c \ub370\uc774\ud130\ub97c \ud655\uc778\ud574\uc8fc\uc138\uc694.',
+  alertAi:
+    'AI \ubb38\uc11c \uc778\uc2dd\uc774 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ucd94\ucd9c\ub41c \ub370\uc774\ud130\ub97c \ud655\uc778\ud574\uc8fc\uc138\uc694.',
   alertOk: '\ud611\ub825\uc0ac\uac00 \ub4f1\ub85d\ub418\uc5c8\uc2b5\ub2c8\ub2e4.',
-  alertExcel: '\ud611\ub825\uc0ac \ub9ac\uc2a4\ud2b8 \uc5d1\uc140 \ub2e4\uc6b4\ub85c\ub4dc\ub97c \uc2dc\uc791\ud569\ub2c8\ub2e4.',
+  alertExcel:
+    '\ud611\ub825\uc0ac \ub9ac\uc2a4\ud2b8 \uc5d1\uc140 \ub2e4\uc6b4\ub85c\ub4dc\ub97c \uc2dc\uc791\ud569\ub2c8\ub2e4.',
 }
 
 const showRegisterDrawer = ref(false)
@@ -206,7 +208,8 @@ const registerPartner = () => {
 const statusBadgeClass = (status) => {
   if (status === '\ub9cc\ub8cc \uc608\uc815')
     return 'bg-rose-50 text-rose-700 ring-1 ring-rose-200/80'
-  if (status === '\uacc4\uc57d \uc885\ub8cc') return 'bg-slate-100 text-slate-600 ring-1 ring-slate-200/80'
+  if (status === '\uacc4\uc57d \uc885\ub8cc')
+    return 'bg-slate-100 text-slate-600 ring-1 ring-slate-200/80'
   return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/80'
 }
 </script>
@@ -227,7 +230,9 @@ const statusBadgeClass = (status) => {
             <Handshake class="h-5 w-5" />
           </span>
           <div>
-            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">{{ T.kicker }}</p>
+            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">
+              {{ T.kicker }}
+            </p>
             <h2 class="text-gradient-brand text-xl font-bold tracking-tight">{{ T.title }}</h2>
             <p class="mt-2 max-w-2xl text-sm leading-relaxed text-forena-700/80">{{ T.desc }}</p>
           </div>
@@ -271,7 +276,8 @@ const statusBadgeClass = (status) => {
           {{ T.statTotal }}
         </div>
         <p class="mt-3 text-3xl font-light tabular-nums text-forena-900">
-          {{ summary.total }}<span class="ml-1 text-sm font-normal text-slate-500">{{ T.unit }}</span>
+          {{ summary.total
+          }}<span class="ml-1 text-sm font-normal text-slate-500">{{ T.unit }}</span>
         </p>
       </article>
       <article class="rounded-2xl border border-white/90 bg-white/90 p-5 shadow-card">
@@ -280,7 +286,8 @@ const statusBadgeClass = (status) => {
           {{ T.statActive }}
         </div>
         <p class="mt-3 text-3xl font-light tabular-nums text-emerald-800">
-          {{ summary.active }}<span class="ml-1 text-sm font-normal text-emerald-600/80">{{ T.unit }}</span>
+          {{ summary.active
+          }}<span class="ml-1 text-sm font-normal text-emerald-600/80">{{ T.unit }}</span>
         </p>
       </article>
       <article
@@ -292,7 +299,8 @@ const statusBadgeClass = (status) => {
         </div>
         <div class="mt-3 flex items-end justify-between gap-2">
           <p class="text-3xl font-light tabular-nums text-rose-700">
-            {{ summary.expiring }}<span class="ml-1 text-sm font-normal text-rose-500">{{ T.unit }}</span>
+            {{ summary.expiring
+            }}<span class="ml-1 text-sm font-normal text-rose-500">{{ T.unit }}</span>
           </p>
           <span class="rounded-lg bg-rose-100 px-2 py-1 text-[10px] font-bold text-rose-700">{{
             T.statExpiringHint
@@ -304,7 +312,9 @@ const statusBadgeClass = (status) => {
     <div
       class="flex flex-col overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 shadow-card"
     >
-      <div class="flex flex-col gap-3 border-b border-forena-100 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div
+        class="flex flex-col gap-3 border-b border-forena-100 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+      >
         <div class="flex gap-1 overflow-x-auto pb-1 sm:pb-0">
           <button
             v-for="tab in tabs"
@@ -337,7 +347,9 @@ const statusBadgeClass = (status) => {
           </thead>
           <tbody class="text-forena-800">
             <tr v-if="filteredPartners.length === 0">
-              <td colspan="4" class="px-6 py-14 text-center text-sm text-slate-400">{{ T.empty }}</td>
+              <td colspan="4" class="px-6 py-14 text-center text-sm text-slate-400">
+                {{ T.empty }}
+              </td>
             </tr>
             <tr
               v-else
@@ -416,7 +428,9 @@ const statusBadgeClass = (status) => {
             <div class="space-y-4">
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelName }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelName
+                  }}</label>
                   <input
                     v-model="newPartner.name"
                     type="text"
@@ -424,7 +438,9 @@ const statusBadgeClass = (status) => {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelBiz }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelBiz
+                  }}</label>
                   <input
                     v-model="newPartner.bizNumber"
                     type="text"
@@ -435,7 +451,9 @@ const statusBadgeClass = (status) => {
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelRep }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelRep
+                  }}</label>
                   <input
                     v-model="newPartner.repName"
                     type="text"
@@ -443,7 +461,9 @@ const statusBadgeClass = (status) => {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelContact }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelContact
+                  }}</label>
                   <input
                     v-model="newPartner.contact"
                     type="text"
@@ -454,7 +474,9 @@ const statusBadgeClass = (status) => {
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelTrade }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelTrade
+                  }}</label>
                   <input
                     v-model="newPartner.trade"
                     type="text"
@@ -462,7 +484,9 @@ const statusBadgeClass = (status) => {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelUnit }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelUnit
+                  }}</label>
                   <input
                     v-model="newPartner.unitPrice"
                     type="text"
@@ -473,7 +497,9 @@ const statusBadgeClass = (status) => {
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelStart }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelStart
+                  }}</label>
                   <input
                     v-model="newPartner.startDate"
                     type="date"
@@ -481,7 +507,9 @@ const statusBadgeClass = (status) => {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{ T.labelEnd }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-500">{{
+                    T.labelEnd
+                  }}</label>
                   <input
                     v-model="newPartner.endDate"
                     type="date"

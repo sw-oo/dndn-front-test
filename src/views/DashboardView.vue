@@ -45,7 +45,20 @@ const D = {
   wxWindL: '\uac15\ud48d (\ud48d\uc18d 10m/s+)',
   wxWindR: '1\uac1c \ud604\uc7a5',
   wxBtn: '\uae30\uc0c1 \uc0c1\uc138 \ub9ac\uc2a4\ud2b8 \ubcf4\uae30',
-  months: ['1\uc6d4', '2\uc6d4', '3\uc6d4', '4\uc6d4', '5\uc6d4', '6\uc6d4', '7\uc6d4', '8\uc6d4', '9\uc6d4', '10\uc6d4', '11\uc6d4', '12\uc6d4'],
+  months: [
+    '1\uc6d4',
+    '2\uc6d4',
+    '3\uc6d4',
+    '4\uc6d4',
+    '5\uc6d4',
+    '6\uc6d4',
+    '7\uc6d4',
+    '8\uc6d4',
+    '9\uc6d4',
+    '10\uc6d4',
+    '11\uc6d4',
+    '12\uc6d4',
+  ],
   sites: [
     {
       name: '\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c',
@@ -121,7 +134,9 @@ const D = {
           <Zap class="h-5 w-5" />
         </span>
         <div>
-          <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">{{ D.heroKicker }}</p>
+          <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">
+            {{ D.heroKicker }}
+          </p>
           <h2 class="text-gradient-brand text-xl font-bold tracking-tight">{{ D.heroTitle }}</h2>
           <p class="mt-2 max-w-3xl text-sm leading-relaxed text-forena-700/80">{{ D.heroDesc }}</p>
         </div>
@@ -137,7 +152,9 @@ const D = {
         />
         <div class="flex items-start justify-between">
           <h3 class="text-sm font-semibold text-forena-800">{{ D.k1 }}</h3>
-          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-flare-100 text-flare-600">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-flare-100 text-flare-600"
+          >
             <Building2 class="h-4 w-4" />
           </span>
         </div>
@@ -155,7 +172,9 @@ const D = {
         />
         <div class="flex items-start justify-between">
           <h3 class="text-sm font-semibold text-forena-800">{{ D.k2 }}</h3>
-          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600"
+          >
             <Users class="h-4 w-4" />
           </span>
         </div>
@@ -177,7 +196,9 @@ const D = {
         <div class="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-amber-200/20" />
         <div class="relative z-10 flex items-start justify-between">
           <h3 class="text-sm font-semibold text-amber-900">{{ D.k3 }}</h3>
-          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-700">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
+          >
             <Wallet class="h-4 w-4" />
           </span>
         </div>
@@ -204,7 +225,9 @@ const D = {
         />
         <div class="flex items-start justify-between">
           <h3 class="text-sm font-semibold text-rose-800">{{ D.k4 }}</h3>
-          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 text-rose-600">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 text-rose-600"
+          >
             <ShieldAlert class="h-4 w-4" />
           </span>
         </div>
@@ -279,7 +302,9 @@ const D = {
               {{ D.chartTitle }}
               <span class="ml-1 text-xs font-normal text-slate-400">{{ D.chartUnit }}</span>
             </h3>
-            <span class="flex items-center gap-1 rounded-lg bg-emerald-50 px-2 py-1 text-[11px] font-semibold text-emerald-700">
+            <span
+              class="flex items-center gap-1 rounded-lg bg-emerald-50 px-2 py-1 text-[11px] font-semibold text-emerald-700"
+            >
               <TrendingUp class="h-3.5 w-3.5" />
               {{ D.chartTrend }}
             </span>
@@ -293,8 +318,11 @@ const D = {
             <div class="h-[55%] w-8 rounded-t-sm bg-forena-400" />
             <div class="h-[40%] w-8 rounded-t-sm bg-forena-300" />
             <div class="h-[60%] w-8 rounded-t-sm bg-flare-500" />
-            <div class="relative h-[80%] w-8 rounded-t-sm bg-gradient-to-t from-forena-600 to-flare-500">
-              <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-600"
+            <div
+              class="relative h-[80%] w-8 rounded-t-sm bg-gradient-to-t from-forena-600 to-flare-500"
+            >
+              <span
+                class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-600"
                 >18.5</span
               >
             </div>
@@ -371,7 +399,9 @@ const D = {
           </div>
         </div>
 
-        <div class="rounded-2xl border border-white/90 bg-white/90 p-5 shadow-card backdrop-blur-sm">
+        <div
+          class="rounded-2xl border border-white/90 bg-white/90 p-5 shadow-card backdrop-blur-sm"
+        >
           <div class="mb-4 flex items-center justify-between">
             <h3 class="font-bold text-forena-900">
               {{ D.wxTitle }}<span class="text-xs font-normal text-slate-400">{{ D.wxHint }}</span>

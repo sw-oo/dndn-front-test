@@ -13,7 +13,6 @@ import {
   Handshake,
   ChevronDown,
   ChevronRight,
-  Search,
   CalendarRange,
   CalendarDays,
   CloudSun,
@@ -33,14 +32,17 @@ const L = {
   banner:
     '\ucd1d \ucc45\uc784\uc790 \uad8c\ud55c\uc73c\ub85c \uc778\uc0ac \ubc0f \uc77c\uc815 \uba54\ub274\uc5d0\uc11c \uc8fc\uc694 \uae30\ub2a5\uc744 \uc774\uc6a9\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4.',
   headerKicker: '\ud654\uba74',
-  searchPh: '\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694',
   fallbackTitle: '\ubcf8\uc0ac \uad00\ub9ac \uc2dc\uc2a4\ud15c',
   personnelGroup: '\uc778\uc0ac \uad00\ub9ac',
   scheduleGroup: '\uc77c\uc815 \uad00\ub9ac',
 }
 
 const personnelNavAll = [
-  { path: '/site/dashboard', label: '\uc778\uc0ac \ub300\uc2dc\ubcf4\ub4dc', icon: LayoutDashboard },
+  {
+    path: '/site/dashboard',
+    label: '\uc778\uc0ac \ub300\uc2dc\ubcf4\ub4dc',
+    icon: LayoutDashboard,
+  },
   {
     path: '/site/onboarding',
     label: '\uc791\uc5c5\uc790 \uc778\ub825 \uc628\ubcf4\ub529',
@@ -225,22 +227,14 @@ function linkClass(item) {
 
     <div class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       <header
-        class="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-3 border-b border-forena-100/80 bg-white/75 px-6 py-4 shadow-sm backdrop-blur-md"
+        class="sticky top-0 z-10 border-b border-forena-100/80 bg-white/75 px-6 py-4 shadow-sm backdrop-blur-md"
       >
         <div class="min-w-0">
-          <p class="text-[10px] font-bold tracking-[0.12em] text-flare-600 uppercase">{{ L.headerKicker }}</p>
-                   <h1 class="mt-0.5 text-xl font-bold tracking-tight text-forena-900">{{ pageTitle }}</h1>
+          <p class="text-[10px] font-bold tracking-[0.12em] text-flare-600 uppercase">
+            {{ L.headerKicker }}
+          </p>
+          <h1 class="mt-0.5 text-xl font-bold tracking-tight text-forena-900">{{ pageTitle }}</h1>
           <div class="mt-2 h-0.5 w-14 rounded-full bg-forena-200" />
-        </div>
-        <div
-          class="flex h-11 max-w-md flex-1 items-center gap-2 rounded-2xl border border-forena-100 bg-white/90 px-3 shadow-sm transition focus-within:border-flare-300 focus-within:shadow-glow"
-        >
-          <Search class="h-4 w-4 shrink-0 text-flare-500" />
-          <input
-            type="search"
-            class="min-w-0 flex-1 border-0 bg-transparent text-sm text-forena-900 placeholder:text-slate-400 focus:outline-none focus:ring-0"
-            :placeholder="L.searchPh"
-          />
         </div>
       </header>
 

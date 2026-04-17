@@ -36,7 +36,8 @@ const T = {
   colStatus: '\ud604\uc7ac \uc0c1\ud0dc',
   colDetail: '\uc0c1\uc138\ubcf4\uae30',
   empty: '\uc870\uac74\uc5d0 \ub9de\ub294 \uc791\uc5c5\uc790\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  excelSoon: '\uc5d1\uc140 \uc77c\uad04 \ub4f1\ub85d \uae30\ub2a5\uc744 \uc900\ube44 \uc911\uc785\ub2c8\ub2e4.',
+  excelSoon:
+    '\uc5d1\uc140 \uc77c\uad04 \ub4f1\ub85d \uae30\ub2a5\uc744 \uc900\ube44 \uc911\uc785\ub2c8\ub2e4.',
   modalTitle: '\uc2e0\uaddc \uc791\uc5c5\uc790 \uc628\ubcf4\ub529 \ub4f1\ub85d',
   secBasic: '1. \uae30\ubcf8 \uc778\uc801 \uc0ac\ud56d',
   secAffil: '2. \uc18c\uc18d \ubc0f \uc11c\ub958 \uc81c\ucd9c',
@@ -51,14 +52,19 @@ const T = {
   phPartner: '\uc120\ud0dd (\ub610\ub294 \uc9c1\uc601)',
   labelJob: '\ub2f4\ub2f9 \uacf5\uc885/\uc9c1\uc885',
   phJob: '\uc608: \ud615\ud2c0, \ubcf4\ud1b5\uc778\ubd80',
-  labelUpload: '\uc548\uc804\uad50\uc721 \uc774\uc218 \ubc0f \uc2e0\ubd84\uc99d (\ud544\uc218 \uc11c\ub958)',
-  uploadHint: '\ud074\ub9ad\ud558\uac70\ub098 \ud30c\uc77c\uc744 \ub4dc\ub798\uadf8\ud558\uc5ec \uc5c5\ub85c\ub4dc',
+  labelUpload:
+    '\uc548\uc804\uad50\uc721 \uc774\uc218 \ubc0f \uc2e0\ubd84\uc99d (\ud544\uc218 \uc11c\ub958)',
+  uploadHint:
+    '\ud074\ub9ad\ud558\uac70\ub098 \ud30c\uc77c\uc744 \ub4dc\ub798\uadf8\ud558\uc5ec \uc5c5\ub85c\ub4dc',
   uploadFormats: 'PDF, JPG, PNG \ud615\uc2dd \uc9c0\uc6d0 (\ucd5c\ub300 10MB)',
-  chkEdu: '\uae30\ucd08\uc548\uc804\ubcf4\uac74\uad50\uc721 \uc774\uc218 \uc5ec\ubd80\ub97c \ud655\uc778\ud588\uc2b5\ub2c8\ub2e4.',
+  chkEdu:
+    '\uae30\ucd08\uc548\uc804\ubcf4\uac74\uad50\uc721 \uc774\uc218 \uc5ec\ubd80\ub97c \ud655\uc778\ud588\uc2b5\ub2c8\ub2e4.',
   cancel: '\ucde8\uc18c',
   submit: '\ub4f1\ub85d \ubc0f \uc11c\ub958 \uac80\ud1a0 \uc694\uccad',
-  alertRequired: '\ud544\uc218 \ud56d\ubaa9\uc744 \ubaa8\ub450 \uc785\ub825\ud558\uace0, \uad50\uc721 \uc774\uc218 \ud655\uc778\uc5d0 \uccb4\ud06c\ud574\uc8fc\uc138\uc694.',
-  alertOk: '\uc628\ubcf4\ub529 \ub4f1\ub85d \uc694\uccad\uc774 \uc811\uc218\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \uac80\ud1a0 \uc911 \uc0c1\ud0dc\ub85c \ub4f1\ub85d\ub418\uc5c8\uc2b5\ub2c8\ub2e4.',
+  alertRequired:
+    '\ud544\uc218 \ud56d\ubaa9\uc744 \ubaa8\ub450 \uc785\ub825\ud558\uace0, \uad50\uc721 \uc774\uc218 \ud655\uc778\uc5d0 \uccb4\ud06c\ud574\uc8fc\uc138\uc694.',
+  alertOk:
+    '\uc628\ubcf4\ub529 \ub4f1\ub85d \uc694\uccad\uc774 \uc811\uc218\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \uac80\ud1a0 \uc911 \uc0c1\ud0dc\ub85c \ub4f1\ub85d\ub418\uc5c8\uc2b5\ub2c8\ub2e4.',
 }
 
 const partnerFilterOptions = [
@@ -251,7 +257,7 @@ function submitOnboard() {
   const companyLabel =
     f.partner === 'direct'
       ? '\uc9c1\uc601'
-      : partnerFilterOptions.find((p) => p.value === f.partner)?.label ?? f.partner
+      : (partnerFilterOptions.find((p) => p.value === f.partner)?.label ?? f.partner)
   const nextId = Math.max(0, ...workers.value.map((w) => w.id)) + 1
   workers.value = [
     ...workers.value,
@@ -289,9 +295,13 @@ function submitOnboard() {
             <UserPlus class="h-5 w-5" />
           </span>
           <div>
-            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">{{ T.kicker }}</p>
+            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">
+              {{ T.kicker }}
+            </p>
             <h1 class="text-xl font-bold tracking-tight text-forena-900">{{ T.pageTitle }}</h1>
-            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-forena-700/80">{{ T.heroDesc }}</p>
+            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-forena-700/80">
+              {{ T.heroDesc }}
+            </p>
           </div>
         </div>
         <div
@@ -312,7 +322,11 @@ function submitOnboard() {
             v-model="partnerFilter"
             class="w-full shrink-0 rounded-xl border border-forena-200 bg-white px-3 py-2.5 text-sm font-semibold text-forena-900 lg:w-40"
           >
-            <option v-for="opt in partnerFilterOptions" :key="opt.value || 'all'" :value="opt.value">
+            <option
+              v-for="opt in partnerFilterOptions"
+              :key="opt.value || 'all'"
+              :value="opt.value"
+            >
               {{ opt.label }}
             </option>
           </select>
@@ -373,21 +387,27 @@ function submitOnboard() {
             <tr>
               <th class="px-5 py-3.5 font-semibold whitespace-nowrap">{{ T.colName }}</th>
               <th class="px-5 py-3.5 font-semibold whitespace-nowrap">{{ T.colAffil }}</th>
-              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">{{ T.colSafety }}</th>
-              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">{{ T.colDocs }}</th>
-              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">{{ T.colStatus }}</th>
-              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">{{ T.colDetail }}</th>
+              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">
+                {{ T.colSafety }}
+              </th>
+              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">
+                {{ T.colDocs }}
+              </th>
+              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">
+                {{ T.colStatus }}
+              </th>
+              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">
+                {{ T.colDetail }}
+              </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-forena-50 text-forena-800">
             <tr v-if="filteredWorkers.length === 0">
-              <td colspan="6" class="px-5 py-14 text-center text-sm text-slate-400">{{ T.empty }}</td>
+              <td colspan="6" class="px-5 py-14 text-center text-sm text-slate-400">
+                {{ T.empty }}
+              </td>
             </tr>
-            <tr
-              v-for="w in filteredWorkers"
-              :key="w.id"
-              class="transition hover:bg-flare-50/40"
-            >
+            <tr v-for="w in filteredWorkers" :key="w.id" class="transition hover:bg-flare-50/40">
               <td class="px-5 py-4 whitespace-nowrap">
                 <div class="flex items-center gap-3">
                   <span
@@ -472,9 +492,13 @@ function submitOnboard() {
           <div class="scrollbar-hide min-h-0 flex-1 overflow-y-auto p-5 sm:p-6">
             <div class="grid gap-8 md:grid-cols-2">
               <div class="space-y-4">
-                <h3 class="text-xs font-bold uppercase tracking-wide text-forena-500">{{ T.secBasic }}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wide text-forena-500">
+                  {{ T.secBasic }}
+                </h3>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{ T.labelName }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
+                    T.labelName
+                  }}</label>
                   <input
                     v-model="onboardForm.name"
                     type="text"
@@ -483,7 +507,9 @@ function submitOnboard() {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{ T.labelBlood }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
+                    T.labelBlood
+                  }}</label>
                   <select
                     v-model="onboardForm.bloodType"
                     class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm font-semibold text-forena-900 outline-none focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
@@ -492,7 +518,9 @@ function submitOnboard() {
                   </select>
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{ T.labelPhone }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
+                    T.labelPhone
+                  }}</label>
                   <input
                     v-model="onboardForm.phone"
                     type="tel"
@@ -501,7 +529,9 @@ function submitOnboard() {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold text-forena-600">
+                  <label
+                    class="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold text-forena-600"
+                  >
                     <AlertTriangle class="h-3.5 w-3.5 text-rose-500" />
                     {{ T.labelEmergency }}
                   </label>
@@ -515,9 +545,13 @@ function submitOnboard() {
               </div>
 
               <div class="space-y-4">
-                <h3 class="text-xs font-bold uppercase tracking-wide text-forena-500">{{ T.secAffil }}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wide text-forena-500">
+                  {{ T.secAffil }}
+                </h3>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{ T.labelPartner }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
+                    T.labelPartner
+                  }}</label>
                   <select
                     v-model="onboardForm.partner"
                     class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm font-semibold text-forena-900 outline-none focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
@@ -530,7 +564,9 @@ function submitOnboard() {
                   </select>
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{ T.labelJob }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
+                    T.labelJob
+                  }}</label>
                   <input
                     v-model="onboardForm.job"
                     type="text"
@@ -539,17 +575,26 @@ function submitOnboard() {
                   />
                 </div>
                 <div>
-                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{ T.labelUpload }}</label>
+                  <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
+                    T.labelUpload
+                  }}</label>
                   <label
                     class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-flare-300/80 bg-flare-50/40 px-4 py-8 transition hover:border-flare-500 hover:bg-flare-50/70"
                   >
                     <UploadCloud class="h-8 w-8 text-flare-600" />
-                    <span class="text-center text-xs font-semibold text-forena-800">{{ T.uploadHint }}</span>
+                    <span class="text-center text-xs font-semibold text-forena-800">{{
+                      T.uploadHint
+                    }}</span>
                     <span class="text-[10px] text-slate-500">{{ T.uploadFormats }}</span>
                     <span v-if="onboardFileName" class="text-[10px] font-medium text-flare-700">{{
                       onboardFileName
                     }}</span>
-                    <input type="file" class="sr-only" accept=".pdf,.jpg,.jpeg,.png" @change="onOnboardFileChange" />
+                    <input
+                      type="file"
+                      class="sr-only"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      @change="onOnboardFileChange"
+                    />
                   </label>
                 </div>
                 <label
