@@ -226,7 +226,7 @@ function linkClass(item) {
     </aside>
 
     <div class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-      <header
+      <!-- <header
         class="sticky top-0 z-10 border-b border-forena-100/80 bg-white/75 px-6 py-4 shadow-sm backdrop-blur-md"
       >
         <div class="min-w-0">
@@ -236,7 +236,7 @@ function linkClass(item) {
           <h1 class="mt-0.5 text-xl font-bold tracking-tight text-forena-900">{{ pageTitle }}</h1>
           <div class="mt-2 h-0.5 w-14 rounded-full bg-forena-200" />
         </div>
-      </header>
+      </header> -->
 
       <main class="min-h-0 flex-1 overflow-y-auto p-6">
         <RouterView />
