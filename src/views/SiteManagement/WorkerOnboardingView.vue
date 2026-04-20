@@ -293,11 +293,26 @@ function badgeToneClass(tone) {
 function initialFromName(name) {
   return name ? name.charAt(0) : '?'
 }
+// <script setup> 내부에 추가
+const tradeFileInputs = {} // 엘리먼트 저장소
 
-function onExcelBulk() {
-  window.alert(T.excelSoon)
+function setTradeFileInput(id, el) {
+  if (el) tradeFileInputs[id] = el
 }
 
+function openTradeFilePicker(id) {
+  tradeFileInputs[id]?.click()
+}
+
+// 파일이 선택되었을 때 실행될 함수 (이게 없어서 안 됐을 수도 있습니다)
+function onTradeFiles(id, event) {
+  const files = event.target.files
+  if (!files || files.length === 0) return
+
+  console.log(`${id} 영역에서 파일 선택됨:`, files)
+  
+  // 여기서 아까 만든 DataParseService를 호출하거나 서버로 파일을 보내면 됩니다!
+}
 const showOnboardModal = ref(false)
 const onboardForm = ref({
   name: '',
@@ -468,18 +483,21 @@ function submitOnboard() {
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-2.5 sm:justify-end">
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-xl bg-emerald-50 px-4 py-2.5 text-[13px] font-bold text-emerald-700 shadow-sm ring-1 ring-emerald-200/60 transition hover:bg-emerald-100"
-              @click="onExcelBulk"
-            >
-              <FileSpreadsheet class="h-4 w-4" /> {{ T.excelBulk }}
-            </button>
+            
+            <input
+              :ref="(el) => setTradeFileInput('bulk', el)"
+              type="file"
+              class="sr-only"
+              multiple
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt"
+              @change="onTradeFiles('bulk', $event)" 
+            />
             <button
               type="button"
               class="inline-flex items-center gap-2 rounded-xl bg-sky-50 px-4 py-2.5 text-[13px] font-bold text-sky-700 shadow-sm ring-1 ring-sky-200/60 transition hover:bg-sky-100"
+              @click.prevent="openTradeFilePicker('bulk')"
             >
-              <Upload class="h-4 w-4" /> {{ T.fileUpload }}
+               <Upload class="h-4 w-4" />{{ T.fileUpload }}
             </button>
             <div class="mx-1 hidden h-8 w-px bg-forena-200/60 sm:block" />
             <button
