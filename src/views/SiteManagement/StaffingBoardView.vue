@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import {
   MapPin,
   Settings,
@@ -8,7 +8,13 @@ import {
   Plus,
   X,
   Users,
+  Radio,
+  WifiOff,
+  Moon,
+  AlertTriangle,
 } from 'lucide-vue-next'
+import { getAffiliationKind, affiliationKindBadgeClass } from '@/utils/workerAffiliation'
+import { useStaffingBoardSync } from '@/composables/useStaffingBoardSync'
 
 const T = {
   kicker: '\uc778\ub825 \ubc30\uce58',
@@ -31,16 +37,87 @@ const T = {
   alertAuto:
     '\ubd80\uc871 \uad6c\uc5ed \uc704\uc8fc\ub85c \ud22c\uc785 \uac00\ub2a5 \uc778\ub825\uc744 \uc790\ub3d9 \ubc30\uce58\ud588\uc2b5\ub2c8\ub2e4. (\ub370\ubaa8)',
   alertSave: '\ud604\uc7ac \ubc30\uce58\uac00 \ud655\uc815\ub418\uc5b4 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4. (\ub370\ubaa8)',
+  kindSummary: '\uc624\ub298 \ubcf4\ub4dc \uc778\uc6d0 (\uad6c\ubd84)',
+  kindFilter: '\ub300\uae30 \ubaa9\ub85d \uad6c\ubd84',
+  kindAll: '\uc804\uccb4',
+  badgeDirect: '\uc9c1\uc601',
+  badgePartner: '\ud611\ub825',
+  badgeAgency: '\uc778\ub825',
+  countUnit: '\uba85',
+  waitingFilteredEmpty: '\uc120\ud0dd\ud55c \uad6c\ubd84\uc5d0 \ud574\ub2f9\ud558\ub294 \uc778\ub825\uc774 \uc5c6\uc2b5\ub2c8\ub2e4.',
+  zoneMix: '\uad6c\uc5ed \uad6c\uc131',
+  totalWorkers: '\ubcf4\ub4dc \ucd1d\uc778\uc6d0',
+  syncTitle: '\uc2e4\uc2dc\uac04 \ubcf4\ub4dc \ub3d9\uae30\ud654',
+  syncConnected:
+    'BroadcastChannel: \ub2e4\ub978 \uad00\ub9ac \ud0ed\uacfc \ub3d9\uae30\ud654 \uc911 (\uc0c8\ub85c\uace0\uce68 \uc5c6\uc774 \ubc18\uc601)',
+  syncUnsupported:
+    '\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \ud0ed \uac04 \ub3d9\uae30\ud654(BroadcastChannel)\ub97c \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.',
+  tradeToTitle: '\uad6c\uc5ed \ud544\uc694 \uc9c1\uc885(T.O)',
+  tradeWarn:
+    '\uc774 \uad6c\uc5ed\uc5d0 \ud544\uc694\ud55c \uc9c1\uc885\uacfc \ub9de\uc9c0 \uc54a\uc744 \uc218 \uc788\uc2b5\ub2c8\ub2e4. \ubc30\uce58\ub294 \uac00\ub2a5\ud558\uba70, \uc548\uc804/\uc0b0\uc5c5 \uad00\uc810\uc5d0\uc11c \ud655\uc778\ud574 \uc8fc\uc138\uc694.',
+  fatigueTitle:
+    '\uc548\uc804 \uc8fc\uc758: \uc804\ub0a0 \uc57c\uac04 \uadfc\ubb34 \ub610\ub294 \uc5f0\uc18d \uadfc\ubb34 \uc77c\uc218\uac00 \ub192\uc74c (\ud53c\ub85c\ub3c4 \ub204\uc801 \uc758\uc2ed)',
+  skillCarpenter: '\ubaa9\uc218',
+  skillRebar: '\uccbc\uadfc',
+  skillWelder: '\uc6a9\uc811',
+  skillLabor: '\uc778\ubd80',
+}
+
+const tradeLabel = (key) => {
+  if (key === 'carpenter') return T.skillCarpenter
+  if (key === 'rebar') return T.skillRebar
+  if (key === 'welder') return T.skillWelder
+  return T.skillLabor
 }
 
 let idSeq = 100
 
+function cloneWorker(w) {
+  return {
+    ...w,
+    skills: Array.isArray(w.skills) ? [...w.skills] : ['labor'],
+    fatigue: w.fatigue
+      ? { ...w.fatigue }
+      : { nightShiftYesterday: false, consecutiveDays: 0 },
+  }
+}
+
 const waiting = ref([
-  { id: 'w1', name: '\uae40\ucca0\uc218', affiliation: '\ud0dc\uc591\uac74\uc124 (\ud604\uc7a5)' },
-  { id: 'w2', name: '\uc774\uc601\ud76c', affiliation: '\uc6b0\uc8fc\uc0b0\uc5c5' },
-  { id: 'w3', name: '\ubc15\ubbfc\uc218', affiliation: '\uc778\ub825\uc0ac\ubb34\uc18c' },
-  { id: 'w4', name: '\uc815\ub300\ub9ac', affiliation: '\ubcf8\uc0ac \uc18c\uc18d' },
-  { id: 'w5', name: '\ucd5c\uc791\uc5c5', affiliation: '\ud0dc\uc591\uac74\uc124 (\ud604\uc7a5)' },
+  {
+    id: 'w1',
+    name: '\uae40\ucca0\uc218',
+    affiliation: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
+    skills: ['carpenter', 'labor'],
+    fatigue: { nightShiftYesterday: true, consecutiveDays: 2 },
+  },
+  {
+    id: 'w2',
+    name: '\uc774\uc601\ud76c',
+    affiliation: '\ud611\ub825\uc0ac (\uc6b0\uc8fc\uc0b0\uc5c5)',
+    skills: ['rebar'],
+    fatigue: { nightShiftYesterday: false, consecutiveDays: 6 },
+  },
+  {
+    id: 'w3',
+    name: '\ubc15\ubbfc\uc218',
+    affiliation: '\uc778\ub825\uc0ac\ubb34\uc18c (\uac1c\uc778)',
+    skills: ['labor'],
+    fatigue: { nightShiftYesterday: false, consecutiveDays: 1 },
+  },
+  {
+    id: 'w4',
+    name: '\uc815\ub300\ub9ac',
+    affiliation: '\ubcf8\uc0ac \uc18c\uc18d',
+    skills: ['welder', 'labor'],
+    fatigue: { nightShiftYesterday: false, consecutiveDays: 0 },
+  },
+  {
+    id: 'w5',
+    name: '\ucd5c\uc791\uc5c5',
+    affiliation: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
+    skills: ['carpenter'],
+    fatigue: { nightShiftYesterday: false, consecutiveDays: 5 },
+  },
 ])
 
 const zones = ref([
@@ -49,9 +126,26 @@ const zones = ref([
     title: 'A\uad6c\uc5ed',
     subtitle: '\uc9c0\ud558 \uc8fc\ucc28\uc7a5',
     required: 4,
+    tradeNeeds: [
+      { trade: 'carpenter', need: 2 },
+      { trade: 'rebar', need: 1 },
+      { trade: 'welder', need: 1 },
+    ],
     workers: [
-      { id: 'z1', name: '\ud55c\ud604\uc7a5', affiliation: '\ud0dc\uc591\uac74\uc124' },
-      { id: 'z2', name: '\uc11c\ub300\ub9ac', affiliation: '\ubcf8\uc0ac' },
+      {
+        id: 'z1',
+        name: '\ud55c\ud604\uc7a5',
+        affiliation: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
+        skills: ['carpenter'],
+        fatigue: { nightShiftYesterday: false, consecutiveDays: 3 },
+      },
+      {
+        id: 'z2',
+        name: '\uc11c\ub300\ub9ac',
+        affiliation: '\ubcf8\uc0ac \uc18c\uc18d',
+        skills: ['labor'],
+        fatigue: { nightShiftYesterday: true, consecutiveDays: 4 },
+      },
     ],
   },
   {
@@ -59,13 +153,30 @@ const zones = ref([
     title: 'B\uad6c\uc5ed',
     subtitle: '1\ub3d9 \uace8\uc870',
     required: 6,
-    workers: [{ id: 'z3', name: '\uc624\ud615\uc0ac', affiliation: '\uc6b0\uc8fc\uc0b0\uc5c5' }],
+    tradeNeeds: [
+      { trade: 'rebar', need: 3 },
+      { trade: 'carpenter', need: 2 },
+      { trade: 'labor', need: 1 },
+    ],
+    workers: [
+      {
+        id: 'z3',
+        name: '\uc624\ud615\uc0ac',
+        affiliation: '\ud611\ub825\uc0ac (\uc6b0\uc8fc\uc0b0\uc5c5)',
+        skills: ['rebar'],
+        fatigue: { nightShiftYesterday: false, consecutiveDays: 7 },
+      },
+    ],
   },
   {
     id: 'z-c',
     title: 'C\uad6c\uc5ed',
     subtitle: '2\ub3d9 \ub9c8\uac10',
     required: 3,
+    tradeNeeds: [
+      { trade: 'welder', need: 1 },
+      { trade: 'labor', need: 2 },
+    ],
     workers: [],
   },
 ])
@@ -73,7 +184,139 @@ const zones = ref([
 const dragged = ref(null)
 const dragSource = ref(null)
 
+const toasts = ref([])
+let toastSeq = 0
+
+function pushToast(message, variant = 'warning') {
+  const id = ++toastSeq
+  toasts.value = [...toasts.value, { id, message, variant }]
+  window.setTimeout(() => {
+    toasts.value = toasts.value.filter((t) => t.id !== id)
+  }, 4200)
+}
+
 const waitingCount = computed(() => waiting.value.length)
+
+const boardKindFilter = ref('')
+
+const displayedWaiting = computed(() => {
+  const k = boardKindFilter.value
+  if (!k) return waiting.value
+  return waiting.value.filter((w) => getAffiliationKind(w.affiliation) === k)
+})
+
+const boardKindBreakdown = computed(() => {
+  const list = []
+  for (const w of waiting.value) list.push(w)
+  for (const z of zones.value) for (const w of z.workers) list.push(w)
+  let direct = 0
+  let partner = 0
+  let agency = 0
+  for (const w of list) {
+    const k = getAffiliationKind(w.affiliation)
+    if (k === 'direct') direct++
+    else if (k === 'agency') agency++
+    else partner++
+  }
+  return { direct, partner, agency, total: list.length }
+})
+
+function workerKindLabel(affiliation) {
+  const k = getAffiliationKind(affiliation)
+  if (k === 'direct') return T.badgeDirect
+  if (k === 'agency') return T.badgeAgency
+  return T.badgePartner
+}
+
+const boardKindPills = computed(() => [
+  { key: '', label: T.kindAll },
+  { key: 'direct', label: T.badgeDirect },
+  { key: 'partner', label: T.badgePartner },
+  { key: 'agency', label: T.badgeAgency },
+])
+
+function zoneKindMixText(z) {
+  if (!z.workers.length) return ''
+  let d = 0
+  let p = 0
+  let a = 0
+  for (const w of z.workers) {
+    const k = getAffiliationKind(w.affiliation)
+    if (k === 'direct') d++
+    else if (k === 'agency') a++
+    else p++
+  }
+  return `${T.zoneMix}: ${T.badgeDirect} ${d} · ${T.badgePartner} ${p} · ${T.badgeAgency} ${a}`
+}
+
+function countTradeInZone(zone, trade) {
+  return zone.workers.filter((w) => (w.skills || []).includes(trade)).length
+}
+
+function zoneTradeProgress(zone) {
+  const needs = zone.tradeNeeds || []
+  return needs.map((tn) => ({
+    trade: tn.trade,
+    label: tradeLabel(tn.trade),
+    need: tn.need,
+    fill: countTradeInZone(zone, tn.trade),
+  }))
+}
+
+/** \uad6c\uc5ed\uc5d0 \uba85\uc2dc\ub41c \ud544\uc694 \uc9c1\uc885\uacfc \uc791\uc5c5\uc790 \uc2a4\ud0ac \uad50\uc9d1\uc774 \uc5c6\uc73c\uba74 \uacbd\uace0 */
+function shouldWarnTradeMismatch(zone, worker) {
+  const needs = zone.tradeNeeds || []
+  if (!needs.length) return false
+  const needSet = new Set(needs.map((n) => n.trade))
+  const skills = worker.skills || []
+  if (!skills.length) return false
+  return !skills.some((s) => needSet.has(s))
+}
+
+function workerFatigueHigh(w) {
+  const f = w.fatigue || {}
+  return Boolean(f.nightShiftYesterday) || (f.consecutiveDays ?? 0) >= 5
+}
+
+function skillBadgeClass(trade) {
+  if (trade === 'welder') return 'bg-violet-50 text-violet-800 ring-1 ring-violet-200/80'
+  if (trade === 'rebar') return 'bg-sky-50 text-sky-800 ring-1 ring-sky-200/80'
+  if (trade === 'carpenter') return 'bg-amber-50 text-amber-900 ring-1 ring-amber-200/80'
+  return 'bg-slate-100 text-slate-700 ring-1 ring-slate-200/80'
+}
+
+function packState() {
+  return {
+    waiting: JSON.parse(JSON.stringify(waiting.value)),
+    zones: JSON.parse(JSON.stringify(zones.value)),
+    idSeq,
+  }
+}
+
+function applyRemoteState(payload) {
+  if (!payload || !Array.isArray(payload.waiting) || !Array.isArray(payload.zones)) return
+  waiting.value = payload.waiting.map(cloneWorker)
+  zones.value = payload.zones.map((z) => ({
+    ...z,
+    workers: (z.workers || []).map(cloneWorker),
+  }))
+  if (typeof payload.idSeq === 'number' && payload.idSeq > idSeq) idSeq = payload.idSeq
+}
+
+const tabId =
+  typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `tab-${Date.now()}-${Math.random().toString(36).slice(2)}`
+
+const { syncStatus, publish } = useStaffingBoardSync(tabId, applyRemoteState)
+
+function syncPublish() {
+  publish(packState())
+}
+
+onMounted(() => {
+  syncPublish()
+})
 
 function onDragStart(worker, source, zoneId = null) {
   dragged.value = worker
@@ -94,12 +337,13 @@ function removeFromZone(zoneId, workerId) {
   if (!z) return
   const w = z.workers.find((x) => x.id === workerId)
   z.workers = z.workers.filter((x) => x.id !== workerId)
-  if (w) waiting.value.push({ ...w, id: 'w-' + String(++idSeq) })
+  if (w) waiting.value.push(cloneWorker({ ...w, id: 'w-' + String(++idSeq) }))
+  syncPublish()
 }
 
 function onDropZone(zoneId) {
   if (!dragged.value || !dragSource.value) return
-  const worker = { ...dragged.value }
+  const worker = cloneWorker(dragged.value)
   const src = dragSource.value
 
   if (src.type === 'waiting') {
@@ -111,22 +355,27 @@ function onDropZone(zoneId) {
 
   const zTo = zones.value.find((x) => x.id === zoneId)
   if (zTo && !zTo.workers.some((w) => w.id === worker.id)) {
+    if (shouldWarnTradeMismatch(zTo, worker)) {
+      pushToast(T.tradeWarn, 'warning')
+    }
     zTo.workers.push({
       ...worker,
       id: worker.id.startsWith('w') ? 'z-' + String(++idSeq) : worker.id,
     })
   }
+  syncPublish()
   onDragEnd()
 }
 
 function onDropWaiting() {
   if (!dragged.value || !dragSource.value) return
-  const worker = { ...dragged.value }
+  const worker = cloneWorker(dragged.value)
   if (dragSource.value.type === 'zone' && dragSource.value.zoneId) {
     const zFrom = zones.value.find((x) => x.id === dragSource.value.zoneId)
     if (zFrom) zFrom.workers = zFrom.workers.filter((w) => w.id !== worker.id)
-    waiting.value.push({ ...worker, id: 'w-' + String(++idSeq) })
+    waiting.value.push(cloneWorker({ ...worker, id: 'w-' + String(++idSeq) }))
   }
+  syncPublish()
   onDragEnd()
 }
 
@@ -143,23 +392,32 @@ function zoneBarClass(z) {
 }
 
 function loadPrevious() {
-  alert(T.alertLoad)
+  window.alert(T.alertLoad)
 }
 
 function autoRecommend() {
-  const pool = [...waiting.value]
+  const pool = waiting.value.map(cloneWorker)
+  waiting.value = []
   for (const z of zones.value) {
     while (z.workers.length < z.required && pool.length) {
       const w = pool.shift()
-      removeFromWaiting(w.id)
       z.workers.push({ ...w, id: 'z-' + String(++idSeq) })
     }
   }
-  alert(T.alertAuto)
+  waiting.value = pool
+  syncPublish()
+  window.alert(T.alertAuto)
 }
 
 function confirmSave() {
-  alert(T.alertSave)
+  syncPublish()
+  window.alert(T.alertSave)
+}
+
+function toastClass(v) {
+  if (v === 'danger') return 'border-rose-200 bg-rose-50 text-rose-900'
+  if (v === 'info') return 'border-sky-200 bg-sky-50 text-sky-900'
+  return 'border-amber-200 bg-amber-50 text-amber-950'
 }
 </script>
 
@@ -208,44 +466,145 @@ function confirmSave() {
           </button>
         </div>
       </div>
+      <div
+        class="mt-4 flex flex-wrap items-center gap-2 rounded-xl border px-3 py-2.5 text-[11px] font-semibold"
+        :class="
+          syncStatus === 'connected'
+            ? 'border-emerald-200/90 bg-emerald-50/60 text-emerald-900'
+            : 'border-forena-200 bg-forena-50/80 text-forena-700'
+        "
+      >
+        <Radio
+          v-if="syncStatus === 'connected'"
+          class="h-3.5 w-3.5 shrink-0 text-emerald-600"
+          aria-hidden="true"
+        />
+        <WifiOff v-else class="h-3.5 w-3.5 shrink-0 text-slate-500" aria-hidden="true" />
+        <span class="font-bold text-forena-800">{{ T.syncTitle }}</span>
+        <span class="text-forena-600/90">
+          {{ syncStatus === 'connected' ? T.syncConnected : T.syncUnsupported }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="rounded-2xl border border-forena-100/90 bg-white/90 px-4 py-3 shadow-card sm:px-5"
+    >
+      <p class="text-[11px] font-bold uppercase tracking-wide text-forena-500">{{ T.kindSummary }}</p>
+      <p class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-forena-800">
+        <span class="tabular-nums">
+          <span class="font-semibold text-indigo-700">{{ T.badgeDirect }}</span>
+          {{ boardKindBreakdown.direct }}{{ T.countUnit }}
+        </span>
+        <span class="text-slate-300" aria-hidden="true">·</span>
+        <span class="tabular-nums">
+          <span class="font-semibold text-amber-800">{{ T.badgePartner }}</span>
+          {{ boardKindBreakdown.partner }}{{ T.countUnit }}
+        </span>
+        <span class="text-slate-300" aria-hidden="true">·</span>
+        <span class="tabular-nums">
+          <span class="font-semibold text-slate-600">{{ T.badgeAgency }}</span>
+          {{ boardKindBreakdown.agency }}{{ T.countUnit }}
+        </span>
+        <span class="text-slate-300" aria-hidden="true">·</span>
+        <span class="tabular-nums text-slate-500">
+          {{ T.totalWorkers }} {{ boardKindBreakdown.total }}{{ T.countUnit }}
+        </span>
+      </p>
     </div>
 
     <div class="flex gap-4 overflow-x-auto pb-2" @dragover.prevent @drop.prevent="onDropWaiting">
       <section
         class="flex w-[280px] shrink-0 flex-col rounded-2xl border border-forena-100/90 bg-white/90 shadow-card"
       >
-        <header class="flex items-center justify-between border-b border-forena-100 px-4 py-3">
-          <div class="flex items-center gap-2">
-            <Users class="h-4 w-4 text-flare-600" />
-            <span class="text-sm font-bold text-forena-900">{{ T.waitingTitle }}</span>
-            <span class="text-[11px] text-slate-500">({{ T.waitingSub }})</span>
+        <header class="border-b border-forena-100 px-4 py-3">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex min-w-0 items-center gap-2">
+              <Users class="h-4 w-4 shrink-0 text-flare-600" />
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span class="text-sm font-bold text-forena-900">{{ T.waitingTitle }}</span>
+                  <span class="text-[11px] text-slate-500">({{ T.waitingSub }})</span>
+                </div>
+              </div>
+            </div>
+            <span class="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-800"
+              >{{ waitingCount }}{{ T.count }}</span
+            >
           </div>
-          <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-800"
-            >{{ waitingCount }}{{ T.count }}</span
-          >
+          <p class="mt-2 text-[10px] font-bold text-forena-500">{{ T.kindFilter }}</p>
+          <div class="mt-1.5 flex flex-wrap gap-1.5">
+            <button
+              v-for="pill in boardKindPills"
+              :key="pill.key || 'all'"
+              type="button"
+              class="rounded-full px-2.5 py-0.5 text-[10px] font-bold transition ring-1"
+              :class="
+                boardKindFilter === pill.key
+                  ? 'bg-forena-800 text-white ring-forena-800'
+                  : 'bg-forena-50 text-forena-700 ring-forena-200/80 hover:bg-forena-100'
+              "
+              @click="boardKindFilter = pill.key"
+            >
+              {{ pill.label }}
+            </button>
+          </div>
         </header>
         <div class="max-h-[520px] space-y-2 overflow-y-auto p-3">
           <div
-            v-for="w in waiting"
+            v-for="w in displayedWaiting"
             :key="w.id"
             draggable="true"
-            class="flex cursor-grab items-center gap-3 rounded-xl border border-forena-100 bg-white p-3 shadow-sm transition hover:border-flare-300 active:cursor-grabbing"
+            class="flex cursor-grab items-start gap-2 rounded-xl border border-forena-100 bg-white p-3 shadow-sm transition hover:border-flare-300 active:cursor-grabbing"
             @dragstart="onDragStart(w, 'waiting')"
             @dragend="onDragEnd"
           >
-            <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-forena-100 to-flare-50 text-xs font-bold text-forena-700"
-            >
-              {{ w.name.slice(0, 1) }}
+            <div class="relative shrink-0">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-forena-100 to-flare-50 text-xs font-bold text-forena-700"
+              >
+                {{ w.name.slice(0, 1) }}
+              </div>
+              <span
+                v-if="workerFatigueHigh(w)"
+                class="absolute -right-0.5 -bottom-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-white ring-2 ring-white"
+                :title="T.fatigueTitle"
+              >
+                <AlertTriangle class="h-2.5 w-2.5" aria-hidden="true" />
+              </span>
             </div>
             <div class="min-w-0 flex-1">
-              <div class="truncate text-sm font-semibold text-forena-900">{{ w.name }}</div>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <div class="truncate text-sm font-semibold text-forena-900">{{ w.name }}</div>
+                <span
+                  class="shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold"
+                  :class="affiliationKindBadgeClass(getAffiliationKind(w.affiliation))"
+                >
+                  {{ workerKindLabel(w.affiliation) }}
+                </span>
+                <Moon
+                  v-if="w.fatigue?.nightShiftYesterday"
+                  class="h-3.5 w-3.5 shrink-0 text-indigo-500"
+                  :title="T.fatigueTitle"
+                  aria-hidden="true"
+                />
+              </div>
               <div class="truncate text-[11px] text-slate-500">{{ w.affiliation }}</div>
+              <div class="mt-1.5 flex flex-wrap gap-1">
+                <span
+                  v-for="sk in w.skills || []"
+                  :key="sk"
+                  class="rounded px-1.5 py-0.5 text-[9px] font-bold"
+                  :class="skillBadgeClass(sk)"
+                >
+                  {{ tradeLabel(sk) }}
+                </span>
+              </div>
             </div>
-            <MoreHorizontal class="h-4 w-4 shrink-0 text-slate-400" />
+            <MoreHorizontal class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
           </div>
-          <p v-if="waiting.length === 0" class="py-8 text-center text-sm text-slate-400">
-            {{ T.waitingEmpty }}
+          <p v-if="displayedWaiting.length === 0" class="py-8 text-center text-sm text-slate-400">
+            {{ waiting.length === 0 ? T.waitingEmpty : T.waitingFilteredEmpty }}
           </p>
         </div>
       </section>
@@ -285,6 +644,24 @@ function confirmSave() {
                 :style="{ width: Math.round(zoneFillRatio(z) * 100) + '%' }"
               />
             </div>
+            <p v-if="z.workers.length" class="text-[10px] font-medium text-slate-500">
+              {{ zoneKindMixText(z) }}
+            </p>
+            <div v-if="(z.tradeNeeds || []).length" class="rounded-lg border border-forena-100 bg-forena-50/50 px-2 py-2">
+              <p class="text-[9px] font-bold uppercase tracking-wide text-forena-500">{{ T.tradeToTitle }}</p>
+              <ul class="mt-1 space-y-0.5">
+                <li
+                  v-for="row in zoneTradeProgress(z)"
+                  :key="row.trade"
+                  class="flex justify-between text-[10px] font-semibold tabular-nums"
+                >
+                  <span class="text-forena-700">{{ row.label }}</span>
+                  <span :class="row.fill >= row.need ? 'text-emerald-700' : 'text-rose-600'">
+                    {{ row.fill }}/{{ row.need }}
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         </header>
 
@@ -300,22 +677,55 @@ function confirmSave() {
             v-for="w in z.workers"
             :key="w.id"
             draggable="true"
-            class="flex cursor-grab items-center gap-3 rounded-xl border border-forena-100 bg-white p-3 shadow-sm transition hover:border-flare-300 active:cursor-grabbing"
+            class="flex cursor-grab items-start gap-2 rounded-xl border border-forena-100 bg-white p-3 shadow-sm transition hover:border-flare-300 active:cursor-grabbing"
             @dragstart="onDragStart(w, 'zone', z.id)"
             @dragend="onDragEnd"
           >
-            <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-flare-100 to-forena-50 text-xs font-bold text-forena-800"
-            >
-              {{ w.name.slice(0, 1) }}
+            <div class="relative shrink-0">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-flare-100 to-forena-50 text-xs font-bold text-forena-800"
+              >
+                {{ w.name.slice(0, 1) }}
+              </div>
+              <span
+                v-if="workerFatigueHigh(w)"
+                class="absolute -right-0.5 -bottom-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-white ring-2 ring-white"
+                :title="T.fatigueTitle"
+              >
+                <AlertTriangle class="h-2.5 w-2.5" aria-hidden="true" />
+              </span>
             </div>
             <div class="min-w-0 flex-1">
-              <div class="truncate text-sm font-semibold text-forena-900">{{ w.name }}</div>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <div class="truncate text-sm font-semibold text-forena-900">{{ w.name }}</div>
+                <span
+                  class="shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold"
+                  :class="affiliationKindBadgeClass(getAffiliationKind(w.affiliation))"
+                >
+                  {{ workerKindLabel(w.affiliation) }}
+                </span>
+                <Moon
+                  v-if="w.fatigue?.nightShiftYesterday"
+                  class="h-3.5 w-3.5 shrink-0 text-indigo-500"
+                  :title="T.fatigueTitle"
+                  aria-hidden="true"
+                />
+              </div>
               <div class="truncate text-[11px] text-slate-500">{{ w.affiliation }}</div>
+              <div class="mt-1.5 flex flex-wrap gap-1">
+                <span
+                  v-for="sk in w.skills || []"
+                  :key="sk"
+                  class="rounded px-1.5 py-0.5 text-[9px] font-bold"
+                  :class="skillBadgeClass(sk)"
+                >
+                  {{ tradeLabel(sk) }}
+                </span>
+              </div>
             </div>
             <button
               type="button"
-              class="rounded-lg p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+              class="mt-0.5 shrink-0 rounded-lg p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
               :title="T.removeZone"
               @click="removeFromZone(z.id, w.id)"
             >
@@ -334,5 +744,22 @@ function confirmSave() {
         </footer>
       </section>
     </div>
+
+    <Teleport to="body">
+      <div
+        class="pointer-events-none fixed bottom-4 right-4 z-[80] flex max-w-sm flex-col gap-2"
+        aria-live="polite"
+      >
+        <div
+          v-for="t in toasts"
+          :key="t.id"
+          class="pointer-events-auto flex items-start gap-2 rounded-xl border px-3 py-2.5 text-xs font-semibold shadow-lg ring-1 ring-black/5"
+          :class="toastClass(t.variant)"
+        >
+          <AlertTriangle v-if="t.variant === 'warning'" class="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          <span>{{ t.message }}</span>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>

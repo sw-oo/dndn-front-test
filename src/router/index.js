@@ -27,14 +27,18 @@ const router = createRouter({
       meta: meta('\uc791\uc5c5\uc790 \uad00\ub9ac'),
     },
     {
-      path: '/site/onboarding/workers/:id',
+      path: '/site/workers/manage/:id',
       name: 'siteWorkerProfile',
       component: () => import('../views/SiteManagement/WorkerProfileDetailView.vue'),
       meta: meta('\uc791\uc5c5\uc790 \uc0c1\uc138 \ud504\ub85c\ud544'),
     },
     {
+      path: '/site/onboarding/workers/:id',
+      redirect: (to) => ({ path: `/site/workers/manage/${to.params.id}` }),
+    },
+    {
       path: '/site/workers/:id',
-      redirect: (to) => ({ path: `/site/onboarding/workers/${to.params.id}` }),
+      redirect: (to) => ({ path: `/site/workers/manage/${to.params.id}` }),
     },
     {
       path: '/site/access-attendance',

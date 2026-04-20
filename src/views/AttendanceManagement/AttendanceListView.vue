@@ -12,10 +12,15 @@ import {
   UserCheck,
   Eye,
 } from 'lucide-vue-next'
+import { getAffiliationKind, affiliationKindBadgeClass } from '@/utils/workerAffiliation'
 
 const props = defineProps({
   embed: { type: Boolean, default: false },
+  /** \uc791\uc5c5\uc790 \uad00\ub9ac(embed)\uc5d0\uc11c \uc0c1\uc138\ubcf4\uae30 \uc5f4 \uc5ec\ubd80 */
+  showProfileLink: { type: Boolean, default: true },
 })
+
+const showProfileColumn = computed(() => !props.embed || props.showProfileLink)
 
 const router = useRouter()
 
@@ -61,6 +66,17 @@ const T = {
   manSuffix: '\uacf5\uc218',
   statHint: '\uae30\uc900',
   colDetail: '\uc0c1\uc138\ubcf4\uae30',
+  filterKind: '\ud22c\uc785 \uad6c\ubd84 (\ubcf8\uc0ac/\ud611\ub825/\uc778\ub825)',
+  kindAll: '\uc804\uccb4',
+  kindDirect: '\ubcf8\uc0ac \uc9c1\uc601',
+  kindPartner: '\ud611\ub825\uc0ac',
+  kindAgency: '\uc778\ub825\uc0ac\ubb34\uc18c',
+  kindBreakdown: '\uc624\ub298 \uc870\ud68c \ub300\uc0c1 (\uad6c\ubd84\ubcc4)',
+  colKind: '\uad6c\ubd84',
+  badgeDirect: '\uc9c1\uc601',
+  badgePartner: '\ud611\ub825',
+  badgeAgency: '\uc778\ub825',
+  countPeople: '\uba85',
 }
 
 const siteOptions = [
@@ -84,6 +100,7 @@ const filters = ref({
   date: new Date().toISOString().split('T')[0],
   siteName: '',
   affiliationType: '',
+  affiliationKind: '',
   searchName: '',
 })
 
@@ -148,13 +165,45 @@ const attendanceList = ref([
   },
 ])
 
-const filteredAttendance = computed(() => {
+const preKindAttendance = computed(() => {
   let result = attendanceList.value
   if (filters.value.siteName) result = result.filter((a) => a.site.includes(filters.value.siteName))
   if (filters.value.affiliationType)
     result = result.filter((a) => a.affiliationType.includes(filters.value.affiliationType))
   if (filters.value.searchName)
     result = result.filter((a) => a.name.includes(filters.value.searchName))
+  return result
+})
+
+const kindBreakdown = computed(() => {
+  const rows = preKindAttendance.value
+  let direct = 0
+  let partner = 0
+  let agency = 0
+  let manDirect = 0
+  let manPartner = 0
+  let manAgency = 0
+  for (const r of rows) {
+    const k = getAffiliationKind(r.affiliationType)
+    const m = Number(r.manDays) || 0
+    if (k === 'direct') {
+      direct++
+      manDirect += m
+    } else if (k === 'agency') {
+      agency++
+      manAgency += m
+    } else {
+      partner++
+      manPartner += m
+    }
+  }
+  return { direct, partner, agency, manDirect, manPartner, manAgency }
+})
+
+const filteredAttendance = computed(() => {
+  let result = preKindAttendance.value
+  const k = filters.value.affiliationKind
+  if (k) result = result.filter((a) => getAffiliationKind(a.affiliationType) === k)
   return result
 })
 
@@ -166,6 +215,19 @@ const statCounts = computed(() => {
     done: rows.filter((r) => r.status.includes('\ud1f4\uadfc \uc644\ub8cc')).length,
   }
 })
+
+const kindPills = computed(() => [
+  { key: '', label: T.kindAll },
+  { key: 'direct', label: T.kindDirect },
+  { key: 'partner', label: T.kindPartner },
+  { key: 'agency', label: T.kindAgency },
+])
+
+function affiliationKindLabel(kind) {
+  if (kind === 'direct') return T.badgeDirect
+  if (kind === 'agency') return T.badgeAgency
+  return T.badgePartner
+}
 
 const deleteAttendance = (id, event) => {
   event.stopPropagation()
@@ -292,6 +354,34 @@ const getStatusBadge = (status) => {
     </div>
 
     <div
+      class="rounded-2xl border border-forena-100/90 bg-white/90 p-4 shadow-card backdrop-blur-sm sm:p-5"
+    >
+      <p class="text-[11px] font-bold uppercase tracking-wide text-forena-500">{{ T.kindBreakdown }}</p>
+      <div
+        class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-forena-800"
+      >
+        <span class="tabular-nums">
+          <span class="font-semibold text-indigo-700">{{ T.kindDirect }}</span>
+          {{ kindBreakdown.direct }}{{ T.countPeople }}
+          <span class="text-slate-400">·</span>
+          {{ kindBreakdown.manDirect.toFixed(1) }}{{ T.manSuffix }}
+        </span>
+        <span class="tabular-nums">
+          <span class="font-semibold text-amber-800">{{ T.kindPartner }}</span>
+          {{ kindBreakdown.partner }}{{ T.countPeople }}
+          <span class="text-slate-400">·</span>
+          {{ kindBreakdown.manPartner.toFixed(1) }}{{ T.manSuffix }}
+        </span>
+        <span class="tabular-nums">
+          <span class="font-semibold text-slate-600">{{ T.kindAgency }}</span>
+          {{ kindBreakdown.agency }}{{ T.countPeople }}
+          <span class="text-slate-400">·</span>
+          {{ kindBreakdown.manAgency.toFixed(1) }}{{ T.manSuffix }}
+        </span>
+      </div>
+    </div>
+
+    <div
       class="rounded-2xl border border-forena-100/90 bg-white/90 p-5 shadow-card backdrop-blur-sm"
     >
       <div class="flex flex-wrap items-end gap-4">
@@ -339,30 +429,55 @@ const getStatusBadge = (status) => {
           />
         </div>
       </div>
+      <div class="mt-5 border-t border-forena-100 pt-4">
+        <p class="mb-2 text-[11px] font-bold text-forena-500">{{ T.filterKind }}</p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="pill in kindPills"
+            :key="pill.key || 'all'"
+            type="button"
+            class="rounded-full px-3.5 py-1.5 text-xs font-bold transition ring-1"
+            :class="
+              filters.affiliationKind === pill.key
+                ? 'bg-forena-800 text-white ring-forena-800'
+                : 'bg-forena-50 text-forena-700 ring-forena-200/80 hover:bg-forena-100'
+            "
+            @click="filters.affiliationKind = pill.key"
+          >
+            {{ pill.label }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <div
       class="flex flex-col overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 shadow-card"
     >
       <div class="overflow-x-auto">
-        <table class="w-full min-w-[900px] text-left text-sm whitespace-nowrap">
+        <table class="w-full min-w-[960px] text-left text-sm whitespace-nowrap">
           <thead
             class="border-b border-forena-100 bg-forena-50/60 text-[11px] font-bold uppercase tracking-wider text-forena-500"
           >
             <tr>
               <th class="px-6 py-4 font-semibold">{{ T.colContact }}</th>
               <th class="px-6 py-4 font-semibold">{{ T.colEmergency }}</th>
+              <th class="px-6 py-4 font-semibold">{{ T.colKind }}</th>
               <th class="px-6 py-4 font-semibold">{{ T.colAffil }}</th>
               <th class="px-6 py-4 font-semibold">{{ T.colTime }}</th>
               <th class="px-6 py-4 font-semibold">{{ T.colMan }}</th>
               <th class="px-6 py-4 text-center font-semibold">{{ T.colStatus }}</th>
-              <th v-if="!embed" class="px-6 py-4 text-center font-semibold">{{ T.colDetail }}</th>
+              <th v-if="showProfileColumn" class="px-6 py-4 text-center font-semibold">{{ T.colDetail }}</th>
               <th class="px-6 py-4 text-center font-semibold">{{ T.colDel }}</th>
             </tr>
           </thead>
           <tbody class="text-forena-800">
             <tr v-if="filteredAttendance.length === 0">
-              <td :colspan="embed ? 7 : 8" class="px-6 py-14 text-center text-sm text-slate-400">{{ T.empty }}</td>
+              <td
+                :colspan="showProfileColumn ? 9 : 8"
+                class="px-6 py-14 text-center text-sm text-slate-400"
+              >
+                {{ T.empty }}
+              </td>
             </tr>
             <tr
               v-else
@@ -376,6 +491,14 @@ const getStatusBadge = (status) => {
                 <div class="text-[11px] text-slate-500">{{ record.phone }}</div>
               </td>
               <td class="px-6 py-4 text-xs font-medium text-rose-600/90">{{ record.emergency }}</td>
+              <td class="px-6 py-4">
+                <span
+                  class="inline-flex rounded-lg px-2 py-0.5 text-[10px] font-bold"
+                  :class="affiliationKindBadgeClass(getAffiliationKind(record.affiliationType))"
+                >
+                  {{ affiliationKindLabel(getAffiliationKind(record.affiliationType)) }}
+                </span>
+              </td>
               <td class="px-6 py-4">
                 <div class="text-xs font-semibold text-forena-800">{{ record.affiliationType }}</div>
                 <div class="text-[11px] text-slate-500">{{ record.site }}</div>
@@ -398,7 +521,7 @@ const getStatusBadge = (status) => {
                   T.closedTag
                 }}</span>
               </td>
-              <td v-if="!embed" class="px-6 py-4 text-center">
+              <td v-if="showProfileColumn" class="px-6 py-4 text-center">
                 <button
                   type="button"
                   class="inline-flex items-center gap-1.5 rounded-lg border border-forena-200 bg-white px-3 py-1.5 text-[11px] font-bold text-forena-700 shadow-sm transition hover:border-flare-300 hover:bg-flare-50/50"

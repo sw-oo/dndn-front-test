@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import {
   UserPlus,
   Search,
@@ -10,10 +9,7 @@ import {
   UploadCloud,
   AlertTriangle,
   Save,
-  Eye,
 } from 'lucide-vue-next'
-
-const router = useRouter()
 
 const T = {
   kicker: '\uc778\uc0ac',
@@ -34,8 +30,9 @@ const T = {
   colSafety: '\uc548\uc804\uad50\uc721',
   colDocs: '\ud544\uc218 \uc11c\ub958',
   colStatus: '\ud604\uc7ac \uc0c1\ud0dc',
-  colDetail: '\uc0c1\uc138\ubcf4\uae30',
   empty: '\uc870\uac74\uc5d0 \ub9de\ub294 \uc791\uc5c5\uc790\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.',
+  profileHint:
+    '\uc791\uc5c5\uc790 \uc0c1\uc138 \ud504\ub85c\ud544(\uc11c\ub958\xb7\uadfc\ud0dc \ub4f1)\uc740 \uba54\ub274 \u300c\uc791\uc5c5\uc790 \uad00\ub9ac\u300d \ud654\uba74\uc758 \ucd9c\uc785/\uadfc\ud0dc \ubaa9\ub85d\uc5d0\uc11c \u300c\uc0c1\uc138\ubcf4\uae30\u300d\ub85c \uc5f4 \uc218 \uc788\uc2b5\ub2c8\ub2e4.',
   excelSoon:
     '\uc5d1\uc140 \uc77c\uad04 \ub4f1\ub85d \uae30\ub2a5\uc744 \uc900\ube44 \uc911\uc785\ub2c8\ub2e4.',
   modalTitle: '\uc2e0\uaddc \uc791\uc5c5\uc790 \uc628\ubcf4\ub529 \ub4f1\ub85d',
@@ -239,11 +236,6 @@ function onOnboardFileChange(e) {
   onboardFileName.value = f ? f.name : ''
 }
 
-function goWorkerProfile(w, event) {
-  event.stopPropagation()
-  router.push({ name: 'siteWorkerProfile', params: { id: String(w.id) } })
-}
-
 function submitOnboard() {
   const f = onboardForm.value
   if (!f.name.trim() || !f.phone.trim() || !f.emergency.trim() || !f.partner || !f.job.trim()) {
@@ -396,14 +388,11 @@ function submitOnboard() {
               <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">
                 {{ T.colStatus }}
               </th>
-              <th class="px-5 py-3.5 text-center font-semibold whitespace-nowrap">
-                {{ T.colDetail }}
-              </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-forena-50 text-forena-800">
             <tr v-if="filteredWorkers.length === 0">
-              <td colspan="6" class="px-5 py-14 text-center text-sm text-slate-400">
+              <td colspan="5" class="px-5 py-14 text-center text-sm text-slate-400">
                 {{ T.empty }}
               </td>
             </tr>
@@ -449,21 +438,15 @@ function submitOnboard() {
                   {{ w.status.text }}
                 </span>
               </td>
-              <td class="px-5 py-4 text-center whitespace-nowrap">
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-1.5 rounded-lg border border-forena-200 bg-white px-3 py-1.5 text-[11px] font-bold text-forena-700 shadow-sm transition hover:border-flare-300 hover:bg-flare-50/50"
-                  :title="T.colDetail"
-                  @click="(e) => goWorkerProfile(w, e)"
-                >
-                  <Eye class="h-3.5 w-3.5" />
-                  {{ T.colDetail }}
-                </button>
-              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p
+        class="border-t border-forena-100 bg-flare-50/25 px-4 py-3 text-[11px] leading-relaxed text-forena-700 sm:px-5"
+      >
+        {{ T.profileHint }}
+      </p>
     </div>
 
     <Teleport to="body">

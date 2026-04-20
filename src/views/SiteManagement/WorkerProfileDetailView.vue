@@ -69,7 +69,7 @@ const docStatusClass = (v) => {
 }
 
 function goBack() {
-  router.push('/site/onboarding')
+  router.push({ name: 'siteWorkerManagement' })
 }
 
 function onEdit() {
