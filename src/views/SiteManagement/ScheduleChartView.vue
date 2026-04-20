@@ -112,6 +112,31 @@ const statusItems = ref([
   { key: 'delayed', label: T.statusDelayed, count: 4, class: 'bg-rose-500' },
 ])
 
+const activeStatusFilter = ref('delayed')
+
+const statusTaskItems = ref([
+  {
+    status: 'done',
+    tasks: ['B동 외장 마감', '기계실 배관 테스트', '주차장 바닥 도장'],
+  },
+  {
+    status: 'progress',
+    tasks: ['옥상 방수 보강', '복도 전등 교체', '계단실 난간 설치'],
+  },
+  {
+    status: 'planned',
+    tasks: ['1층 로비 천장 마감', '출입구 자동문 시운전', '소방 설비 점검'],
+  },
+  {
+    status: 'delayed',
+    tasks: ['A-2 구간 파일', 'CCTV 설치', 'Joint Pipe EV PIT', '지하 주차장 톤개'],
+  },
+])
+
+const filteredStatusTasks = computed(() => {
+  return statusTaskItems.value.find((item) => item.status === activeStatusFilter.value)?.tasks ?? []
+})
+
 const weeklyCompare = ref([
   { label: '9\uc6d4 3\uc8fc', plan: 72, actual: 68 },
   { label: '9\uc6d4 4\uc8fc', plan: 80, actual: 76 },
@@ -139,6 +164,28 @@ const delayedTasks = ref([
     end: '2025-10-22',
   },
 ])
+
+const delayedTradeRatios = ref([
+  { name: '건축', pct: 40, color: '#f97316' },
+  { name: '토목', pct: 30, color: '#0ea5e9' },
+  { name: '파일', pct: 30, color: '#ef4444' },
+])
+
+const delayedDonutStyle = computed(() => {
+  let start = 0
+  const stops = delayedTradeRatios.value
+    .map((item) => {
+      const end = start + item.pct
+      const stop = `${item.color} ${start}% ${end}%`
+      start = end
+      return stop
+    })
+    .join(', ')
+
+  return {
+    background: `conic-gradient(${stops})`,
+  }
+})
 
 /** plan/actual: { s, e } \uc77c\uad00 \uc2ac\ub86f (1 ~ count) */
 const ganttRows = computed(() => {
@@ -368,7 +415,13 @@ function barWidthPct(s, e, total) {
           <div
             v-for="s in statusItems"
             :key="s.key"
-            class="flex min-w-[140px] flex-1 items-center justify-between gap-3 rounded-xl border border-forena-100 bg-forena-50/50 px-3 py-2.5"
+            class="flex min-w-[140px] flex-1 cursor-pointer select-none items-center justify-between gap-3 rounded-xl border border-forena-100 bg-forena-50/50 px-3 py-2.5 transition hover:bg-forena-100/50"
+            :class="activeStatusFilter === s.key ? 'ring-2 ring-flare-400/60' : ''"
+            role="button"
+            tabindex="0"
+            @click="activeStatusFilter = s.key"
+            @keydown.enter.prevent="activeStatusFilter = s.key"
+            @keydown.space.prevent="activeStatusFilter = s.key"
           >
             <span class="flex items-center gap-2 text-xs font-bold text-forena-800">
               <span class="h-2.5 w-2.5 shrink-0 rounded-full" :class="s.class" />
@@ -377,6 +430,15 @@ function barWidthPct(s, e, total) {
             <span class="text-lg font-bold tabular-nums text-forena-900">{{ s.count }}</span>
           </div>
         </div>
+        <ul class="mt-3 space-y-1">
+          <li
+            v-for="(task, idx) in filteredStatusTasks"
+            :key="`${activeStatusFilter}-${idx}`"
+            class="text-xs font-semibold text-forena-800"
+          >
+            {{ task }}
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -412,18 +474,27 @@ function barWidthPct(s, e, total) {
 
       <div class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card">
         <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">{{ T.sectionDelayed }}</h2>
-        <ul class="mt-3 divide-y divide-forena-50">
-          <li v-for="(d, i) in delayedTasks" :key="i" class="flex flex-col gap-1 py-3 first:pt-0">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <span class="text-[11px] font-bold text-flare-700">{{ d.type }}</span>
-              <span class="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-700">
-                {{ T.delayLabel }} {{ d.delay }}
-              </span>
+        <div class="mt-3 flex items-start gap-4">
+          <div class="relative h-28 w-28 shrink-0 rounded-full" :style="delayedDonutStyle">
+            <div
+              class="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[10px] font-bold text-forena-700"
+            >
+              {{ T.statusDelayed }}
             </div>
-            <p class="font-semibold text-forena-900">{{ d.name }}</p>
-            <p class="text-[11px] text-slate-500">{{ T.plannedEnd }}: {{ d.end }}</p>
-          </li>
-        </ul>
+          </div>
+          <ul class="min-w-0 flex-1 divide-y divide-forena-50">
+            <li v-for="(d, i) in delayedTasks" :key="i" class="flex flex-col gap-1 py-3 first:pt-0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-[11px] font-bold text-flare-700">{{ d.type }}</span>
+                <span class="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-700">
+                  {{ T.delayLabel }} {{ d.delay }}
+                </span>
+              </div>
+              <p class="font-semibold text-forena-900">{{ d.name }}</p>
+              <p class="text-[11px] text-slate-500">{{ T.plannedEnd }}: {{ d.end }}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
