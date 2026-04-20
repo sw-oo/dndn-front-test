@@ -3,42 +3,42 @@ import { ref } from 'vue'
 import { CloudSun, Sparkles, AlertTriangle, CalendarRange, Wind, Droplets } from 'lucide-vue-next'
 
 const T = {
-  kicker: '\uc77c\uc815',
-  title: '\uae30\uc0c1 \uad00\uc81c',
+  kicker: '일정',
+  title: '기상 관제',
   desc:
-    '\ub2f9\uc77c\xb7\uc8fc\uac04 \uae30\uc0c1 \ube0c\ub9ac\ud551\uacfc \uc704\ud5d8 \uc7a5\ube44 \ud1b5\uc81c, \uacf5\uc815\uacfc\uc758 \uc5f0\ub3d9\uc744 \ud55c \ud654\uba74\uc5d0\uc11c \uc9c0\uc6d0\ud569\ub2c8\ub2e4.',
-  catInfo: '\uae30\uc0c1 \uc815\ubcf4 \uad00\ub9ac',
-  catControl: '\uae30\uc0c1 \uad00\uc81c',
-  catRisk: '\uc704\ud5d8 \ud1b5\uc81c',
-  row1Title: '\uae30\uc0c1 \ube0c\ub9ac\ud551 \ubc0f \uc790\ub3d9\ud654',
+    '당일·주간 기상 브리핑과 위험 장비 통제, 공정과의 연동을 한 화면에서 지원합니다.',
+  catInfo: '기상 정보 관리',
+  catControl: '기상 관제',
+  catRisk: '위험 통제',
+  row1Title: '기상 브리핑 및 자동화',
   row1Desc:
-    '\uc9c1\uad00\uc801\uc778 \ub2f9\uc77c/\uc8fc\uac04 \uae30\uc0c1 \ube0c\ub9ac\ud551 \ud45c\ucd9c \ubc0f \uc791\uc5c5 \uc77c\ubcf4 \uc791\uc131 \uc2dc \ud574\ub2f9 \uc2dc\uac04\ub300 \uae30\uc0c1 \uc815\ubcf4 \uc790\ub3d9 \uae30\uc785.',
-  row2Title: 'AI \uc704\ud5d8 \uc7a5\ube44 \ud1b5\uc81c',
+    '직관적인 당일/주간 기상 브리핑 표출 및 작업 일보 작성 시 해당 시간대 기상 정보 자동 기입.',
+  row2Title: 'AI 위험 장비 통제',
   row2Desc:
-    '\ub2f9\uc77c \uae30\uc0c1 \ubd84\uc11d\uc744 \ud1b5\ud574 \uac15\ud48d, \ud3ed\uc6b0 \uc2dc \ud0c0\uc6cc\ud06c\ub808\uc778 \ub4f1 \uc704\ud5d8 \uc7a5\ube44 \ud22c\uc785 \uc81c\ud55c \ucd94\ucc9c \uacbd\uace0 \ud45c\uc2dc.',
-  row3Title: '\uacc4\ud68d \ub300\ube44 \uc704\ud5d8 \uacbd\uace0',
+    '당일 기상 분석을 통해 강풍, 폭우 시 타워크레인 등 위험 장비 투입 제한 추천 경고 표시.',
+  row3Title: '계획 대비 위험 경고',
   row3Desc:
-    '\uc2e4\uc2dc\uac04 \ub0a0\uc528\uc640 \uacf5\uc815 \uacc4\ud68d\uc744 \ub300\uc870\ud558\uc5ec \uc6b0\ucc9c \uc2dc \ucf58\ud06c\ub9ac\ud2b8 \ud0c0\uc124 \ub4f1 \uc704\ud5d8 \uc77c\uc815\uc744 \ubd89\uc740\uc0c9\uc73c\ub85c \ud558\uc774\ub77c\uc774\ud2b8.',
-  demoToday: '\uc624\ub298 \uc694\uc57d',
-  demoWeek: '\uc774\ubc88 \uc8fc \uc694\uc57d',
-  demoWind: '\ucd5c\ub300 \ud48d\uc18d',
-  demoRain: '\uac15\uc218\ud655\ub960',
+    '실시간 날씨와 공정 계획을 대조하여 우천 시 콘크리트 타설 등 위험 일정을 붉은색으로 하이라이트.',
+  demoToday: '오늘 요약',
+  demoWeek: '이번 주 요약',
+  demoWind: '최대 풍속',
+  demoRain: '강수확률',
   badgeAi: 'AI',
-  badgePlan: '\uacc4\ud68d \uc5f0\ub3d9',
-  liveRisk: '\uc2e4\uc2dc\uac04 \uc704\ud5d8 \ud1b5\uc81c \ucd94\ucc9c (\uc608\uc2dc)',
-  dot: '\xb7',
+  badgePlan: '계획 연동',
+  liveRisk: '실시간 위험 통제 추천 (예시)',
+  dot: '·',
 }
 
 const briefing = ref({
-  todayHigh: '22\xb0C',
-  todayLow: '14\xb0C',
-  condition: '\ud765\ub9bc, \uc624\ud6c4 \uc18c\ub098\uae30',
-  weekNote: '\ubaa9~\uae08 \uc77c\uc2dc \uac15\ud48d \uc8fc\uc758 (\ucd5c\ub300 15m/s \uc608\ubcf4)',
+  todayHigh: '22°C',
+  todayLow: '14°C',
+  condition: '흥림, 오후 소나기',
+  weekNote: '목~금 일시 강풍 주의 (최대 15m/s 예보)',
 })
 
 const riskFlags = ref([
-  { id: 1, type: 'crane', label: '\ud0c0\uc6cc\ud06c\ub808\uc778 A', level: '\uc8fc\uc758', reason: '\uc624\ud6c4 \ud48d\uc18d 12m/s \uc608\ubcf4' },
-  { id: 2, type: 'concrete', label: 'B\uad6c\uc5ed \uc2ac\ub77c\ube0c \ud0c0\uc124', level: '\uc81c\ud55c', reason: '\uac15\uc6b0 \uc608\ubcf4 \u2014 \uacc4\ud68d \ub300\ube44 \uc911\ub2e8 \ucd94\ucc9c' },
+  { id: 1, type: 'crane', label: '타워크레인 A', level: '주의', reason: '오후 풍속 12m/s 예보' },
+  { id: 2, type: 'concrete', label: 'B구역 슬라브 타설', level: '제한', reason: '강우 예보 — 계획 대비 중단 추천' },
 ])
 </script>
 
@@ -81,7 +81,7 @@ const riskFlags = ref([
         <p class="text-[11px] font-bold text-sky-800">{{ T.demoRain }}</p>
         <p class="mt-2 flex items-center gap-2 text-sm text-sky-900">
           <Droplets class="h-4 w-4" />
-          60% (\uc624\ud6c4)
+          60% (오후)
         </p>
       </article>
     </div>
@@ -146,7 +146,7 @@ const riskFlags = ref([
           <span class="font-semibold text-forena-900">{{ r.label }}</span>
           <span
             class="rounded-md px-2 py-0.5 text-[10px] font-bold"
-            :class="r.level === '\uc81c\ud55c' ? 'bg-rose-600 text-white' : 'bg-amber-100 text-amber-900'"
+            :class="r.level === '제한' ? 'bg-rose-600 text-white' : 'bg-amber-100 text-amber-900'"
             >{{ r.level }}</span
           >
           <p class="w-full text-xs text-slate-600">{{ r.reason }}</p>

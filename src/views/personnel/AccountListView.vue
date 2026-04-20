@@ -1,25 +1,25 @@
 <script setup>
 import { ref } from 'vue'
 
-const AUTH_SUPER = '\ucd5c\uace0 \uad00\ub9ac\uc790'
-const AUTH_SITE_LEAD = '\ucd1d \ucc45\uc784\uc790'
+const AUTH_SUPER = '최고 관리자'
+const AUTH_SITE_LEAD = '총 책임자'
 
 const UI = {
-  title: '\uacc4\uc815 \uad00\ub9ac',
-  subtitlePrefix: '\uad8c\ud55c\uc740 ',
-  subtitleMid: '\uc640 ',
-  subtitleSuffix: ' \ub450 \uac00\uc9c0\ub9cc \ubd80\uc5ec\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4.',
-  newAccount: '+ \uc0c8 \uacc4\uc815 \uc0dd\uc131',
-  colName: '\uc774\ub984',
-  colEmail: '\uc774\uba54\uc77c (ID)',
-  colSite: '\ub2f4\ub2f9 \ud604\uc7a5',
-  colAuth: '\uad8c\ud55c',
-  colManage: '\uad00\ub9ac',
-  edit: '\uc218\uc815',
-  del: '\uc0ad\uc81c',
-  cancel: '\ucde8\uc18c',
-  saveEdit: '\uc218\uc815 \uc0ac\ud56d \uc800\uc7a5',
-  saveCreate: '\uacc4\uc815 \uc0dd\uc131 \uc644\ub8cc',
+  title: '계정 관리',
+  subtitlePrefix: '권한은 ',
+  subtitleMid: '와 ',
+  subtitleSuffix: ' 두 가지만 부여할 수 있습니다.',
+  newAccount: '+ 새 계정 생성',
+  colName: '이름',
+  colEmail: '이메일 (ID)',
+  colSite: '담당 현장',
+  colAuth: '권한',
+  colManage: '관리',
+  edit: '수정',
+  del: '삭제',
+  cancel: '취소',
+  saveEdit: '수정 사항 저장',
+  saveCreate: '계정 생성 완료',
 }
 
 const showDrawer = ref(false)
@@ -29,16 +29,16 @@ const form = ref({ name: '', email: '', password: '', site: '', auth: '' })
 const accounts = ref([
   {
     id: 1,
-    name: '\uae40\ucca0\uc218',
+    name: '김철수',
     email: 'chulsu@conwork.com',
     site: '-',
     auth: AUTH_SUPER,
   },
   {
     id: 2,
-    name: '\uc774\uc601\ud76c',
+    name: '이영희',
     email: 'young@conwork.com',
-    site: '\ud310\uad50 \ub370\uc774\ud130\uc13c\ud130',
+    site: '판교 데이터센터',
     auth: AUTH_SITE_LEAD,
   },
 ])
@@ -55,11 +55,11 @@ const openEdit = (item) => {
 }
 const save = () => {
   showDrawer.value = false
-  alert(isEdit.value ? '\uacc4\uc815\uc774 \uc218\uc815\ub418\uc5c8\uc2b5\ub2c8\ub2e4.' : '\uacc4\uc815\uc774 \uc0dd\uc131\ub418\uc5c8\uc2b5\ub2c8\ub2e4.')
+  alert(isEdit.value ? '계정이 수정되었습니다.' : '계정이 생성되었습니다.')
 }
 const deleteAccount = (id) => {
-  if (confirm('\uc774 \uacc4\uc815\uc744 \uc644\uc804\ud788 \uc0ad\uc81c\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?'))
-    alert('\uc0ad\uc81c \uc644\ub8cc')
+  if (confirm('이 계정을 완전히 삭제하시겠습니까?'))
+    alert('삭제 완료')
 }
 
 function onAuthChange() {
@@ -139,8 +139,8 @@ function onAuthChange() {
         <h2 class="text-lg font-bold">
           {{
             isEdit
-              ? '\uacc4\uc815 \uc815\ubcf4 \uc218\uc815'
-              : '\uc2e0\uaddc \uacc4\uc815 \uc0dd\uc131'
+              ? '계정 정보 수정'
+              : '신규 계정 생성'
           }}
         </h2>
         <button type="button" class="text-lg font-bold leading-none text-gray-400" @click="showDrawer = false">
@@ -149,31 +149,31 @@ function onAuthChange() {
       </div>
       <div class="flex-1 space-y-5 overflow-y-auto p-6 text-sm">
         <div>
-          <label class="mb-1 block text-[11px] font-bold text-gray-500">\ub2f4\ub2f9\uc790 \uc774\ub984</label>
+          <label class="mb-1 block text-[11px] font-bold text-gray-500">담당자 이름</label>
           <input v-model="form.name" type="text" class="w-full rounded-lg border p-2.5" />
         </div>
         <div>
-          <label class="mb-1 block text-[11px] font-bold text-gray-500">\uc774\uba54\uc77c (\uc544\uc774\ub514)</label>
+          <label class="mb-1 block text-[11px] font-bold text-gray-500">이메일 (아이디)</label>
           <input v-model="form.email" type="email" class="w-full rounded-lg border p-2.5" />
         </div>
         <div>
           <label class="mb-1 block text-[11px] font-bold text-gray-500">{{
-            isEdit ? '\uc0c8 \ube44\ubc00\ubc88\ud638 (\uc120\ud0dd)' : '\uc784\uc2dc \ube44\ubc00\ubc88\ud638 \ud560\ub2f9'
+            isEdit ? '새 비밀번호 (선택)' : '임시 비밀번호 할당'
           }}</label>
           <input v-model="form.password" type="password" class="w-full rounded-lg border p-2.5" />
         </div>
 
         <div v-if="form.auth !== AUTH_SUPER" class="border-t border-gray-100 pt-2">
-          <label class="mb-1 block text-[11px] font-bold text-gray-500">\ub2f4\ub2f9 \ud604\uc7a5 \uc9c0\uc815</label>
+          <label class="mb-1 block text-[11px] font-bold text-gray-500">담당 현장 지정</label>
           <select v-model="form.site" class="w-full rounded-lg border bg-white p-2.5 text-gray-700">
-            <option value="\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c">
-              \uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c
+            <option value="강남구 재건축 A공구">
+              강남구 재건축 A공구
             </option>
-            <option value="\ud310\uad50 \ub370\uc774\ud130\uc13c\ud130">\ud310\uad50 \ub370\uc774\ud130\uc13c\ud130</option>
+            <option value="판교 데이터센터">판교 데이터센터</option>
           </select>
         </div>
         <div>
-          <label class="mb-1 block text-[11px] font-bold text-gray-500">\uad8c\ud55c</label>
+          <label class="mb-1 block text-[11px] font-bold text-gray-500">권한</label>
           <select
             v-model="form.auth"
             class="w-full rounded-lg border bg-white p-2.5 text-gray-700"

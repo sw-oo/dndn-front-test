@@ -10,36 +10,35 @@ import {
 } from 'lucide-vue-next'
 
 const T = {
-  kicker: '\uc77c\uc815',
-  title: '\uacf5\uc815 \uc9c0\ud45c\ubcf4\uace0',
-  desc:
-    '\uc5f0\uac04\xb7\uc6d4\uac04\xb7\uc8fc\uac04 \ub2e8\uc704\ub85c \uacf5\uc815 \uc9c4\ud589\uc728\uacfc \uc9c0\uc5f0, \uc8fc\uac04 \uacc4\ud68d \ub300\ube44 \uc2e4\uc801\uc744 \ud55c \ub208\uc5d0 \ud655\uc778\ud569\ub2c8\ub2e4.',
-  tabY: '\uc5f0\uac04',
-  tabM: '\uc6d4\uac04',
-  tabW: '\uc8fc\uac04',
-  kpiOverall: '\uc804\uccb4 \uc9c4\ud589\uc728',
-  kpiDelayed: '\uc9c0\uc5f0 \uac74',
-  kpiDoneWeek: '\uae08\uc8fc \uc644\ub8cc',
-  kpiNextWeek: '\ub2e4\uc74c\uc8fc \uc608\uc815',
-  kpiDelta: '\uc804\uc6d4 \ube44',
-  kpiAction: '\uc870\uce58 \ud544\uc694',
-  kpiPlanRatio: '\uacc4\ud68d \ub300\ube44',
-  sectionWorkType: '\uacf5\uc885\ubcc4 \uc9c4\ud589\uc728',
-  sectionStatus: '\uc77c\uc815 \uc0c1\ud0dc \ubd84\ud3ec',
-  sectionWeekly: '\uc8fc\uac04 \uacc4\ud68d vs \uc2e4\uc801',
-  sectionDelayed: '\uc9c0\uc5f0 \uacf5\uc815 \ubaa9\ub85d',
-  sectionGantt: '\uacf5\uc815\ud45c (\uacc4\ud68d / \uc2e4\uc801)',
-  legendPlan: '\uacc4\ud68d',
-  legendActual: '\uc2e4\uc801',
-  colTask: '\uacf5\uc815\uba85',
-  colType: '\uacf5\uc885',
-  delayLabel: '\uc9c0\uc5f0',
-  plannedEnd: '\uc644\ub8cc \uc608\uc815',
-  statusDone: '\uc644\ub8cc',
-  statusProgress: '\uc9c4\ud589',
-  statusPlanned: '\uc608\uc815',
-  statusDelayed: '\uc9c0\uc5f0',
-  countUnit: '\uac74',
+  kicker: '일정',
+  title: '공정 지표보고',
+  desc: '연간·월간·주간 단위로 공정 진행율과 지연, 주간 계획 대비 실적을 한 눈에 확인합니다.',
+  tabY: '연간',
+  tabM: '월간',
+  tabW: '주간',
+  kpiOverall: '전체 진행율',
+  kpiDelayed: '지연 건',
+  kpiDoneWeek: '금주 완료',
+  kpiNextWeek: '다음주 예정',
+  kpiDelta: '전월 비',
+  kpiAction: '조치 필요',
+  kpiPlanRatio: '계획 대비',
+  sectionWorkType: '공종별 진행율',
+  sectionStatus: '일정 상태 분포',
+  sectionWeekly: '주간 계획 vs 실적',
+  sectionDelayed: '지연 공정 목록',
+  sectionGantt: '공정표 (계획 / 실적)',
+  legendPlan: '계획',
+  legendActual: '실적',
+  colTask: '공정명',
+  colType: '공종',
+  delayLabel: '지연',
+  plannedEnd: '완료 예정',
+  statusDone: '완료',
+  statusProgress: '진행',
+  statusPlanned: '예정',
+  statusDelayed: '지연',
+  countUnit: '건',
 }
 
 const activeTab = ref('week')
@@ -48,15 +47,15 @@ const timeline = computed(() => {
   if (activeTab.value === 'year') {
     return {
       count: 4,
-      labels: ['1\ubd84\uae30', '2\ubd84\uae30', '3\ubd84\uae30', '4\ubd84\uae30'],
-      slotUnit: '\ubd84\uae30',
+      labels: ['1분기', '2분기', '3분기', '4분기'],
+      slotUnit: '분기',
     }
   }
   if (activeTab.value === 'month') {
     return {
       count: 4,
-      labels: ['1\uc8fc', '2\uc8fc', '3\uc8fc', '4\uc8fc'],
-      slotUnit: '\uc8fc',
+      labels: ['1주', '2주', '3주', '4주'],
+      slotUnit: '주',
     }
   }
   return {
@@ -98,11 +97,11 @@ const kpi = computed(() => {
 })
 
 const workTypeBars = ref([
-  { label: '\uac74\ucd95 / \ucca0\uadfc', pct: 74 },
-  { label: '\ud30c\uc77c \uacf5\uc0ac', pct: 68 },
-  { label: '\ud1a0\ubaa9 \uacf5\uc0ac', pct: 57 },
-  { label: '\ud1b0\ub9c1 / \uac00\uc624\uc0ac', pct: 49 },
-  { label: '\uc804\uae30 \uacf5\uc0ac', pct: 63 },
+  { label: '건축 / 철근', pct: 74 },
+  { label: '파일 공사', pct: 68 },
+  { label: '토목 공사', pct: 57 },
+  { label: '톰링 / 가오사', pct: 49 },
+  { label: '전기 공사', pct: 63 },
 ])
 
 const statusItems = ref([
@@ -138,29 +137,29 @@ const filteredStatusTasks = computed(() => {
 })
 
 const weeklyCompare = ref([
-  { label: '9\uc6d4 3\uc8fc', plan: 72, actual: 68 },
-  { label: '9\uc6d4 4\uc8fc', plan: 80, actual: 76 },
-  { label: '10\uc6d4 1\uc8fc', plan: 65, actual: 70 },
-  { label: '10\uc6d4 2\uc8fc', plan: 58, actual: 55 },
+  { label: '9월 3주', plan: 72, actual: 68 },
+  { label: '9월 4주', plan: 80, actual: 76 },
+  { label: '10월 1주', plan: 65, actual: 70 },
+  { label: '10월 2주', plan: 58, actual: 55 },
 ])
 
 const delayedTasks = ref([
   {
-    type: '\ud30c\uc77c \uacf5\uc0ac',
-    name: 'A-2 \uad6c\uac04 \ud30c\uc77c',
-    delay: '3\uc77c \uc9c0\uc5f0',
+    type: '파일 공사',
+    name: 'A-2 구간 파일',
+    delay: '3일 지연',
     end: '2025-10-18',
   },
   {
-    type: '\uc804\uae30 \uacf5\uc0ac',
-    name: 'CCTV \uc124\uce58',
-    delay: '2\uc77c \uc9c0\uc5f0',
+    type: '전기 공사',
+    name: 'CCTV 설치',
+    delay: '2일 지연',
     end: '2025-10-20',
   },
   {
-    type: '\ud1a0\ubaa9',
+    type: '토목',
     name: 'Joint Pipe EV PIT',
-    delay: '1\uc77c \uc9c0\uc5f0',
+    delay: '1일 지연',
     end: '2025-10-22',
   },
 ])
@@ -187,32 +186,32 @@ const delayedDonutStyle = computed(() => {
   }
 })
 
-/** plan/actual: { s, e } \uc77c\uad00 \uc2ac\ub86f (1 ~ count) */
+/** plan/actual: { s, e } 일관 슬롯 (1 ~ count) */
 const ganttRows = computed(() => {
   const c = timeline.value.count
   if (activeTab.value === 'year') {
     return [
       {
         name: 'Joint Pipe EV PIT',
-        trade: '\ud1a0\ubaa9',
+        trade: '토목',
         plan: { s: 1, e: 2 },
         actual: { s: 1, e: 2 },
       },
       {
-        name: 'A-2 \uad6c\uac04 \ud30c\uc77c',
-        trade: '\ud30c\uc77c \uacf5\uc0ac',
+        name: 'A-2 구간 파일',
+        trade: '파일 공사',
         plan: { s: 2, e: 3 },
         actual: { s: 2, e: 4 },
       },
       {
-        name: 'CCTV \uc124\uce58',
-        trade: '\uc804\uae30',
+        name: 'CCTV 설치',
+        trade: '전기',
         plan: { s: 3, e: 3 },
         actual: { s: 3, e: 4 },
       },
       {
-        name: '\uc9c0\ud558 \uc8fc\ucc28\uc7a5 \ud1a4\uac1c',
-        trade: '\ud1a0\ubaa9',
+        name: '지하 주차장 톤개',
+        trade: '토목',
         plan: { s: 1, e: 4 },
         actual: { s: 2, e: 4 },
       },
@@ -222,25 +221,25 @@ const ganttRows = computed(() => {
     return [
       {
         name: 'Joint Pipe EV PIT',
-        trade: '\ud1a0\ubaa9',
+        trade: '토목',
         plan: { s: 1, e: 2 },
         actual: { s: 1, e: 2 },
       },
       {
-        name: 'A-2 \uad6c\uac04 \ud30c\uc77c',
-        trade: '\ud30c\uc77c \uacf5\uc0ac',
+        name: 'A-2 구간 파일',
+        trade: '파일 공사',
         plan: { s: 2, e: 3 },
         actual: { s: 2, e: 3 },
       },
       {
-        name: 'CCTV \uc124\uce58',
-        trade: '\uc804\uae30',
+        name: 'CCTV 설치',
+        trade: '전기',
         plan: { s: 3, e: 4 },
         actual: { s: 3, e: 4 },
       },
       {
-        name: '\ucca0\uadfc \uc5d0\ub11c\uc9c0',
-        trade: '\uac74\ucd95',
+        name: '철근 에넜지',
+        trade: '건축',
         plan: { s: 1, e: 3 },
         actual: { s: 2, e: 3 },
       },
@@ -249,31 +248,31 @@ const ganttRows = computed(() => {
   return [
     {
       name: 'Joint Pipe EV PIT',
-      trade: '\ud1a0\ubaa9',
+      trade: '토목',
       plan: { s: 3, e: 10 },
       actual: { s: 4, e: 11 },
     },
     {
-      name: 'A-2 \uad6c\uac04 \ud30c\uc77c',
-      trade: '\ud30c\uc77c \uacf5\uc0ac',
+      name: 'A-2 구간 파일',
+      trade: '파일 공사',
       plan: { s: 6, e: 14 },
       actual: { s: 7, e: 15 },
     },
     {
-      name: 'CCTV \uc124\uce58',
-      trade: '\uc804\uae30',
+      name: 'CCTV 설치',
+      trade: '전기',
       plan: { s: 12, e: 18 },
       actual: { s: 13, e: 19 },
     },
     {
-      name: '\ud615\ud2c0 \uc81c\uac70',
-      trade: '\uac74\ucd95',
+      name: '형틀 제거',
+      trade: '건축',
       plan: { s: 2, e: 8 },
       actual: { s: 2, e: 7 },
     },
     {
-      name: 'TBM \ubc0f \uc548\uc804\uad50\uc721',
-      trade: '\uc548\uc804',
+      name: 'TBM 및 안전교육',
+      trade: '안전',
       plan: { s: 1, e: 3 },
       actual: { s: 1, e: 3 },
     },
@@ -306,12 +305,16 @@ function barWidthPct(s, e, total) {
             <LayoutDashboard class="h-5 w-5" />
           </span>
           <div>
-            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">{{ T.kicker }}</p>
+            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-flare-600">
+              {{ T.kicker }}
+            </p>
             <h1 class="text-gradient-brand text-xl font-bold tracking-tight">{{ T.title }}</h1>
             <p class="mt-2 max-w-2xl text-sm leading-relaxed text-forena-700/80">{{ T.desc }}</p>
           </div>
         </div>
-        <div class="flex flex-wrap gap-2 rounded-2xl border border-forena-100/80 bg-white/80 p-1.5 shadow-sm">
+        <div
+          class="flex flex-wrap gap-2 rounded-2xl border border-forena-100/80 bg-white/80 p-1.5 shadow-sm"
+        >
           <button
             v-for="tab in [
               { id: 'year', label: T.tabY },
@@ -340,7 +343,9 @@ function barWidthPct(s, e, total) {
         class="rounded-2xl border border-forena-100/90 bg-white/95 p-4 shadow-card ring-1 ring-forena-50"
       >
         <div class="flex items-center justify-between gap-2">
-          <p class="text-[11px] font-bold uppercase tracking-wider text-forena-500">{{ T.kpiOverall }}</p>
+          <p class="text-[11px] font-bold uppercase tracking-wider text-forena-500">
+            {{ T.kpiOverall }}
+          </p>
           <span class="rounded-lg bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
             {{ kpi.overallDelta }} {{ T.kpiDelta }}
           </span>
@@ -354,7 +359,9 @@ function barWidthPct(s, e, total) {
         class="rounded-2xl border border-rose-100/90 bg-gradient-to-br from-rose-50/40 to-white p-4 shadow-card ring-1 ring-rose-100/60"
       >
         <div class="flex items-center justify-between gap-2">
-          <p class="text-[11px] font-bold uppercase tracking-wider text-rose-700/90">{{ T.kpiDelayed }}</p>
+          <p class="text-[11px] font-bold uppercase tracking-wider text-rose-700/90">
+            {{ T.kpiDelayed }}
+          </p>
           <span class="rounded-lg bg-rose-100 px-2 py-0.5 text-[10px] font-bold text-rose-800">
             {{ T.kpiAction }}
           </span>
@@ -368,17 +375,23 @@ function barWidthPct(s, e, total) {
       <div
         class="rounded-2xl border border-forena-100/90 bg-white/95 p-4 shadow-card ring-1 ring-forena-50"
       >
-        <p class="text-[11px] font-bold uppercase tracking-wider text-forena-500">{{ T.kpiDoneWeek }}</p>
+        <p class="text-[11px] font-bold uppercase tracking-wider text-forena-500">
+          {{ T.kpiDoneWeek }}
+        </p>
         <div class="mt-2 flex items-end justify-between gap-2">
           <span class="text-3xl font-bold tabular-nums text-forena-900">{{ kpi.doneWeek }}</span>
-          <span class="mb-1 text-xs font-semibold text-forena-600">{{ kpi.doneSub }} {{ T.kpiPlanRatio }}</span>
+          <span class="mb-1 text-xs font-semibold text-forena-600"
+            >{{ kpi.doneSub }} {{ T.kpiPlanRatio }}</span
+          >
         </div>
         <CheckCircle2 class="mt-2 h-4 w-4 text-flare-600" />
       </div>
       <div
         class="rounded-2xl border border-forena-100/90 bg-white/95 p-4 shadow-card ring-1 ring-forena-50"
       >
-        <p class="text-[11px] font-bold uppercase tracking-wider text-forena-500">{{ T.kpiNextWeek }}</p>
+        <p class="text-[11px] font-bold uppercase tracking-wider text-forena-500">
+          {{ T.kpiNextWeek }}
+        </p>
         <div class="mt-2 flex items-end gap-2">
           <span class="text-3xl font-bold tabular-nums text-forena-900">{{ kpi.nextWeek }}</span>
           <span class="mb-1 text-sm font-medium text-slate-500">{{ T.countUnit }}</span>
@@ -388,7 +401,9 @@ function barWidthPct(s, e, total) {
     </div>
 
     <div class="grid gap-4 lg:grid-cols-2">
-      <div class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card">
+      <div
+        class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card"
+      >
         <div class="flex items-center gap-2 border-b border-forena-100 pb-3">
           <CalendarRange class="h-4 w-4 text-flare-600" />
           <h2 class="text-sm font-bold text-forena-900">{{ T.sectionWorkType }}</h2>
@@ -409,8 +424,12 @@ function barWidthPct(s, e, total) {
         </ul>
       </div>
 
-      <div class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card">
-        <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">{{ T.sectionStatus }}</h2>
+      <div
+        class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card"
+      >
+        <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">
+          {{ T.sectionStatus }}
+        </h2>
         <div class="mt-4 flex flex-wrap gap-2">
           <div
             v-for="s in statusItems"
@@ -443,10 +462,18 @@ function barWidthPct(s, e, total) {
     </div>
 
     <div class="grid gap-4 lg:grid-cols-2">
-      <div class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card">
-        <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">{{ T.sectionWeekly }}</h2>
+      <div
+        class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card"
+      >
+        <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">
+          {{ T.sectionWeekly }}
+        </h2>
         <div class="mt-4 flex h-40 items-end justify-between gap-3">
-          <div v-for="(w, i) in weeklyCompare" :key="i" class="flex flex-1 flex-col items-center gap-2">
+          <div
+            v-for="(w, i) in weeklyCompare"
+            :key="i"
+            class="flex flex-1 flex-col items-center gap-2"
+          >
             <div class="flex h-32 w-full items-end justify-center gap-1">
               <div
                 class="w-1/2 max-w-[18px] rounded-t-md bg-blue-600"
@@ -462,7 +489,9 @@ function barWidthPct(s, e, total) {
             <span class="text-center text-[10px] font-semibold text-slate-600">{{ w.label }}</span>
           </div>
         </div>
-        <div class="mt-3 flex flex-wrap items-center justify-center gap-4 text-[11px] text-slate-600">
+        <div
+          class="mt-3 flex flex-wrap items-center justify-center gap-4 text-[11px] text-slate-600"
+        >
           <span class="inline-flex items-center gap-1.5">
             <span class="h-1.5 w-4 shrink-0 rounded-full bg-blue-600" /> {{ T.legendPlan }}
           </span>
@@ -472,8 +501,12 @@ function barWidthPct(s, e, total) {
         </div>
       </div>
 
-      <div class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card">
-        <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">{{ T.sectionDelayed }}</h2>
+      <div
+        class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-5 shadow-card"
+      >
+        <h2 class="border-b border-forena-100 pb-3 text-sm font-bold text-forena-900">
+          {{ T.sectionDelayed }}
+        </h2>
         <div class="mt-3 flex items-start gap-4">
           <div class="relative h-28 w-28 shrink-0 rounded-full" :style="delayedDonutStyle">
             <div
@@ -500,7 +533,9 @@ function barWidthPct(s, e, total) {
 
     <!-- Gantt -->
     <div class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 shadow-card">
-      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-forena-100 px-5 py-4">
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 border-b border-forena-100 px-5 py-4"
+      >
         <div class="flex items-center gap-2">
           <CalendarRange class="h-4 w-4 text-flare-600" />
           <h2 class="text-sm font-bold text-forena-900">{{ T.sectionGantt }}</h2>
@@ -520,7 +555,9 @@ function barWidthPct(s, e, total) {
 
       <div class="overflow-x-auto">
         <div class="min-w-[880px] px-5 py-4">
-          <div class="flex gap-3 border-b border-forena-100 pb-2 text-[10px] font-bold text-forena-500">
+          <div
+            class="flex gap-3 border-b border-forena-100 pb-2 text-[10px] font-bold text-forena-500"
+          >
             <div class="w-[220px] shrink-0 pl-1">{{ T.colTask }} / {{ T.colType }}</div>
             <div
               class="grid min-w-0 flex-1"
@@ -536,7 +573,11 @@ function barWidthPct(s, e, total) {
             </div>
           </div>
 
-          <div v-for="(row, ri) in ganttRows" :key="ri" class="flex gap-3 border-b border-forena-50 py-3">
+          <div
+            v-for="(row, ri) in ganttRows"
+            :key="ri"
+            class="flex gap-3 border-b border-forena-50 py-3"
+          >
             <div class="w-[220px] shrink-0 min-w-0 pl-1 pr-2">
               <p class="truncate text-sm font-semibold text-forena-900">{{ row.name }}</p>
               <p class="truncate text-[11px] text-slate-500">{{ row.trade }}</p>

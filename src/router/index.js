@@ -11,32 +11,32 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue'),
+      component: () => import('../views/auth/LoginView.vue'),
       meta: meta('로그인'),
     },
     {
       path: '/site/dashboard',
       name: 'siteDashboard',
-      component: () => import('../views/SiteManagement/SiteDashboardView.vue'),
-      meta: meta('\uc778\uc0ac \ub300\uc2dc\ubcf4\ub4dc'),
+      component: () => import('../views/personnel/SiteDashboardView.vue'),
+      meta: meta('인사 대시보드'),
     },
     {
       path: '/site/onboarding',
       name: 'siteOnboarding',
-      component: () => import('../views/SiteManagement/WorkerOnboardingView.vue'),
-      meta: meta('\uc791\uc5c5\uc790 \uc778\ub825 \uc628\ubcf4\ub529'),
+      component: () => import('../views/personnel/WorkerOnboardingView.vue'),
+      meta: meta('작업자 인력 온보딩'),
     },
     {
       path: '/site/workers/manage',
       name: 'siteWorkerManagement',
-      component: () => import('../views/SiteManagement/WorkerManagementView.vue'),
-      meta: meta('\uc791\uc5c5\uc790 \uad00\ub9ac'),
+      component: () => import('../views/personnel/WorkerManagementView.vue'),
+      meta: meta('작업자 관리'),
     },
     {
       path: '/site/workers/manage/:id',
       name: 'siteWorkerProfile',
-      component: () => import('../views/SiteManagement/WorkerProfileDetailView.vue'),
-      meta: meta('\uc791\uc5c5\uc790 \uc0c1\uc138 \ud504\ub85c\ud544'),
+      component: () => import('../views/personnel/WorkerProfileDetailView.vue'),
+      meta: meta('작업자 상세 프로필'),
     },
     {
       path: '/site/onboarding/workers/:id',
@@ -53,45 +53,45 @@ const router = createRouter({
     {
       path: '/site/work-instructions',
       name: 'siteWorkInstructions',
-      component: () => import('../views/SiteManagement/WorkInstructionView.vue'),
-      meta: meta('\uc791\uc5c5 \uc9c0\uc2dc'),
+      component: () => import('../views/schedule/WorkInstructionView.vue'),
+      meta: meta('작업 지시'),
     },
     {
       path: '/site/staffing',
       name: 'siteStaffing',
-      component: () => import('../views/SiteManagement/StaffingBoardView.vue'),
-      meta: meta('\uc778\ub825 \ubc30\uce58'),
+      component: () => import('../views/personnel/StaffingBoardView.vue'),
+      meta: meta('인력 배치'),
     },
     {
       path: '/site/man-days',
       name: 'siteManDays',
-      component: () => import('../views/PayrollManagement/PayrollCalculationView.vue'),
-      meta: meta('\uacf5\uc218 \uad00\ub9ac'),
+      component: () => import('../views/personnel/PayrollCalculationView.vue'),
+      meta: meta('공수 관리'),
     },
     { path: '/site/settlement', redirect: '/site/dashboard' },
     {
       path: '/site/daily-log',
       name: 'siteDailyLog',
-      component: () => import('../views/SiteManagement/DailyWorkReportView.vue'),
-      meta: meta('\uc791\uc5c5 \uc77c\ubcf4'),
+      component: () => import('../views/schedule/DailyWorkReportView.vue'),
+      meta: meta('작업 일보'),
     },
     {
       path: '/site/schedule',
       name: 'siteSchedule',
-      component: () => import('../views/SiteManagement/ScheduleChartView.vue'),
-      meta: meta('\uacf5\uc815 \uc9c0\ud45c\ubcf4\uace0'),
+      component: () => import('../views/schedule/ScheduleChartView.vue'),
+      meta: meta('공정 지표보고'),
     },
     {
       path: '/site/work-plan',
       name: 'siteWorkPlan',
-      component: () => import('../views/SiteManagement/WorkPlanView.vue'),
-      meta: meta('\uc791\uc5c5 \uacc4\ud68d'),
+      component: () => import('../views/schedule/WorkPlanView.vue'),
+      meta: meta('작업 계획'),
     },
     {
       path: '/site/weather',
       name: 'siteWeather',
-      component: () => import('../views/SiteManagement/WeatherControlView.vue'),
-      meta: meta('\uae30\uc0c1 \uad00\uc81c'),
+      component: () => import('../views/schedule/WeatherControlView.vue'),
+      meta: meta('기상 관제'),
     },
     { path: '/site/alerts', redirect: '/site/dashboard' },
 
@@ -100,26 +100,26 @@ const router = createRouter({
     {
       path: '/hr/partners',
       name: 'hrPartners',
-      component: () => import('../views/PartnerManagement/PartnerListView.vue'),
-      meta: meta('\ud611\ub825\uc0ac \uad00\ub9ac'),
+      component: () => import('../views/personnel/PartnerListView.vue'),
+      meta: meta('협력사 관리'),
     },
     {
       path: '/hr/partners/:id',
       name: 'hrPartnerDetail',
-      component: () => import('../views/PartnerManagement/PartnerDetailView.vue'),
-      meta: meta('\ud611\ub825\uc0ac \uc0c1\uc138'),
+      component: () => import('../views/personnel/PartnerDetailView.vue'),
+      meta: meta('협력사 상세'),
     },
     {
       path: '/hr/attendance/list',
       name: 'hrAttendanceList',
-      component: () => import('../views/AttendanceManagement/AttendanceListView.vue'),
-      meta: meta('\uc804\uccb4 \uadfc\ud0dc \ubaa9\ub85d'),
+      component: () => import('../views/personnel/AttendanceListView.vue'),
+      meta: meta('전체 근태 목록'),
     },
     {
       path: '/hr/attendance/closing',
       name: 'hrAttendanceClosing',
-      component: () => import('../views/AttendanceManagement/AttendanceClosingView.vue'),
-      meta: meta('\uadfc\ud0dc \ub9c8\uac10'),
+      component: () => import('../views/personnel/AttendanceClosingView.vue'),
+      meta: meta('근태 마감'),
     },
     { path: '/hr/payroll/calculation', redirect: '/site/man-days' },
     { path: '/hr/payroll/ledger', redirect: '/site/dashboard' },
@@ -128,8 +128,8 @@ const router = createRouter({
     {
       path: '/hr/accounts',
       name: 'hrAccounts',
-      component: () => import('../views/AccountManagement/AccountListView.vue'),
-      meta: meta('\uacc4\uc815 \uad00\ub9ac'),
+      component: () => import('../views/personnel/AccountListView.vue'),
+      meta: meta('계정 관리'),
     },
 
     { path: '/SiteManagement', redirect: '/site/dashboard' },
@@ -148,9 +148,19 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  if (to.path === '/login') return true
-
   const auth = useAuthStore()
+
+  if (to.path === '/login') {
+    if (auth.isAuthenticated) {
+      return { path: '/site/dashboard' }
+    }
+    return true
+  }
+
+  if (!auth.isAuthenticated) {
+    return { path: '/login' }
+  }
+
   if (!pathAllowedForRole(auth.role, to.path)) {
     return { path: '/login' }
   }

@@ -16,7 +16,7 @@ import { getAffiliationKind, affiliationKindBadgeClass } from '@/utils/workerAff
 
 const props = defineProps({
   embed: { type: Boolean, default: false },
-  /** \uc791\uc5c5\uc790 \uad00\ub9ac(embed)\uc5d0\uc11c \uc0c1\uc138\ubcf4\uae30 \uc5f4 \uc5ec\ubd80 */
+  /** 작업자 관리(embed)에서 상세보기 열 여부 */
   showProfileLink: { type: Boolean, default: true },
 })
 
@@ -25,75 +25,75 @@ const showProfileColumn = computed(() => !props.embed || props.showProfileLink)
 const router = useRouter()
 
 const T = {
-  kicker: '\ud604\uc7a5 \uc6b4\uc601',
-  title: '\ucd9c\uc785 / \uadfc\ud0dc \uad00\ub9ac',
-  desc: '\uc791\uc5c5\uc790 \ucd9c\ud1f4\uadfc\uacfc \uacf5\uc218 \uc0b0\uc815 \ud604\ud669\uc744 \uc77c\uc77c\ubcc4\ub85c \uc870\ud68c\ud558\uace0 \ubcf4\uc815\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4.',
-  breadcrumb: '\ud604\uc7a5 \uad00\ub9ac / \ucd9c\uc785\xb7\uadfc\ud0dc',
-  statTotal: '\uc870\ud68c \uc778\uc6d0',
-  statWorking: '\uc791\uc5c5 \uc911',
-  statDone: '\ud1f4\uadfc \uc644\ub8cc',
-  filterDate: '\uc870\ud68c \ub0a0\uc9dc',
-  filterSite: '\ud604\uc7a5',
-  filterAffil: '\uc18c\uc18d \uad6c\ubd84',
-  filterSearch: '\uc791\uc5c5\uc790 \uc774\ub984',
-  filterSearchPh: '\uc774\ub984\uc744 \uc785\ub825\ud558\uc138\uc694',
-  siteAll: '\uc804\uccb4 \ud604\uc7a5',
-  affilAll: '\uc804\uccb4 \uc18c\uc18d',
-  colContact: '\uc774\ub984 / \uc5f0\ub77d\ucc98',
-  colEmergency: '\ube44\uc0c1 \uc5f0\ub77d\ub9dd',
-  colAffil: '\uc18c\uc18d / \ud604\uc7a5',
-  colTime: '\ucd9c\xb7\ud1f4\uadfc',
-  colMan: '\uc0b0\uc815 \uacf5\uc218',
-  colStatus: '\uc0c1\ud0dc',
-  colDel: '\uc0ad\uc81c',
-  empty: '\uc870\ud68c\ub41c \uadfc\ud0dc \ub0b4\uc5ed\uc774 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  drawerTitle: '\uadfc\ud0dc \uae30\ub85d \ubcf4\uc815',
-  drawerWorker: '\ub300\uc0c1 \uc791\uc5c5\uc790',
-  affilChange: '\uc18c\uc18d \ubcc0\uacbd',
-  clockIn: '\ucd9c\uadfc \uc2dc\uac04',
-  clockOut: '\ud1f4\uadfc \uc2dc\uac04',
-  manDays: '\uc0b0\uc815 \uacf5\uc218',
-  reasonTitle: '\ubcf4\uc815 \uc0ac\uc720 (\ud544\uc218)',
-  reasonPh: '\uc2dc\uac04 \uc624\ub958, \uc2dc\uc2a4\ud15c \ub204\ub77d \ub4f1 \uc0ac\uc720\ub97c \uc785\ub825\ud558\uc138\uc694.',
-  cancel: '\ucde8\uc18c',
-  save: '\ubcf4\uc815 \ubc0f \uc2b9\uc778',
-  closedWarn: '\uc774\ubbf8 \ub9c8\uac10\ub41c \ud604\uc7a5\uc758 \uadfc\ud0dc\ub294 \uc218\uc815\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  deleteConfirm: '\ud574\ub2f9 \uc791\uc5c5\uc790\uc758 \uadfc\ud0dc \uae30\ub85d\uc744 \uc0ad\uc81c\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?',
-  deleted: '\uc0ad\uc81c\uac00 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4.',
-  reasonRequired: '\ubcf4\uc815 \uc0ac\uc720\ub97c \ubc18\ub4dc\uc2dc \uc785\ub825\ud574\uc57c \ud569\ub2c8\ub2e4.',
-  saved: '\uadfc\ud0dc \uc815\ubcf4\uac00 \uc131\uacf5\uc801\uc73c\ub85c \ubcf4\uc815\ub418\uc5c8\uc2b5\ub2c8\ub2e4.',
-  closedTag: '\ub9c8\uac10\ub428',
-  manSuffix: '\uacf5\uc218',
-  statHint: '\uae30\uc900',
-  colDetail: '\uc0c1\uc138\ubcf4\uae30',
-  filterKind: '\ud22c\uc785 \uad6c\ubd84 (\ubcf8\uc0ac/\ud611\ub825/\uc778\ub825)',
-  kindAll: '\uc804\uccb4',
-  kindDirect: '\ubcf8\uc0ac \uc9c1\uc601',
-  kindPartner: '\ud611\ub825\uc0ac',
-  kindAgency: '\uc778\ub825\uc0ac\ubb34\uc18c',
-  kindBreakdown: '\uc624\ub298 \uc870\ud68c \ub300\uc0c1 (\uad6c\ubd84\ubcc4)',
-  colKind: '\uad6c\ubd84',
-  badgeDirect: '\uc9c1\uc601',
-  badgePartner: '\ud611\ub825',
-  badgeAgency: '\uc778\ub825',
-  countPeople: '\uba85',
+  kicker: '현장 운영',
+  title: '출입 / 근태 관리',
+  desc: '작업자 출퇴근과 공수 산정 현황을 일일별로 조회하고 보정할 수 있습니다.',
+  breadcrumb: '현장 관리 / 출입·근태',
+  statTotal: '조회 인원',
+  statWorking: '작업 중',
+  statDone: '퇴근 완료',
+  filterDate: '조회 날짜',
+  filterSite: '현장',
+  filterAffil: '소속 구분',
+  filterSearch: '작업자 이름',
+  filterSearchPh: '이름을 입력하세요',
+  siteAll: '전체 현장',
+  affilAll: '전체 소속',
+  colContact: '이름 / 연락처',
+  colEmergency: '비상 연락망',
+  colAffil: '소속 / 현장',
+  colTime: '출·퇴근',
+  colMan: '산정 공수',
+  colStatus: '상태',
+  colDel: '삭제',
+  empty: '조회된 근태 내역이 없습니다.',
+  drawerTitle: '근태 기록 보정',
+  drawerWorker: '대상 작업자',
+  affilChange: '소속 변경',
+  clockIn: '출근 시간',
+  clockOut: '퇴근 시간',
+  manDays: '산정 공수',
+  reasonTitle: '보정 사유 (필수)',
+  reasonPh: '시간 오류, 시스템 누락 등 사유를 입력하세요.',
+  cancel: '취소',
+  save: '보정 및 승인',
+  closedWarn: '이미 마감된 현장의 근태는 수정할 수 없습니다.',
+  deleteConfirm: '해당 작업자의 근태 기록을 삭제하시겠습니까?',
+  deleted: '삭제가 완료되었습니다.',
+  reasonRequired: '보정 사유를 반드시 입력해야 합니다.',
+  saved: '근태 정보가 성공적으로 보정되었습니다.',
+  closedTag: '마감됨',
+  manSuffix: '공수',
+  statHint: '기준',
+  colDetail: '상세보기',
+  filterKind: '투입 구분 (본사/협력/인력)',
+  kindAll: '전체',
+  kindDirect: '본사 직영',
+  kindPartner: '협력사',
+  kindAgency: '인력사무소',
+  kindBreakdown: '오늘 조회 대상 (구분별)',
+  colKind: '구분',
+  badgeDirect: '직영',
+  badgePartner: '협력',
+  badgeAgency: '인력',
+  countPeople: '명',
 }
 
 const siteOptions = [
-  { value: '\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c', label: '\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c' },
-  { value: '\ud310\uad50 \ub370\uc774\ud130\uc13c\ud130', label: '\ud310\uad50 \ub370\uc774\ud130\uc13c\ud130' },
+  { value: '강남구 재건축 A공구', label: '강남구 재건축 A공구' },
+  { value: '판교 데이터센터', label: '판교 데이터센터' },
 ]
 
 const affiliationOptions = [
-  { value: '\ubcf8\uc0ac \uc18c\uc18d', label: '\ubcf8\uc0ac \uc18c\uc18d \uc9c1\uc6d0' },
-  { value: '\ud611\ub825\uc0ac', label: '\ud611\ub825\uc0ac \uc18c\uc18d' },
-  { value: '\uc778\ub825\uc0ac\ubb34\uc18c', label: '\uc778\ub825\uc0ac\ubb34\uc18c (\uac1c\uc778)' },
+  { value: '본사 소속', label: '본사 소속 직원' },
+  { value: '협력사', label: '협력사 소속' },
+  { value: '인력사무소', label: '인력사무소 (개인)' },
 ]
 
 const editAffiliationOptions = [
-  { value: '\ubcf8\uc0ac \uc18c\uc18d', label: '\ubcf8\uc0ac \uc18c\uc18d \uc9c1\uc6d0' },
-  { value: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)', label: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)' },
-  { value: '\uc778\ub825\uc0ac\ubb34\uc18c', label: '\uc778\ub825\uc0ac\ubb34\uc18c (\uac1c\uc778)' },
+  { value: '본사 소속', label: '본사 소속 직원' },
+  { value: '협력사 (태양건설)', label: '협력사 (태양건설)' },
+  { value: '인력사무소', label: '인력사무소 (개인)' },
 ]
 
 const filters = ref({
@@ -107,15 +107,15 @@ const filters = ref({
 const attendanceList = ref([
   {
     id: 1,
-    name: '\uae40\ub3d9\uc11d',
+    name: '김동석',
     phone: '010-1234-5678',
-    emergency: '010-9999-1111 (\ubc30\uc6b0\uc790)',
-    affiliationType: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
-    site: '\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c',
+    emergency: '010-9999-1111 (배우자)',
+    affiliationType: '협력사 (태양건설)',
+    site: '강남구 재건축 A공구',
     clockIn: '06:50',
     clockOut: '17:10',
     manDays: 1.0,
-    status: '\ud1f4\uadfc \uc644\ub8cc',
+    status: '퇴근 완료',
     isClosed: false,
     monthTotalMan: 18.5,
     clockHistory: [
@@ -127,15 +127,15 @@ const attendanceList = ref([
   },
   {
     id: 2,
-    name: '\uc774\ubaa9\uc218',
+    name: '이목수',
     phone: '010-8888-7777',
-    emergency: '010-7777-6666 (\uc790\ub155)',
-    affiliationType: '\uc778\ub825\uc0ac\ubb34\uc18c',
-    site: '\uac15\ub0a8\uad6c \uc7ac\uac74\ucd95 A\uacf5\uad6c',
+    emergency: '010-7777-6666 (자녕)',
+    affiliationType: '인력사무소',
+    site: '강남구 재건축 A공구',
     clockIn: '07:05',
     clockOut: '-',
     manDays: 0,
-    status: '\uc791\uc5c5 \uc911',
+    status: '작업 중',
     isClosed: false,
     monthTotalMan: 14.0,
     clockHistory: [
@@ -146,15 +146,15 @@ const attendanceList = ref([
   },
   {
     id: 3,
-    name: '\ubc15\ubc18\uc7a5',
+    name: '박반장',
     phone: '010-5555-4444',
-    emergency: '010-4444-3333 (\ud615\uc81c)',
-    affiliationType: '\ubcf8\uc0ac \uc18c\uc18d',
-    site: '\ud310\uad50 \ub370\uc774\ud130\uc13c\ud130',
+    emergency: '010-4444-3333 (형제)',
+    affiliationType: '본사 소속',
+    site: '판교 데이터센터',
     clockIn: '06:45',
     clockOut: '16:00',
     manDays: 0.5,
-    status: '\uc870\ud1f4',
+    status: '조퇴',
     isClosed: true,
     monthTotalMan: 10.5,
     clockHistory: [
@@ -211,8 +211,8 @@ const statCounts = computed(() => {
   const rows = filteredAttendance.value
   return {
     total: rows.length,
-    working: rows.filter((r) => r.status.includes('\uc791\uc5c5 \uc911')).length,
-    done: rows.filter((r) => r.status.includes('\ud1f4\uadfc \uc644\ub8cc')).length,
+    working: rows.filter((r) => r.status.includes('작업 중')).length,
+    done: rows.filter((r) => r.status.includes('퇴근 완료')).length,
   }
 })
 
@@ -296,9 +296,9 @@ function goWorkerProfile(record, event) {
 }
 
 const getStatusBadge = (status) => {
-  if (status.includes('\ud1f4\uadfc')) return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/80'
-  if (status.includes('\uc791\uc5c5 \uc911')) return 'bg-amber-50 text-amber-800 ring-1 ring-amber-200/80'
-  if (status.includes('\uc870\ud1f4') || status.includes('\uacb8\uadfc'))
+  if (status.includes('퇴근')) return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/80'
+  if (status.includes('작업 중')) return 'bg-amber-50 text-amber-800 ring-1 ring-amber-200/80'
+  if (status.includes('조퇴') || status.includes('겸근'))
     return 'bg-rose-50 text-rose-700 ring-1 ring-rose-200/80'
   return 'bg-slate-50 text-slate-600 ring-1 ring-slate-200/80'
 }

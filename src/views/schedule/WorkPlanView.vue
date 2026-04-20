@@ -9,32 +9,32 @@ import {
 } from 'lucide-vue-next'
 
 const T = {
-  kicker: '\uc77c\uc815',
-  title: '\uc791\uc5c5 \uacc4\ud68d',
-  desc: '\uacf5\uc885\ubcc4 \uc791\uc5c5 \uacc4\ud68d\uc11c\ub97c \uc5c5\ub85c\ub4dc\ud558\uba74 \ubb38\uc11c\uc5d0\uc11c \uc77c\uc815\uc744 \ucd94\ucd9c\ud558\uc5ec \uacf5\uc885\ubcc4 \uc791\uc5c5 \uacc4\ud68d \uc77c\uc815\uc744 \ud655\uc778\ud569\ub2c8\ub2e4. TXT\xb7CSV\ub294 \ub0a0\uc9dc \ud30c\uc2f1\uc744 \uc9c0\uc6d0\ud558\uba70, \uadf8 \uc678 \ud30c\uc77c\uc740 \ub370\ubaa8\uc6a9 \uc0d8\ud50c \uae30\uac04\uc744 \uc0dd\uc131\ud569\ub2c8\ub2e4.',
-  tradeReports: '\uacf5\uc885\ubcc4 \ubcf4\uace0\uc11c',
-  uploadCta: '\ubcf4\uace0\uc11c \uc5c5\ub85c\ub4dc',
+  kicker: '일정',
+  title: '작업 계획',
+  desc: '공종별 작업 계획서를 업로드하면 문서에서 일정을 추출하여 공종별 작업 계획 일정을 확인합니다. TXT·CSV는 날짜 파싱을 지원하며, 그 외 파일은 데모용 샘플 기간을 생성합니다.',
+  tradeReports: '공종별 보고서',
+  uploadCta: '보고서 업로드',
   uploadHint: 'PDF, Office, CSV, TXT',
-  addTradeSection: '\uacf5\uc885(\uacf5\uc0ac) \ucd94\uac00',
-  newTradePh: '\uc0c8 \uacf5\uc885 \uba85\uc744 \uc785\ub825\ud558\uc138\uc694',
-  extractedLabel: '\ucd94\ucd9c\ub41c \uc791\uc5c5 \uc77c\uc815',
+  addTradeSection: '공종(공사) 추가',
+  newTradePh: '새 공종 명을 입력하세요',
+  extractedLabel: '추출된 작업 일정',
   noExtract:
-    '\uc544\uc9c1 \uc5c5\ub85c\ub4dc\ub41c \ubcf4\uace0\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.',
+    '아직 업로드된 보고서가 없습니다.',
   weekNoBars:
-    '\uc120\ud0dd\ud55c \uc8fc\ucc28\uc5d0 \ud45c\uc2dc\ud560 \uc77c\uc815\uc774 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  monthPick: '\uae30\uc900 \uc6d4',
-  sourceDoc: '\ucd9c\ucc98 \ubb38\uc11c',
+    '선택한 주차에 표시할 일정이 없습니다.',
+  monthPick: '기준 월',
+  sourceDoc: '출처 문서',
   demoNote:
-    '\uc774\ubbf8\uc9c0\xb7PDF \ub4f1\uc740 \uc11c\ubc84 OCR \uc5c6\uc774 \ub0a0\uc9dc\ub97c \uc77d\uc9c0 \ubabb\ud558\ubbc0\ub85c, \ud30c\uc77c\uba85 \uae30\ubc18 \uc0d8\ud50c \uacc4\ud68d\uc774 \uc0dd\uc131\ub429\ub2c8\ub2e4.',
-  sectionSchedule: '\uacf5\uc885\ubcc4 \uc791\uc5c5 \uacc4\ud68d \uc77c\uc815',
-  tabMonth: '\uc6d4\uac04',
-  tabWeek: '\uc8fc\uac04',
-  weekOfMonth: '\uc8fc\ucc28',
-  legendPlan: '\uacc4\ud68d',
-  legendActual: '\uc2e4\uc801',
-  colTask: '\uacf5\uc815\uba85',
-  colType: '\uacf5\uc885',
-  countUnit: '\uac74',
+    '이미지·PDF 등은 서버 OCR 없이 날짜를 읽지 못하므로, 파일명 기반 샘플 계획이 생성됩니다.',
+  sectionSchedule: '공종별 작업 계획 일정',
+  tabMonth: '월간',
+  tabWeek: '주간',
+  weekOfMonth: '주차',
+  legendPlan: '계획',
+  legendActual: '실적',
+  colTask: '공정명',
+  colType: '공종',
+  countUnit: '건',
 }
 
 const planViewYear = ref(2025)
@@ -49,11 +49,11 @@ function nextTradeId() {
 }
 
 const defaultTrades = [
-  { id: 'steel', label: '\uac74\ucd95 / \ucca0\uadfc' },
-  { id: 'pile', label: '\ud30c\uc77c \uacf5\uc0ac' },
-  { id: 'earth', label: '\ud1a0\ubaa9 \uacf5\uc0ac' },
-  { id: 'tunnel', label: '\ud1b0\ub9c1 / \uac00\uc624\uc0ac' },
-  { id: 'elec', label: '\uc804\uae30 \uacf5\uc0ac' },
+  { id: 'steel', label: '건축 / 철근' },
+  { id: 'pile', label: '파일 공사' },
+  { id: 'earth', label: '토목 공사' },
+  { id: 'tunnel', label: '톰링 / 가오사' },
+  { id: 'elec', label: '전기 공사' },
 ]
 
 /** @param {string} task @param {number} d0 @param {number} d1 @param {[number, number] | null} actual */
@@ -72,38 +72,38 @@ function demoSeg(task, d0, d1, actual = null) {
 const exampleUploadsByTrade = {
   steel: [
     {
-      fileName: '\uc0d8\ud50c_\ucca0\uadfc_\uc2b9\ub77c\ube0c_3F.pdf',
-      segments: [demoSeg('\ubcf8\ub3d9 3\ucd95 \uc2ac\ub77c\ube0c \ucca0\uadfc \ubc15\u30fb\uace0\uc815', 3, 12, [4, 13])],
+      fileName: '샘플_철근_승라브_3F.pdf',
+      segments: [demoSeg('본동 3축 슬라브 철근 박・고정', 3, 12, [4, 13])],
     },
   ],
   pile: [
     {
-      fileName: '\uc0d8\ud50c_A2\ub2e8\uc9c0_\ud30c\uc77c\uacc4\ud68d.xlsx',
-      segments: [demoSeg('A-2 \uad6c\uac04 \ud30c\uc77c \uac70\uc81c', 6, 15, [7, 15])],
+      fileName: '샘플_A2단지_파일계획.xlsx',
+      segments: [demoSeg('A-2 구간 파일 거제', 6, 15, [7, 15])],
     },
   ],
   earth: [
     {
-      fileName: '\uc0d8\ud50c_\uad6c\uac04_\uae68\ub2e4_\ud1a0\ucd94.pdf',
+      fileName: '샘플_구간_깨다_토추.pdf',
       segments: [
-        demoSeg('\ube84\uc5d4 \uad6c\uac04 \uae68\ub2e4 \ubc0f \uc0ac\ubab0', 1, 9, [2, 10]),
-        demoSeg('\uc9c0\ud574 \ubc29\uc218 \uacf5', 8, 17, [9, 16]),
+        demoSeg('뺄엔 구간 깨다 및 사몰', 1, 9, [2, 10]),
+        demoSeg('지해 방수 공', 8, 17, [9, 16]),
       ],
     },
   ],
   tunnel: [
     {
-      fileName: '\uc0d8\ud50c_EV_PIT_\ud1a4\ub9c1.pdf',
+      fileName: '샘플_EV_PIT_톤링.pdf',
       segments: [
         demoSeg('Joint Pipe EV PIT', 10, 22, [11, 23]),
-        demoSeg('\ud1a4\ub11b \ub0b4 \ubc30\uad00 \uc2dc\uacf5', 18, 28, [19, 27]),
+        demoSeg('톤넛 내 배관 시공', 18, 28, [19, 27]),
       ],
     },
   ],
   elec: [
     {
-      fileName: '\uc0d8\ud50c_\uc804\uae30_\ub77c\uc774\uc800_\uc124\uc120.csv',
-      segments: [demoSeg('\uc804\uae30 \ub77c\uc774\uc800 \ubca0\uc774\uc2a4 \ubc0f \ub3d9\uc120', 12, 24, [13, 24])],
+      fileName: '샘플_전기_라이저_설선.csv',
+      segments: [demoSeg('전기 라이저 베이스 및 동선', 12, 24, [13, 24])],
     },
   ],
 }
@@ -156,7 +156,7 @@ function weekChunksOfMonth(y, m) {
     chunks.push({
       start,
       end,
-      label: `${start}~${end}\uc77c`,
+      label: `${start}~${end}일`,
     })
   }
   return chunks
@@ -287,7 +287,7 @@ function mockSegmentFromFile(fileName, tradeLabel) {
   const ad0 = Math.min(lastDay, d0 + (h % 2))
   const ad1 = Math.min(lastDay, d1 + (h % 3))
   return {
-    task: `${tradeLabel} \uacc4\ud68d (${fileName.replace(/\.[^.]+$/, '')})`,
+    task: `${tradeLabel} 계획 (${fileName.replace(/\.[^.]+$/, '')})`,
     plan: { y, m, d0, d1 },
     actual: ad1 >= ad0 ? { y, m, d0: ad0, d1: ad1 } : null,
   }
@@ -305,15 +305,15 @@ function parseCsvRows(text) {
     }
     return -1
   }
-  const iTask = idx(['\uacf5\uc815', '\uacf5\uc885', 'task', '\ud56d\ubaa9', '\uc791\uc5c5'])
-  const iPs = idx(['\uacc4\ud68d\uc2dc\uc791', 'plan_start', 'start', '\uc2dc\uc791'])
-  const iPe = idx(['\uacc4\ud68d\uc885\ub8cc', 'plan_end', 'end', '\uc885\ub8cc'])
-  const iAs = idx(['\uc2e4\uc801\uc2dc\uc791', 'actual_start'])
-  const iAe = idx(['\uc2e4\uc801\uc885\ub8cc', 'actual_end'])
+  const iTask = idx(['공정', '공종', 'task', '항목', '작업'])
+  const iPs = idx(['계획시작', 'plan_start', 'start', '시작'])
+  const iPe = idx(['계획종료', 'plan_end', 'end', '종료'])
+  const iAs = idx(['실적시작', 'actual_start'])
+  const iAe = idx(['실적종료', 'actual_end'])
   const out = []
   for (let r = 1; r < lines.length; r++) {
     const cols = lines[r].split(/[,;\t]/).map((c) => c.trim())
-    const task = (iTask >= 0 ? cols[iTask] : null) || cols[0] || `\ud589 ${r}`
+    const task = (iTask >= 0 ? cols[iTask] : null) || cols[0] || `행 ${r}`
     const parseCell = (ci) => {
       if (ci < 0 || !cols[ci]) return null
       const mm = cols[ci].match(/(\d{4})[./-](\d{1,2})[./-](\d{1,2})/)
@@ -531,7 +531,7 @@ function barWidthPct(s, e, total) {
                 v-model.number="planViewMonth"
                 class="rounded-xl border border-forena-200 bg-white px-3 py-2 text-sm font-semibold text-forena-900"
               >
-                <option v-for="mo in 12" :key="mo" :value="mo">{{ mo }}{{ '\uc6d4' }}</option>
+                <option v-for="mo in 12" :key="mo" :value="mo">{{ mo }}{{ '월' }}</option>
               </select>
             </div>
           </label>

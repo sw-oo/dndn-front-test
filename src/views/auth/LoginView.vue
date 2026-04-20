@@ -66,21 +66,30 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore'
 import bgImage from '@/assets/hanwha-bg.png'
 import hanwhaLogo from '@/assets/hanwha_logo.png'
 
+const router = useRouter()
+const auth = useAuthStore()
+
 const loginForm = reactive({
   userId: '',
-  password: ''
+  password: '',
 })
 
 const rememberMe = ref(false)
 
-const handleLogin = () => {
-  console.log('로그인 정보:', {
-    ...loginForm,
-    rememberMe: rememberMe.value
-  })
+const loginError = ref('')
+
+function handleLogin() {
+  loginError.value = ''
+  if (auth.login(loginForm.userId, loginForm.password)) {
+    router.push({ path: '/site/dashboard' })
+    return
+  }
+  loginError.value = '아이디 또는 비밀번호가 올바르지 않습니다. (admin / admin)'
 }
 </script>
 
@@ -284,6 +293,18 @@ const handleLogin = () => {
 
 .login-btn:hover {
   transform: translateY(-1px);
+}
+
+.login-error {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 .divider {

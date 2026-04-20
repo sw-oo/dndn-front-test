@@ -16,112 +16,112 @@ import {
 const router = useRouter()
 
 const partner = ref({
-  name: '\ud0dc\uc591\uac74\uc124',
-  repName: '\uae40\ud0dc\uc591',
+  name: '태양건설',
+  repName: '김태양',
   contact: '010-1111-2222',
   workersCount: 145,
   period: '2025.01.01 ~ 2025.12.31',
-  status: '\uacc4\uc57d \uc720\uc9c0',
+  status: '계약 유지',
 })
 
 const workers = ref([
   {
     id: 1,
-    name: '\uae40\ub3d9\uc11d',
+    name: '김동석',
     phone: '010-1234-5678',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc804',
+    docStatus: '완료',
+    status: '출근 전',
   },
   {
     id: 2,
-    name: '\uc774\ubaa9\uc218',
+    name: '이목수',
     phone: '010-9876-5432',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc644\ub8cc',
+    docStatus: '완료',
+    status: '출근 완료',
   },
   {
     id: 3,
-    name: '\ubc15\uc9c0\ud6c8',
+    name: '박지훈',
     phone: '010-2345-6789',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc644\ub8cc',
+    docStatus: '완료',
+    status: '출근 완료',
   },
   {
     id: 4,
-    name: '\ucd5c\uc218\uc5f0',
+    name: '최수연',
     phone: '010-3456-7890',
-    docStatus: '\uc9c4\ud589\uc911',
-    status: '\ucd9c\uadfc \uc804',
+    docStatus: '진행중',
+    status: '출근 전',
   },
   {
     id: 5,
-    name: '\uc815\ud574\uc131',
+    name: '정해성',
     phone: '010-4567-8901',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc644\ub8cc',
+    docStatus: '완료',
+    status: '출근 완료',
   },
   {
     id: 6,
-    name: '\uc548\uc601\uc9c4',
+    name: '안영진',
     phone: '010-5678-9012',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc804',
+    docStatus: '완료',
+    status: '출근 전',
   },
   {
     id: 7,
-    name: '\uc870\ubbfc\uc7ac',
+    name: '조민재',
     phone: '010-6789-0123',
-    docStatus: '\ub300\uae30',
-    status: '\ucd9c\uadfc \uc804',
+    docStatus: '대기',
+    status: '출근 전',
   },
   {
     id: 8,
-    name: '\ud55c\uc9c0\uc6d0',
+    name: '한지원',
     phone: '010-7890-1234',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc644\ub8cc',
+    docStatus: '완료',
+    status: '출근 완료',
   },
   {
     id: 9,
-    name: '\uc784\uc131\ud638',
+    name: '임성호',
     phone: '010-8901-2345',
-    docStatus: '\uc644\ub8cc',
-    status: '\ucd9c\uadfc \uc644\ub8cc',
+    docStatus: '완료',
+    status: '출근 완료',
   },
   {
     id: 10,
-    name: '\uae40\ub098\uc5f0',
+    name: '김나연',
     phone: '010-9012-3456',
-    docStatus: '\uc9c4\ud589\uc911',
-    status: '\ucd9c\uadfc \uc804',
+    docStatus: '진행중',
+    status: '출근 전',
   },
 ])
 
 const deployedSites = ref([
   {
     id: 1,
-    name: 'A\uad6c\uc5ed \xb7 \uac15\ub0a8 \uc7ac\uac74\ucd95',
+    name: 'A구역 · 강남 재건축',
     current: 45,
-    status: '\uc6b4\uc601 \uc911',
+    status: '운영 중',
   },
   {
     id: 2,
-    name: 'B\uad6c\uc5ed \xb7 \ud310\uad50 \ub370\uc774\ud130\uc13c\ud130',
+    name: 'B구역 · 판교 데이터센터',
     current: 20,
-    status: '\uc6b4\uc601 \uc911',
+    status: '운영 중',
   },
 ])
 
 const contractFiles = ref([
   {
     id: 1,
-    name: '2025\ub144\ub3c4_\ud558\ub3c4\uae09\uacc4\uc57d\uc11c.pdf',
+    name: '2025년도_하도급계약서.pdf',
     size: '2.4MB',
     date: '2025.01.05',
   },
   {
     id: 2,
-    name: '\uc0ac\uc5c5\uc790\ub4f1\ub85d\uc99d_\uc0ac\ubcf8.jpg',
+    name: '사업자등록증_사본.jpg',
     size: '1.1MB',
     date: '2024.12.28',
   },
@@ -132,12 +132,12 @@ const evaluation = ref({
   score: 92,
   lastDate: '2025.03.15',
   summary:
-    '\ud488\uc9c8 \ubc0f \uc77c\uc815 \uc900\uc218\ub294 \uc6b0\uc218\ud558\ub098, \uc548\uc804 \uad50\uc721 \uc774\uc218 \uc720\ub3c4 \ubcf4\uc644\uc774 \ud544\uc694\ud569\ub2c8\ub2e4.',
+    '품질 및 일정 준수는 우수하나, 안전 교육 이수 유도 보완이 필요합니다.',
   items: [
-    { label: '\ud488\uc9c8', score: 95 },
-    { label: '\uc548\uc804', score: 88 },
-    { label: '\uc77c\uc815', score: 91 },
-    { label: '\uc18c\ud1b5', score: 94 },
+    { label: '품질', score: 95 },
+    { label: '안전', score: 88 },
+    { label: '일정', score: 91 },
+    { label: '소통', score: 94 },
   ],
 })
 
@@ -148,55 +148,55 @@ const evaluationDraft = ref({
 })
 
 const T = {
-  kicker: '\ud611\ub825\uc0ac \uc0c1\uc138',
-  badgeCustom: '\ub9de\ucda4 \ud611\ub825\uc0ac',
-  summaryCard: '\uc694\uc57d',
-  rep: '\ub300\ud45c\uc790',
-  contact: '\uc5f0\ub77d\ucc98',
-  workers: '\ub4f1\ub85d \uadfc\ub85c\uc790',
-  contractState: '\uacc4\uc57d',
-  period: '\uacc4\uc57d \uae30\uac04',
-  contractDocs: '\uacc4\uc57d \uc11c\ub958',
-  fileList: '\ucca8\ubd80 \ud30c\uc77c',
-  workerList: '\uc18c\uc18d \uadfc\ub85c\uc790',
-  workerTotal: '\ucd1d',
-  colName: '\uc774\ub984',
-  colPhone: '\uc5f0\ub77d\ucc98',
-  colDoc: '\uad50\uc721/\uc11c\ub958',
-  colStatus: '\uc0c1\ud0dc',
-  deployed: '\ud22c\uc785 \uad6c\uc5ed',
-  deployingLine1: '\ud604\uc7ac',
-  deployingLine2: '\ubc30\uce58 \uc911',
-  evalSection: '\ud611\ub825\uc0ac \ud3c9\uac00',
-  evalGrade: '\ub4f1\uae09',
-  evalScore: '\ucd1c\uc810',
-  evalLast: '\ucd5c\uadfc \ud3c9\uac00',
-  evalItems: '\ud56d\ubaa9',
-  evalSummary: '\uc694\uc57d',
-  evalAction: '\ud3c9\uac00\ud558\uae30',
-  evalModalTitle: '\ud611\ub825\uc0ac \ud3c9\uac00 \ub4f1\ub85d',
+  kicker: '협력사 상세',
+  badgeCustom: '맞춤 협력사',
+  summaryCard: '요약',
+  rep: '대표자',
+  contact: '연락처',
+  workers: '등록 근로자',
+  contractState: '계약',
+  period: '계약 기간',
+  contractDocs: '계약 서류',
+  fileList: '첨부 파일',
+  workerList: '소속 근로자',
+  workerTotal: '총',
+  colName: '이름',
+  colPhone: '연락처',
+  colDoc: '교육/서류',
+  colStatus: '상태',
+  deployed: '투입 구역',
+  deployingLine1: '현재',
+  deployingLine2: '배치 중',
+  evalSection: '협력사 평가',
+  evalGrade: '등급',
+  evalScore: '촜점',
+  evalLast: '최근 평가',
+  evalItems: '항목',
+  evalSummary: '요약',
+  evalAction: '평가하기',
+  evalModalTitle: '협력사 평가 등록',
   evalModalDesc:
-    '\ud56d\ubaa9\ubcc4 \uc810\uc218\uc640 \uc885\ud569 \uc758\uacac\uc744 \uc785\ub825\ud558\uba74 \ud604\uc7ac \ud3c9\uac00 \uacb0\uacfc\uc5d0 \ubc18\uc601\ub429\ub2c8\ub2e4.',
-  evalScoreUnit: '\uc810',
+    '항목별 점수와 종합 의견을 입력하면 현재 평가 결과에 반영됩니다.',
+  evalScoreUnit: '점',
   evalCommentPh:
-    '\ud488\uc9c8, \uc548\uc804, \uc77c\uc815, \uc18c\ud1b5 \uad00\uc810\uc5d0\uc11c \uc885\ud569 \uc758\uacac\uc744 \uc791\uc131\ud558\uc138\uc694.',
-  evalCancel: '\ucde8\uc18c',
-  evalSubmit: '\ud3c9\uac00 \ubc18\uc601',
-  person: '\uba85',
-  dot: '\xb7',
+    '품질, 안전, 일정, 소통 관점에서 종합 의견을 작성하세요.',
+  evalCancel: '취소',
+  evalSubmit: '평가 반영',
+  person: '명',
+  dot: '·',
 }
 
 const goBack = () => router.push('/hr/partners')
 
 const statusBadgeClass = (s) => {
-  if (s === '\uacc4\uc57d \uc720\uc9c0')
+  if (s === '계약 유지')
     return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/80'
-  if (s === '\uc815\uc9c0') return 'bg-amber-50 text-amber-800 ring-1 ring-amber-200/80'
+  if (s === '정지') return 'bg-amber-50 text-amber-800 ring-1 ring-amber-200/80'
   return 'bg-slate-100 text-slate-600 ring-1 ring-slate-200/80'
 }
 
 const workerStatusClass = (s) => {
-  if (s.includes('\uc644\ub8cc')) return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/70'
+  if (s.includes('완료')) return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/70'
   return 'bg-slate-50 text-slate-600 ring-1 ring-slate-200/70'
 }
 
@@ -235,7 +235,7 @@ const submitEvaluation = () => {
     score: averageScore,
     lastDate: new Date().toLocaleDateString('ko-KR').replace(/\s/g, ''),
     summary:
-      evaluationDraft.value.summary.trim() || '\ud3c9\uac00 \uc758\uacac\uc774 \uc785\ub825\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4.',
+      evaluationDraft.value.summary.trim() || '평가 의견이 입력되지 않았습니다.',
     items: sanitizedItems,
   }
 

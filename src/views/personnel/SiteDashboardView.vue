@@ -15,105 +15,104 @@ import {
 } from 'lucide-vue-next'
 
 const T = {
-  kicker: '\uc778\uc0ac \ub2f4\ub2f9',
-  title: '\uc778\uc0ac \ub300\uc2dc\ubcf4\ub4dc',
-  desc: '\ud604\uc7a5 \uc778\uc6d0, \uacf5\uc815, \uae30\uc0c1\xb7\uc548\uc804 \uc54c\ub9bc\uc744 \uc2e4\uc2dc\uac04\uc5d0 \uac00\uae4c\uc6b4 \ud615\ud0dc\ub85c \ud655\uc778\ud569\ub2c8\ub2e4.',
-  today: '\uae08\uc77c \ud22c\uc785',
-  cap: '/ 145 \uba85 (\uc0d8\ud50c)',
-  status: '\ud604\uc7a5 \uc0c1\ud0dc',
-  running: '\uc6b4\uc601 \uc911',
-  alert: '\uae34\uae09 \uc54c\ub9bc',
-  alertBody: '\uac15\ud48d \uc8fc\uc758 \u2014 \uace0\uc18c\uc791\uc5c5 \uc911\uc9c0',
-  tbm: '\uc624\ub298 TBM',
-  tbmBody: '07:30 \uc77c\uc77c \uc548\uc804 \uacf5\uc720',
-  secMain: '\uba54\uc778 \uc778\ub514\ucf00\uc774\ud130',
-  indAttendance: '\uae08\uc77c \ud22c\uc785 \uc778\uc6d0 \ud604\ud669',
+  kicker: '인사 담당',
+  title: '인사 대시보드',
+  desc: '현장 인원, 공정, 기상·안전 알림을 실시간에 가까운 형태로 확인합니다.',
+  today: '금일 투입',
+  cap: '/ 145 명 (샘플)',
+  status: '현장 상태',
+  running: '운영 중',
+  alert: '긴급 알림',
+  alertBody: '강풍 주의 — 고소작업 중지',
+  tbm: '오늘 TBM',
+  tbmBody: '07:30 일일 안전 공유',
+  secMain: '메인 인디케이터',
+  indAttendance: '금일 투입 인원 현황',
   indAttendanceSub:
-    '\uae08\uc77c \ucd9c\uadfc \uc644\ub8cc\ub41c \ucd1d \uc778\uc6d0 \ubc0f \uacf5\uc885\ubcc4(\ud611\ub825\uc0ac\ubcc4) \uc778\uc6d0 \uc2e4\uc2dc\uac04 \ud45c\ucd9c',
-  totalChecked: '\ucd9c\uadfc \uc644\ub8cc \ud569\uacc4',
-  personUnit: '\uba85',
-  colBreakdown: '\uacf5\uc885 / \ud611\ub825\uc0ac',
-  colCount: '\uc778\uc6d0',
-  indNew: '\uc2e0\uaddc \ud22c\uc785 \ud604\ud669',
-  indNewSub: '\uae08\uc77c \ud604\uc7a5\uc5d0 \uc0c8\ub85c \ud22c\uc785\ub41c \uc2e0\uaddc \uc628\ubcf4\ub529 \uc778\uc6d0 \uc218\uce58',
-  newCountLabel: '\uc624\ub298 \uc2e0\uaddc \ud22c\uc785',
-  indWork: '\uae08\uc77c \uc791\uc5c5 \uc694\uc57d',
+    '금일 출근 완료된 총 인원 및 공종별(협력사별) 인원 실시간 표출',
+  totalChecked: '출근 완료 합계',
+  personUnit: '명',
+  colBreakdown: '공종 / 협력사',
+  colCount: '인원',
+  indNew: '신규 투입 현황',
+  indNewSub: '금일 현장에 새로 투입된 신규 온보딩 인원 수치',
+  newCountLabel: '오늘 신규 투입',
+  indWork: '금일 작업 요약',
   indWorkSub:
-    '\uae08\uc77c \ud604\uc7a5\uc5d0 \ud22c\uc785\ub420 \uc911\uc7a5\ube44 \ub9ac\uc2a4\ud2b8 \ubc0f \uc9c4\ud589\ub420 \uacf5\uc815 \ub9ac\uc2a4\ud2b8',
-  equipTitle: '\uc911\uc7a5\ube44 (\uc608\uc815)',
-  procTitle: '\uacf5\uc815 (\uc608\uc815)',
-  secProgress: '\uacf5\uc815 \uc9c4\ud589 \uc0c1\ud669',
-  progressViz: '\uacf5\uc0ac \uc9c4\ud589\ub3c4 \uc2dc\uac01\ud654',
-  progressVizSub: '\uc804\uccb4 \uacf5\uc0ac \uc9c4\ud589\ub3c4 \ubc0f \uacf5\uc885\ubcc4 \uacf5\uc0ac \uc9c4\ud589\ub3c4 \ud37c\uc13c\ud2b8(%) \uc694\uc57d',
-  overall: '\uc804\uccb4 \uacf5\uc0ac',
-  secAlert: '\uc54c\ub9bc \ubc0f \uacbd\uace0',
-  weatherAlertTitle: '\uae30\uc0c1 \uae30\ubc18 \uc548\uc804 \uacbd\ubcf4',
+    '금일 현장에 투입될 중장비 리스트 및 진행될 공정 리스트',
+  equipTitle: '중장비 (예정)',
+  procTitle: '공정 (예정)',
+  secProgress: '공정 진행 상황',
+  progressViz: '공사 진행도 시각화',
+  progressVizSub: '전체 공사 진행도 및 공종별 공사 진행도 퍼센트(%) 요약',
+  overall: '전체 공사',
+  secAlert: '알림 및 경고',
+  weatherAlertTitle: '기상 기반 안전 경보',
   weatherAlertSub:
-    '\uae30\uc0c1 \uc815\ubcf4\uc5d0 \ub530\ub978 \uc791\uc5c5 \uc548\uc804 \uacbd\uace0 \ubc0f \ud604\uc7a5 \uc548\uc804\uacbd\ubcf4 \uae34\uae09 \uc54c\ub9bc \ud45c\ucd9c',
-  urgent: '\uae34\uae09',
-  weather: '\uae30\uc0c1',
-  liveTag: 'LIVE',
+    '기상 정보에 따른 작업 안전 경고 및 현장 안전경보 긴급 알림 표출',
+  urgent: '긴급',
+  weather: '기상',
 }
 
 const attendanceBreakdown = ref([
-  { label: '\ud615\ud2c0 (\ud0dc\uc591\uac74\uc124)', count: 42 },
-  { label: '\uc804\uae30 (\ud55c\uc232\uc804\uae30)', count: 28 },
-  { label: '\ud1a0\ubaa9 (\uccad\uc6d4\uac74\uc124)', count: 35 },
-  { label: '\ub0b4\ubd80 \uc9c1\uc6d0 / \uae30\ud0c0', count: 19 },
+  { label: '형틀 (태양건설)', count: 42 },
+  { label: '전기 (한숲전기)', count: 28 },
+  { label: '토목 (청월건설)', count: 35 },
+  { label: '내부 직원 / 기타', count: 19 },
 ])
 
 const newDeployToday = ref(8)
 
 const equipmentToday = ref([
-  '50\ud1a4 \ud0c0\uc6cc\ud06c\ub808\uc778 (\ub3d9)',
-  '\ucf58\ud06c\ub9ac\ud2b8 \ud37c\uc9f1\uce742\ub300',
-  '\uc0ac\ub2e4 \uae45\uace0 25t',
-  '\ube44\uc544\uc0ac \uc18c\ud615 \uad6c\uc870',
+  '50톤 타워크레인 (동)',
+  '콘크리트 퍼짱카2대',
+  '사다 깅고 25t',
+  '비아사 소형 구조',
 ])
 
 const processesToday = ref([
-  'B\uad6c\uc5ed \uc9c0\ud558 2\uce35 \uc2ac\ub77c\ube0c \ud615\ud2c0 \uc870\ub9bd',
-  'A\uad6c\uc5ed \uc804\uae30 \ubc30\uad00 \ub3c4\uc120',
-  '\uc678\ubd80 \uc2a4\ud06c\ud53c\ub4dc \ub0b4\ub9e4\ub9c5 \uc9c4\ud589',
-  '\uc9c0\ud558\uc8fc\ucc28\uc7a5 \ubc29\uc218 \uacf5\uc0ac',
+  'B구역 지하 2층 슬라브 형틀 조립',
+  'A구역 전기 배관 도선',
+  '외부 스크피드 내매맅 진행',
+  '지하주차장 방수 공사',
 ])
 
 const overallProgress = ref(62)
 
 const processProgress = ref([
-  { name: '\uace8\uc870 \uacf5\uc0ac', pct: 74 },
-  { name: '\ud30c\uc77c \ubc0f \uae30\ucd08', pct: 68 },
-  { name: '\uc804\uae30 \ubc0f \uc18c\ubc29', pct: 52 },
-  { name: '\ub0b4\ub9e4\ub9c5 \ubc0f \ub9c8\uac10', pct: 41 },
+  { name: '골조 공사', pct: 74 },
+  { name: '파일 및 기초', pct: 68 },
+  { name: '전기 및 소방', pct: 52 },
+  { name: '내매맅 및 마감', pct: 41 },
 ])
 
 const weatherAlerts = ref([
   {
     id: 1,
-    level: '\uc8fc\uc758',
-    title: '\uc624\ud6c4 \ud48d\uc18d \uac15\ud654 (12~15m/s \uc608\ubcf4)',
-    detail: '\ud0c0\uc6cc\ud06c\ub808\uc778 \uc791\uc5c5 \uc2dc\uac04 \ub2e8\ucd95 \ubc0f \ud6c4\ud48d \uac10\uc18c \uc548\ub0b4',
+    level: '주의',
+    title: '오후 풍속 강화 (12~15m/s 예보)',
+    detail: '타워크레인 작업 시간 단축 및 후풍 감소 안내',
   },
   {
     id: 2,
-    level: '\uc548\ub0b4',
-    title: '\uc18c\ub098\uae30 \ub2e4\ub7c9 \u2014 \uc678\ubd80 \uc6a9\uc811 \ubbf8\ub044\ub7ec\uc9d0 \uc8fc\uc758',
-    detail: '\uace0\uc18c \uc791\uc5c5 \uc2dc \ubbf8\ub044\ub7ec\uc9d0 \uc7a5\uce58 \uc810\uac80 \ucd94\ucc9c',
+    level: '안내',
+    title: '소나기 다량 — 외부 용접 미끄러짐 주의',
+    detail: '고소 작업 시 미끄러짐 장치 점검 추천',
   },
 ])
 
 const urgentAlerts = ref([
   {
     id: 1,
-    title: '[\uae34\uae09] \uac15\ud48d \uc774\uc218 \uc2dc \uace0\uc18c \uc791\uc5c5 \uc804\uba74 \uc911\uc9c0',
+    title: '[긴급] 강풍 이수 시 고소 작업 전면 중지',
     time: '09:42',
-    source: '\ud604\uc7a5 \uc548\uc804\uad00\ub9ac\uc790',
+    source: '현장 안전관리자',
   },
   {
     id: 2,
-    title: 'TBM \uc774\ud6c4 \uc9c0\ud558 \uc8fc\ucc28\uc7a5 \uc785\uad6c \ud1b5\uc81c 1\uc2dc\uac04 \ud574\uc81c',
+    title: 'TBM 이후 지하 주차장 입구 통제 1시간 해제',
     time: '08:15',
-    source: '\ucd9c\uc785\uadfc\ud0dc \uc2dc\uc2a4\ud15c',
+    source: '출입근태 시스템',
   },
 ])
 
@@ -148,9 +147,8 @@ const totalCheckedIn = computed(() =>
           </div>
         </div>
         <div
-          class="flex shrink-0 flex-wrap items-center gap-2 rounded-xl border border-forena-100/80 bg-white/60 px-3 py-2 text-[11px] text-forena-600 lg:flex-col lg:items-stretch lg:px-4 lg:py-3"
+          class="flex shrink-0 flex-wrap items-center gap-2 rounded-xl border border-forena-100/80 bg-white/60 px-3 py-2 text-[11px] text-forena-600 lg:px-4 lg:py-3"
         >
-          <span class="font-bold uppercase tracking-wide text-forena-400">{{ T.liveTag }}</span>
           <span class="tabular-nums text-forena-800">{{ T.today }}: <strong>{{ totalCheckedIn }}</strong> {{ T.personUnit }}</span>
         </div>
       </div>
@@ -203,10 +201,6 @@ const totalCheckedIn = computed(() =>
       <div class="flex flex-wrap items-center gap-2 border-b border-forena-100 bg-forena-50/50 px-4 py-2.5 sm:px-5 sm:py-3">
         <LayoutDashboard class="h-4 w-4 text-flare-600" />
         <h3 class="text-sm font-bold text-forena-900">{{ T.secMain }}</h3>
-        <span
-          class="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800"
-          >{{ T.liveTag }}</span
-        >
       </div>
       <div
         class="grid gap-4 p-4 sm:gap-5 sm:p-5 lg:grid-cols-1 xl:grid-cols-12 xl:gap-5 xl:p-6"
@@ -362,7 +356,7 @@ const totalCheckedIn = computed(() =>
             <span
               class="inline-flex rounded-md px-2 py-0.5 text-[10px] font-bold"
               :class="
-                w.level === '\uc8fc\uc758'
+                w.level === '주의'
                   ? 'bg-amber-100 text-amber-900'
                   : 'bg-slate-100 text-slate-700'
               "

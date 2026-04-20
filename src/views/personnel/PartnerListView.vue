@@ -17,45 +17,45 @@ import {
 const router = useRouter()
 
 const T = {
-  kicker: '\ud611\ub825 \ub124\ud2b8\uc6cc\ud06c',
-  title: '\ud611\ub825\uc0ac \uad00\ub9ac',
-  desc: '\ud611\ub825\uc0ac \uc815\ubcf4, \uacc4\uc57d \uae30\uac04, \ud3c9\uac00\ub97c \ud55c \ud654\uba74\uc5d0\uc11c \uc870\ud68c\ud558\uace0 \uc2e0\uaddc \ub4f1\ub85d\uc744 \uc9c4\ud589\ud569\ub2c8\ub2e4.',
-  searchPh: '\ud611\ub825\uc0ac\uba85, \uacf5\uc885 \uac80\uc0c9',
-  excel: '\uc5d1\uc140 \ub2e4\uc6b4\ub85c\ub4dc',
-  register: '\uc2e0\uaddc \ud611\ub825\uc0ac \ub4f1\ub85d',
-  statTotal: '\ucd1d \ud611\ub825\uc0ac',
-  statActive: '\uacc4\uc57d \uc720\uc9c0',
-  statExpiring: '\ub9cc\ub8cc \uc608\uc815',
-  statExpiringHint: '30\uc77c \uc774\ub0b4',
-  unit: '\uac1c\uc0ac',
-  tabAll: '\uc804\uccb4',
-  tabActive: '\uacc4\uc57d \uc720\uc9c0',
-  tabExpiring: '\ub9cc\ub8cc \uc608\uc815',
-  tabEnded: '\uacc4\uc57d \uc885\ub8cc',
-  colName: '\ud611\ub825\uc0ac\uba85',
-  colTrade: '\uacf5\uc885 / \ub300\ud45c\uc790',
-  colPeriod: '\uacc4\uc57d \uae30\uac04',
-  colEval: '\ud3c9\uac00',
-  empty: '\uc870\uac74\uc5d0 \ub9de\ub294 \ud611\ub825\uc0ac\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  drawerTitle: '\uc2e0\uaddc \ud611\ub825\uc0ac \ub4f1\ub85d',
-  aiTitle: 'AI \uacc4\uc57d\uc11c \uc790\ub3d9 \ubd84\uc11d',
-  aiHint: 'PDF \ub610\ub294 \uc774\ubbf8\uc9c0 \ud30c\uc77c \uc5c5\ub85c\ub4dc',
-  aiLoading: '\ubb38\uc11c \ubd84\uc11d \uc911...',
-  labelName: '\ud611\ub825\uc0ac\uba85 *',
-  labelBiz: '\uc0ac\uc5c5\uc790 \ubc88\ud638',
-  labelRep: '\ub300\ud45c\uc790\uba85',
-  labelContact: '\uc5f0\ub77d\ucc98',
-  labelTrade: '\ub2f4\ub2f9 \uacf5\uc885 *',
-  labelUnit: '\uacc4\uc57d \ub2e8\uac00 (\uc6d0)',
-  labelStart: '\uacc4\uc57d \uc2dc\uc791\uc77c *',
-  labelEnd: '\uacc4\uc57d \uc885\ub8cc\uc77c *',
-  submit: '\ub4f1\ub85d \uc644\ub8cc',
-  alertFields: '\ud544\uc218 \uc815\ubcf4\ub97c \ubaa8\ub450 \uc785\ub825\ud574\uc8fc\uc138\uc694.',
+  kicker: '협력 네트워크',
+  title: '협력사 관리',
+  desc: '협력사 정보, 계약 기간, 평가를 한 화면에서 조회하고 신규 등록을 진행합니다.',
+  searchPh: '협력사명, 공종 검색',
+  excel: '엑셀 다운로드',
+  register: '신규 협력사 등록',
+  statTotal: '총 협력사',
+  statActive: '계약 유지',
+  statExpiring: '만료 예정',
+  statExpiringHint: '30일 이내',
+  unit: '개사',
+  tabAll: '전체',
+  tabActive: '계약 유지',
+  tabExpiring: '만료 예정',
+  tabEnded: '계약 종료',
+  colName: '협력사명',
+  colTrade: '공종 / 대표자',
+  colPeriod: '계약 기간',
+  colEval: '평가',
+  empty: '조건에 맞는 협력사가 없습니다.',
+  drawerTitle: '신규 협력사 등록',
+  aiTitle: 'AI 계약서 자동 분석',
+  aiHint: 'PDF 또는 이미지 파일 업로드',
+  aiLoading: '문서 분석 중...',
+  labelName: '협력사명 *',
+  labelBiz: '사업자 번호',
+  labelRep: '대표자명',
+  labelContact: '연락처',
+  labelTrade: '담당 공종 *',
+  labelUnit: '계약 단가 (원)',
+  labelStart: '계약 시작일 *',
+  labelEnd: '계약 종료일 *',
+  submit: '등록 완료',
+  alertFields: '필수 정보를 모두 입력해주세요.',
   alertAi:
-    'AI \ubb38\uc11c \uc778\uc2dd\uc774 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ucd94\ucd9c\ub41c \ub370\uc774\ud130\ub97c \ud655\uc778\ud574\uc8fc\uc138\uc694.',
-  alertOk: '\ud611\ub825\uc0ac\uac00 \ub4f1\ub85d\ub418\uc5c8\uc2b5\ub2c8\ub2e4.',
+    'AI 문서 인식이 완료되었습니다. 추출된 데이터를 확인해주세요.',
+  alertOk: '협력사가 등록되었습니다.',
   alertExcel:
-    '\ud611\ub825\uc0ac \ub9ac\uc2a4\ud2b8 \uc5d1\uc140 \ub2e4\uc6b4\ub85c\ub4dc\ub97c \uc2dc\uc791\ud569\ub2c8\ub2e4.',
+    '협력사 리스트 엑셀 다운로드를 시작합니다.',
 }
 
 const showRegisterDrawer = ref(false)
@@ -77,41 +77,41 @@ const newPartner = ref({
 
 const partners = ref([
   {
-    name: '\ud0dc\uc591\uac74\uc124',
-    repName: '\uae40\ud0dc\uc591',
-    trade: '\ud615\ud2c0',
+    name: '태양건설',
+    repName: '김태양',
+    trade: '형틀',
     workers: 45,
     unitPrice: '250,000',
     period: '2024.01.01 ~ 2025.12.31',
-    status: '\uacc4\uc57d \uc720\uc9c0',
-    evaluation: 'A \xb7 92\uc810',
+    status: '계약 유지',
+    evaluation: 'A · 92점',
   },
   {
-    name: '\uc6b0\uc8fc\uc0b0\uc5c5',
-    repName: '\ubc15\uc6b0\uc8fc',
-    trade: '\ucca0\uadfc',
+    name: '우주산업',
+    repName: '박우주',
+    trade: '철근',
     workers: 32,
     unitPrice: '260,000',
     period: '2023.05.01 ~ 2024.05.15',
-    status: '\ub9cc\ub8cc \uc608\uc815',
-    evaluation: 'B+ \xb7 81\uc810',
+    status: '만료 예정',
+    evaluation: 'B+ · 81점',
   },
   {
-    name: '\uc81c\uc77c\ud658\uacbd',
-    repName: '\uc774\ud658\uacbd',
-    trade: '\ube44\uacc4',
+    name: '제일환경',
+    repName: '이환경',
+    trade: '비계',
     workers: 18,
     unitPrice: '230,000',
     period: '2024.03.01 ~ 2026.02.28',
-    status: '\uacc4\uc57d \uc720\uc9c0',
-    evaluation: 'A \xb7 89\uc810',
+    status: '계약 유지',
+    evaluation: 'A · 89점',
   },
 ])
 
 const summary = computed(() => ({
   total: partners.value.length,
-  active: partners.value.filter((p) => p.status === '\uacc4\uc57d \uc720\uc9c0').length,
-  expiring: partners.value.filter((p) => p.status === '\ub9cc\ub8cc \uc608\uc815').length,
+  active: partners.value.filter((p) => p.status === '계약 유지').length,
+  expiring: partners.value.filter((p) => p.status === '만료 예정').length,
 }))
 
 const filteredPartners = computed(() => {
@@ -132,7 +132,7 @@ const filteredPartners = computed(() => {
   }
 
   return result.sort((a, b) =>
-    a.status === '\ub9cc\ub8cc \uc608\uc815' && b.status !== '\ub9cc\ub8cc \uc608\uc815' ? -1 : 1,
+    a.status === '만료 예정' && b.status !== '만료 예정' ? -1 : 1,
   )
 })
 
@@ -150,10 +150,10 @@ const handleFileUpload = (e) => {
 
   setTimeout(() => {
     newPartner.value = {
-      name: '\uc2a4\ub9c8\ud2b8\uc548\uc804(\uc8fc)',
+      name: '스마트안전(주)',
       bizNumber: '123-45-67890',
-      repName: '\ucd5c\uc2a4\ub9c8\ud2b8',
-      trade: '\uc804\uae30',
+      repName: '최스마트',
+      trade: '전기',
       contact: '010-9999-8888',
       startDate: '2024-05-01',
       endDate: '2025-04-30',
@@ -183,7 +183,7 @@ const registerPartner = () => {
     workers: 0,
     unitPrice: newPartner.value.unitPrice,
     period: `${newPartner.value.startDate.replace(/-/g, '.')} ~ ${newPartner.value.endDate.replace(/-/g, '.')}`,
-    status: '\uacc4\uc57d \uc720\uc9c0',
+    status: '계약 유지',
     evaluation: '-',
   })
 
@@ -203,9 +203,9 @@ const registerPartner = () => {
 }
 
 const statusBadgeClass = (status) => {
-  if (status === '\ub9cc\ub8cc \uc608\uc815')
+  if (status === '만료 예정')
     return 'bg-rose-50 text-rose-700 ring-1 ring-rose-200/80'
-  if (status === '\uacc4\uc57d \uc885\ub8cc')
+  if (status === '계약 종료')
     return 'bg-slate-100 text-slate-600 ring-1 ring-slate-200/80'
   return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/80'
 }

@@ -17,50 +17,50 @@ import { getAffiliationKind, affiliationKindBadgeClass } from '@/utils/workerAff
 import { useStaffingBoardSync } from '@/composables/useStaffingBoardSync'
 
 const T = {
-  kicker: '\uc778\ub825 \ubc30\uce58',
-  boardTitle: '\uc778\ub825 \ubc30\uce58 \uad00\ub9ac \ubcf4\ub4dc',
-  hint: '\ub4dc\ub798\uadf8 \uc564 \ub4dc\ub86d\uc73c\ub85c \uc791\uc5c5\uc790\ub97c \uad6c\uc5ed\ubcc4\ub85c \ubc30\uce58\ud558\uc138\uc694.',
-  loadPrev: '\uc774\uc804 \ubc30\uce58 \ubd88\ub7ec\uc624\uae30',
-  autoRec: '\uc790\ub3d9 \ucd94\ucc9c \ubc30\uce58',
-  confirm: '\ubc30\uce58 \ud655\uc815 \ubc0f \uc800\uc7a5',
-  waitingTitle: '\ud22c\uc785 \uac00\ub2a5 \uc778\ub825',
-  waitingSub: '\ubc30\uce58 \uc804',
-  waitingEmpty: '\ud22c\uc785 \uac00\ub2a5 \uc778\ub825\uc774 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  needTo: '\ud544\uc694 \uc778\uc6d0 (T.O)',
-  current: '\ud604\uc7ac \ubc30\uce58',
-  dropHint: '\uc778\ub825\uc744 \uc774\uacf3\uc73c\ub85c \ub4dc\ub798\uadf8',
-  zoneSettings: '\uad6c\uc5ed \uc124\uc815',
-  removeZone: '\uad6c\uc5ed\uc5d0\uc11c \uc81c\uac70',
-  more: '\ub354 \ubcf4\uae30',
-  count: '\uba85',
-  alertLoad: '\uc800\uc7a5\ub41c \uc774\uc804 \ubc30\uce58 \uc2a4\ub0b4\uc774\ud06c\ub97c \ubd88\ub7ec\uc634\ub2c8\ub2e4. (\ub370\ubaa8)',
+  kicker: '인력 배치',
+  boardTitle: '인력 배치 관리 보드',
+  hint: '드래그 앤 드롭으로 작업자를 구역별로 배치하세요.',
+  loadPrev: '이전 배치 불러오기',
+  autoRec: '자동 추천 배치',
+  confirm: '배치 확정 및 저장',
+  waitingTitle: '투입 가능 인력',
+  waitingSub: '배치 전',
+  waitingEmpty: '투입 가능 인력이 없습니다.',
+  needTo: '필요 인원 (T.O)',
+  current: '현재 배치',
+  dropHint: '인력을 이곳으로 드래그',
+  zoneSettings: '구역 설정',
+  removeZone: '구역에서 제거',
+  more: '더 보기',
+  count: '명',
+  alertLoad: '저장된 이전 배치 스내이크를 불러옴니다. (데모)',
   alertAuto:
-    '\ubd80\uc871 \uad6c\uc5ed \uc704\uc8fc\ub85c \ud22c\uc785 \uac00\ub2a5 \uc778\ub825\uc744 \uc790\ub3d9 \ubc30\uce58\ud588\uc2b5\ub2c8\ub2e4. (\ub370\ubaa8)',
-  alertSave: '\ud604\uc7ac \ubc30\uce58\uac00 \ud655\uc815\ub418\uc5b4 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4. (\ub370\ubaa8)',
-  kindSummary: '\uc624\ub298 \ubcf4\ub4dc \uc778\uc6d0 (\uad6c\ubd84)',
-  kindFilter: '\ub300\uae30 \ubaa9\ub85d \uad6c\ubd84',
-  kindAll: '\uc804\uccb4',
-  badgeDirect: '\uc9c1\uc601',
-  badgePartner: '\ud611\ub825',
-  badgeAgency: '\uc778\ub825',
-  countUnit: '\uba85',
-  waitingFilteredEmpty: '\uc120\ud0dd\ud55c \uad6c\ubd84\uc5d0 \ud574\ub2f9\ud558\ub294 \uc778\ub825\uc774 \uc5c6\uc2b5\ub2c8\ub2e4.',
-  zoneMix: '\uad6c\uc5ed \uad6c\uc131',
-  totalWorkers: '\ubcf4\ub4dc \ucd1d\uc778\uc6d0',
-  syncTitle: '\uc2e4\uc2dc\uac04 \ubcf4\ub4dc \ub3d9\uae30\ud654',
+    '부족 구역 위주로 투입 가능 인력을 자동 배치했습니다. (데모)',
+  alertSave: '현재 배치가 확정되어 저장되었습니다. (데모)',
+  kindSummary: '오늘 보드 인원 (구분)',
+  kindFilter: '대기 목록 구분',
+  kindAll: '전체',
+  badgeDirect: '직영',
+  badgePartner: '협력',
+  badgeAgency: '인력',
+  countUnit: '명',
+  waitingFilteredEmpty: '선택한 구분에 해당하는 인력이 없습니다.',
+  zoneMix: '구역 구성',
+  totalWorkers: '보드 총인원',
+  syncTitle: '실시간 보드 동기화',
   syncConnected:
-    'BroadcastChannel: \ub2e4\ub978 \uad00\ub9ac \ud0ed\uacfc \ub3d9\uae30\ud654 \uc911 (\uc0c8\ub85c\uace0\uce68 \uc5c6\uc774 \ubc18\uc601)',
+    'BroadcastChannel: 다른 관리 탭과 동기화 중 (새로고침 없이 반영)',
   syncUnsupported:
-    '\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \ud0ed \uac04 \ub3d9\uae30\ud654(BroadcastChannel)\ub97c \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.',
-  tradeToTitle: '\uad6c\uc5ed \ud544\uc694 \uc9c1\uc885(T.O)',
+    '이 브라우저는 탭 간 동기화(BroadcastChannel)를 지원하지 않습니다.',
+  tradeToTitle: '구역 필요 직종(T.O)',
   tradeWarn:
-    '\uc774 \uad6c\uc5ed\uc5d0 \ud544\uc694\ud55c \uc9c1\uc885\uacfc \ub9de\uc9c0 \uc54a\uc744 \uc218 \uc788\uc2b5\ub2c8\ub2e4. \ubc30\uce58\ub294 \uac00\ub2a5\ud558\uba70, \uc548\uc804/\uc0b0\uc5c5 \uad00\uc810\uc5d0\uc11c \ud655\uc778\ud574 \uc8fc\uc138\uc694.',
+    '이 구역에 필요한 직종과 맞지 않을 수 있습니다. 배치는 가능하며, 안전/산업 관점에서 확인해 주세요.',
   fatigueTitle:
-    '\uc548\uc804 \uc8fc\uc758: \uc804\ub0a0 \uc57c\uac04 \uadfc\ubb34 \ub610\ub294 \uc5f0\uc18d \uadfc\ubb34 \uc77c\uc218\uac00 \ub192\uc74c (\ud53c\ub85c\ub3c4 \ub204\uc801 \uc758\uc2ed)',
-  skillCarpenter: '\ubaa9\uc218',
-  skillRebar: '\uccbc\uadfc',
-  skillWelder: '\uc6a9\uc811',
-  skillLabor: '\uc778\ubd80',
+    '안전 주의: 전날 야간 근무 또는 연속 근무 일수가 높음 (피로도 누적 의십)',
+  skillCarpenter: '목수',
+  skillRebar: '첼근',
+  skillWelder: '용접',
+  skillLabor: '인부',
 }
 
 const tradeLabel = (key) => {
@@ -85,36 +85,36 @@ function cloneWorker(w) {
 const waiting = ref([
   {
     id: 'w1',
-    name: '\uae40\ucca0\uc218',
-    affiliation: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
+    name: '김철수',
+    affiliation: '협력사 (태양건설)',
     skills: ['carpenter', 'labor'],
     fatigue: { nightShiftYesterday: true, consecutiveDays: 2 },
   },
   {
     id: 'w2',
-    name: '\uc774\uc601\ud76c',
-    affiliation: '\ud611\ub825\uc0ac (\uc6b0\uc8fc\uc0b0\uc5c5)',
+    name: '이영희',
+    affiliation: '협력사 (우주산업)',
     skills: ['rebar'],
     fatigue: { nightShiftYesterday: false, consecutiveDays: 6 },
   },
   {
     id: 'w3',
-    name: '\ubc15\ubbfc\uc218',
-    affiliation: '\uc778\ub825\uc0ac\ubb34\uc18c (\uac1c\uc778)',
+    name: '박민수',
+    affiliation: '인력사무소 (개인)',
     skills: ['labor'],
     fatigue: { nightShiftYesterday: false, consecutiveDays: 1 },
   },
   {
     id: 'w4',
-    name: '\uc815\ub300\ub9ac',
-    affiliation: '\ubcf8\uc0ac \uc18c\uc18d',
+    name: '정대리',
+    affiliation: '본사 소속',
     skills: ['welder', 'labor'],
     fatigue: { nightShiftYesterday: false, consecutiveDays: 0 },
   },
   {
     id: 'w5',
-    name: '\ucd5c\uc791\uc5c5',
-    affiliation: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
+    name: '최작업',
+    affiliation: '협력사 (태양건설)',
     skills: ['carpenter'],
     fatigue: { nightShiftYesterday: false, consecutiveDays: 5 },
   },
@@ -123,8 +123,8 @@ const waiting = ref([
 const zones = ref([
   {
     id: 'z-a',
-    title: 'A\uad6c\uc5ed',
-    subtitle: '\uc9c0\ud558 \uc8fc\ucc28\uc7a5',
+    title: 'A구역',
+    subtitle: '지하 주차장',
     required: 4,
     tradeNeeds: [
       { trade: 'carpenter', need: 2 },
@@ -134,15 +134,15 @@ const zones = ref([
     workers: [
       {
         id: 'z1',
-        name: '\ud55c\ud604\uc7a5',
-        affiliation: '\ud611\ub825\uc0ac (\ud0dc\uc591\uac74\uc124)',
+        name: '한현장',
+        affiliation: '협력사 (태양건설)',
         skills: ['carpenter'],
         fatigue: { nightShiftYesterday: false, consecutiveDays: 3 },
       },
       {
         id: 'z2',
-        name: '\uc11c\ub300\ub9ac',
-        affiliation: '\ubcf8\uc0ac \uc18c\uc18d',
+        name: '서대리',
+        affiliation: '본사 소속',
         skills: ['labor'],
         fatigue: { nightShiftYesterday: true, consecutiveDays: 4 },
       },
@@ -150,8 +150,8 @@ const zones = ref([
   },
   {
     id: 'z-b',
-    title: 'B\uad6c\uc5ed',
-    subtitle: '1\ub3d9 \uace8\uc870',
+    title: 'B구역',
+    subtitle: '1동 골조',
     required: 6,
     tradeNeeds: [
       { trade: 'rebar', need: 3 },
@@ -161,8 +161,8 @@ const zones = ref([
     workers: [
       {
         id: 'z3',
-        name: '\uc624\ud615\uc0ac',
-        affiliation: '\ud611\ub825\uc0ac (\uc6b0\uc8fc\uc0b0\uc5c5)',
+        name: '오형사',
+        affiliation: '협력사 (우주산업)',
         skills: ['rebar'],
         fatigue: { nightShiftYesterday: false, consecutiveDays: 7 },
       },
@@ -170,8 +170,8 @@ const zones = ref([
   },
   {
     id: 'z-c',
-    title: 'C\uad6c\uc5ed',
-    subtitle: '2\ub3d9 \ub9c8\uac10',
+    title: 'C구역',
+    subtitle: '2동 마감',
     required: 3,
     tradeNeeds: [
       { trade: 'welder', need: 1 },
@@ -263,7 +263,7 @@ function zoneTradeProgress(zone) {
   }))
 }
 
-/** \uad6c\uc5ed\uc5d0 \uba85\uc2dc\ub41c \ud544\uc694 \uc9c1\uc885\uacfc \uc791\uc5c5\uc790 \uc2a4\ud0ac \uad50\uc9d1\uc774 \uc5c6\uc73c\uba74 \uacbd\uace0 */
+/** 구역에 명시된 필요 직종과 작업자 스킬 교집이 없으면 경고 */
 function shouldWarnTradeMismatch(zone, worker) {
   const needs = zone.tradeNeeds || []
   if (!needs.length) return false

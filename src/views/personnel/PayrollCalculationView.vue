@@ -3,26 +3,26 @@ import { computed, ref } from 'vue'
 import { AlertTriangle, Search, X } from 'lucide-vue-next'
 
 const T = {
-  title: '\uacf5\uc218 \uad00\ub9ac',
+  title: '공수 관리',
   desc:
-    '\ucd5c\uadfc 7\uc77c \uadfc\ud0dc\xb7\uacf5\uc218\uc640 \ucd1d \uadfc\ubb34\uc77c\uc744 \ud655\uc778\ud558\uace0, \uc0b0\uc815\xb7\ud655\uc815 \ubc0f \uc81c\uc218\ub2f9\xb7\uc9c0\uae09 \uc5ec\ubd80\ub97c \ud55c \uacf3\uc5d0\uc11c \uad00\ub9ac\ud569\ub2c8\ub2e4.',
-  dayUnit: '\uc77c',
-  manUnit: '\uacf5\uc218',
+    '최근 7일 근태·공수와 총 근무일을 확인하고, 산정·확정 및 제수당·지급 여부를 한 곳에서 관리합니다.',
+  dayUnit: '일',
+  manUnit: '공수',
   alert:
-    '[\ud655\uc778 \ud544\uc694] \uc774\ubaa9\uc218 \uc791\uc5c5\uc790\uc758 \uacf5\uc218 \uacc4\uc0b0\uc774 \ucd9c\uc785 \uae30\ub85d\uacfc \ub2e4\ub97c \uc218 \uc788\uc2b5\ub2c8\ub2e4. \ucd9c\uc785 \uae30\ub85d\uc744 \ub300\uc870\ud558\uc138\uc694.',
-  colName: '\uc774\ub984 / \uc18c\uc18d',
-  col7: '\ucd5c\uadfc 7\uc77c \uadfc\ud0dc \ubc0f \uacf5\uc218',
-  colTotal: '\ucd1d \uadfc\ubb34\uc77c / \uacf5\uc218',
-  colAllow: '\uc81c\uc218\ub2f9 \uad6c\ubd84',
-  colPay: '\uc9c0\uae09 \uc5ec\ubd80',
-  paid: '\uc9c0\uae09 \uc644\ub8cc',
-  unpaid: '\ubbf8\uc9c0\uae09',
+    '[확인 필요] 이목수 작업자의 공수 계산이 출입 기록과 다를 수 있습니다. 출입 기록을 대조하세요.',
+  colName: '이름 / 소속',
+  col7: '최근 7일 근태 및 공수',
+  colTotal: '총 근무일 / 공수',
+  colAllow: '제수당 구분',
+  colPay: '지급 여부',
+  paid: '지급 완료',
+  unpaid: '미지급',
   slash: '/',
-  searchPh: '\uc791\uc5c5\uc790 \uc774\ub984 \uac80\uc0c9',
-  emptyResult: '\uac80\uc0c9\uc5d0 \ub9de\ub294 \uc791\uc5c5\uc790\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.',
+  searchPh: '작업자 이름 검색',
+  emptyResult: '검색에 맞는 작업자가 없습니다.',
 }
 
-/** \uc624\ub298 \uae30\uc900 6\uc77c \uc804 ~ \uc624\ub298\uae4c\uc9c0 MM/DD (7\uceec) */
+/** 오늘 기준 6일 전 ~ 오늘까지 MM/DD (7컬) */
 const dateColumns = computed(() => {
   const out = []
   const today = new Date()
@@ -46,24 +46,24 @@ const filteredRows = computed(() => {
 })
 
 /**
- * weekCells: \uc5ed\uc2dc\uac04\uc21c (6\uc77c\uc804 \u2192 \uc624\ub298)
- * man: \uacf5\uc218 (\uc5c6\uc73c\uba74 null, UI\uc5d0\uc11c /)
+ * weekCells: 역시간순 (6일전 → 오늘)
+ * man: 공수 (없으면 null, UI에서 /)
  */
 const rows = ref([
   {
     id: 1,
-    name: '\uae40\ub3d9\uc11d',
-    affiliation: '\ud0dc\uc591\uac74\uc124',
+    name: '김동석',
+    affiliation: '태양건설',
     weekCells: [{ man: 1 }, { man: null }, { man: 1.5 }, { man: null }, { man: 1 }, { man: 1 }, { man: 1.5 }],
     totalDays: 22,
     manDays: 24.5,
-    allowanceType: '\uc5f0\uc7a5(2\uacf5\uc218) / \ud734\uc77c(1\uacf5\uc218)',
+    allowanceType: '연장(2공수) / 휴일(1공수)',
     isPaid: true,
   },
   {
     id: 2,
-    name: '\uc774\ubaa9\uc218',
-    affiliation: '\uc778\ub825\uc0ac\ubb34\uc18c',
+    name: '이목수',
+    affiliation: '인력사무소',
     weekCells: [
       { man: 1 },
       { man: 1 },
@@ -80,12 +80,12 @@ const rows = ref([
   },
   {
     id: 3,
-    name: '\ubc15\ubc18\uc7a5',
-    affiliation: '\ubcf8\uc0ac \uc18c\uc18d',
+    name: '박반장',
+    affiliation: '본사 소속',
     weekCells: [{ man: 1 }, { man: 1 }, { man: 1 }, { man: 1 }, { man: 1 }, { man: 1 }, { man: 1 }],
     totalDays: 28,
     manDays: 28,
-    allowanceType: '\ud734\uc77c(1\uacf5\uc218)',
+    allowanceType: '휴일(1공수)',
     isPaid: true,
   },
 ])

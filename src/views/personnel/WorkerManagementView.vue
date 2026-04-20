@@ -1,13 +1,13 @@
 <script setup>
 import { Users } from 'lucide-vue-next'
-import AttendanceListView from '@/views/AttendanceManagement/AttendanceListView.vue'
+import AttendanceListView from '@/views/personnel/AttendanceListView.vue'
 
 const T = {
-  pageTitle: '\uc791\uc5c5\uc790 \uad00\ub9ac',
-  kicker: '\uc778\uc0ac',
+  pageTitle: '작업자 관리',
+  kicker: '인사',
   heroDesc:
-    '\ubcf8\uc0ac \uc9c1\uc601\uacfc \ud611\ub825\uc0ac(\uc778\ub825 \ub4f1)\uc18c\uc18d \uc791\uc5c5\uc790\ub97c \ub3d9\uc77c \ud604\uc7a5\uc5d0\uc11c \uad00\ub9ac\ud560 \uc218 \uc788\ub3c4\ub85d, \ucd9c\uc785/\uadfc\ud0dc \ubc0f \uacf5\uc218 \ud604\ud669\uc744 \uad6c\ubd84\ubcc4\ub85c \uc870\ud68c\ud558\uace0 \ubcf4\uc815\ud569\ub2c8\ub2e4.',
-  sectionAttendance: '\ucd9c\uc785 / \uadfc\ud0dc \ud604\ud669',
+    '본사 직영과 협력사(인력 등)소속 작업자를 동일 현장에서 관리할 수 있도록, 출입/근태 및 공수 현황을 구분별로 조회하고 보정합니다.',
+  sectionAttendance: '출입 / 근태 현황',
 }
 </script>
 
