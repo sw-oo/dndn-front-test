@@ -10,6 +10,7 @@ import {
   Download,
   MapPin,
   Star,
+  X,
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -140,6 +141,12 @@ const evaluation = ref({
   ],
 })
 
+const showEvaluationModal = ref(false)
+const evaluationDraft = ref({
+  items: evaluation.value.items.map((item) => ({ ...item })),
+  summary: evaluation.value.summary,
+})
+
 const T = {
   kicker: '\ud611\ub825\uc0ac \uc0c1\uc138',
   badgeCustom: '\ub9de\ucda4 \ud611\ub825\uc0ac',
@@ -166,6 +173,15 @@ const T = {
   evalLast: '\ucd5c\uadfc \ud3c9\uac00',
   evalItems: '\ud56d\ubaa9',
   evalSummary: '\uc694\uc57d',
+  evalAction: '\ud3c9\uac00\ud558\uae30',
+  evalModalTitle: '\ud611\ub825\uc0ac \ud3c9\uac00 \ub4f1\ub85d',
+  evalModalDesc:
+    '\ud56d\ubaa9\ubcc4 \uc810\uc218\uc640 \uc885\ud569 \uc758\uacac\uc744 \uc785\ub825\ud558\uba74 \ud604\uc7ac \ud3c9\uac00 \uacb0\uacfc\uc5d0 \ubc18\uc601\ub429\ub2c8\ub2e4.',
+  evalScoreUnit: '\uc810',
+  evalCommentPh:
+    '\ud488\uc9c8, \uc548\uc804, \uc77c\uc815, \uc18c\ud1b5 \uad00\uc810\uc5d0\uc11c \uc885\ud569 \uc758\uacac\uc744 \uc791\uc131\ud558\uc138\uc694.',
+  evalCancel: '\ucde8\uc18c',
+  evalSubmit: '\ud3c9\uac00 \ubc18\uc601',
   person: '\uba85',
   dot: '\xb7',
 }
@@ -182,6 +198,48 @@ const statusBadgeClass = (s) => {
 const workerStatusClass = (s) => {
   if (s.includes('\uc644\ub8cc')) return 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/70'
   return 'bg-slate-50 text-slate-600 ring-1 ring-slate-200/70'
+}
+
+const openEvaluationModal = () => {
+  evaluationDraft.value = {
+    items: evaluation.value.items.map((item) => ({ ...item })),
+    summary: evaluation.value.summary,
+  }
+  showEvaluationModal.value = true
+}
+
+const getEvaluationGrade = (score) => {
+  if (score >= 95) return 'S'
+  if (score >= 90) return 'A'
+  if (score >= 80) return 'B+'
+  if (score >= 70) return 'B'
+  return 'C'
+}
+
+const submitEvaluation = () => {
+  const sanitizedItems = evaluationDraft.value.items.map((item) => {
+    const score = Number(item.score)
+
+    return {
+      ...item,
+      score: Math.max(0, Math.min(100, Number.isNaN(score) ? 0 : score)),
+    }
+  })
+
+  const averageScore = Math.round(
+    sanitizedItems.reduce((sum, item) => sum + item.score, 0) / sanitizedItems.length,
+  )
+
+  evaluation.value = {
+    grade: getEvaluationGrade(averageScore),
+    score: averageScore,
+    lastDate: new Date().toLocaleDateString('ko-KR').replace(/\s/g, ''),
+    summary:
+      evaluationDraft.value.summary.trim() || '\ud3c9\uac00 \uc758\uacac\uc774 \uc785\ub825\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4.',
+    items: sanitizedItems,
+  }
+
+  showEvaluationModal.value = false
 }
 </script>
 
@@ -371,10 +429,19 @@ const workerStatusClass = (s) => {
           <div
             class="overflow-hidden rounded-2xl border border-forena-100/90 bg-white/95 p-4 shadow-card sm:p-5"
           >
-            <h3 class="flex items-center gap-2 text-sm font-bold text-forena-900">
-              <Star class="h-4 w-4 shrink-0 text-amber-500" />
-              {{ T.evalSection }}
-            </h3>
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="flex items-center gap-2 text-sm font-bold text-forena-900">
+                <Star class="h-4 w-4 shrink-0 text-amber-500" />
+                {{ T.evalSection }}
+              </h3>
+              <button
+                type="button"
+                class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold text-amber-700 transition hover:bg-amber-100"
+                @click="openEvaluationModal"
+              >
+                {{ T.evalAction }}
+              </button>
+            </div>
             <div
               class="mt-3 flex items-start justify-between gap-3 rounded-xl bg-gradient-to-br from-amber-50/80 to-flare-50/40 px-3 py-2.5 ring-1 ring-amber-100/60"
             >
@@ -387,12 +454,12 @@ const workerStatusClass = (s) => {
               <div class="text-right">
                 <p class="text-[10px] font-bold text-forena-500">{{ T.evalScore }}</p>
                 <p class="text-lg font-bold tabular-nums text-flare-700">
-                  {{ evaluation.score }}점
+                  {{ evaluation.score }}{{ T.evalScoreUnit }}
                 </p>
               </div>
             </div>
             <p class="mt-2 text-[10px] text-slate-500">
-              {{ T.evalLast }} · {{ evaluation.lastDate }}
+              {{ T.evalLast }} {{ T.dot }} {{ evaluation.lastDate }}
             </p>
             <p class="mt-3 text-[10px] font-bold uppercase tracking-wide text-forena-500">
               {{ T.evalItems }}
@@ -449,5 +516,99 @@ const workerStatusClass = (s) => {
         </div>
       </div>
     </div>
+
+    <Teleport to="body">
+      <div
+        v-if="showEvaluationModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-forena-950/35 p-4 backdrop-blur-[3px]"
+        @click.self="showEvaluationModal = false"
+      >
+        <div
+          class="w-full max-w-2xl overflow-hidden rounded-3xl border border-forena-100/90 bg-white shadow-2xl animate-[fadeUp_0.2s_ease-out]"
+        >
+          <div
+            class="flex items-start justify-between gap-4 border-b border-forena-100 bg-gradient-to-r from-forena-50 to-flare-50/40 px-5 py-4 sm:px-6"
+          >
+            <div>
+              <h2 class="text-lg font-bold text-forena-900">{{ T.evalModalTitle }}</h2>
+              <p class="mt-1 text-xs text-slate-500">{{ T.evalModalDesc }}</p>
+            </div>
+            <button
+              type="button"
+              class="rounded-lg border border-forena-200 bg-white p-2 text-forena-400 transition hover:text-forena-700"
+              @click="showEvaluationModal = false"
+            >
+              <X class="h-4 w-4" />
+            </button>
+          </div>
+
+          <div class="space-y-5 px-5 py-5 sm:px-6">
+            <div class="grid gap-3 sm:grid-cols-2">
+              <label
+                v-for="(item, idx) in evaluationDraft.items"
+                :key="item.label"
+                class="rounded-2xl border border-forena-100 bg-forena-50/35 p-4"
+              >
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-sm font-bold text-forena-900">{{ item.label }}</span>
+                  <span class="text-[11px] font-bold text-forena-400"
+                    >0-100 {{ T.evalScoreUnit }}</span
+                  >
+                </div>
+                <input
+                  v-model.number="evaluationDraft.items[idx].score"
+                  type="number"
+                  min="0"
+                  max="100"
+                  class="mt-3 w-full rounded-xl border border-forena-200 bg-white px-3 py-2.5 text-sm font-semibold text-forena-900 outline-none transition focus:border-flare-400 focus:ring-2 focus:ring-flare-400/20"
+                />
+              </label>
+            </div>
+
+            <div>
+              <p class="mb-2 text-[11px] font-bold uppercase tracking-wide text-forena-500">
+                {{ T.evalSummary }}
+              </p>
+              <textarea
+                v-model="evaluationDraft.summary"
+                rows="4"
+                :placeholder="T.evalCommentPh"
+                class="w-full resize-none rounded-2xl border border-forena-200 bg-white px-4 py-3 text-sm leading-relaxed text-forena-900 outline-none transition placeholder:text-slate-400 focus:border-flare-400 focus:ring-2 focus:ring-flare-400/20"
+              />
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 border-t border-forena-100 px-5 py-4 sm:px-6">
+            <button
+              type="button"
+              class="rounded-xl border border-forena-200 bg-white px-4 py-2.5 text-sm font-bold text-forena-700 transition hover:bg-forena-50"
+              @click="showEvaluationModal = false"
+            >
+              {{ T.evalCancel }}
+            </button>
+            <button
+              type="button"
+              class="rounded-xl bg-gradient-to-r from-forena-700 to-forena-900 px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:from-forena-800 hover:to-forena-950"
+              @click="submitEvaluation"
+            >
+              {{ T.evalSubmit }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
+
+<style scoped>
+@keyframes fadeUp {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+</style>

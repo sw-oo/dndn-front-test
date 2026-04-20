@@ -77,7 +77,6 @@ const newPartner = ref({
 
 const partners = ref([
   {
-    id: 'PTN-001',
     name: '\ud0dc\uc591\uac74\uc124',
     repName: '\uae40\ud0dc\uc591',
     trade: '\ud615\ud2c0',
@@ -88,7 +87,6 @@ const partners = ref([
     evaluation: 'A \xb7 92\uc810',
   },
   {
-    id: 'PTN-002',
     name: '\uc6b0\uc8fc\uc0b0\uc5c5',
     repName: '\ubc15\uc6b0\uc8fc',
     trade: '\ucca0\uadfc',
@@ -99,7 +97,6 @@ const partners = ref([
     evaluation: 'B+ \xb7 81\uc810',
   },
   {
-    id: 'PTN-003',
     name: '\uc81c\uc77c\ud658\uacbd',
     repName: '\uc774\ud658\uacbd',
     trade: '\ube44\uacc4',

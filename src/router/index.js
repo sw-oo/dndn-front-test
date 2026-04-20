@@ -6,8 +6,14 @@ const meta = (title) => ({ title })
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: '/site/dashboard' },
+    { path: '/', redirect: '/login' },
 
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue'),
+      meta: meta('로그인'),
+    },
     {
       path: '/site/dashboard',
       name: 'siteDashboard',
@@ -142,9 +148,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
+  if (to.path === '/login') return true
+
   const auth = useAuthStore()
   if (!pathAllowedForRole(auth.role, to.path)) {
-    return { path: '/site/dashboard' }
+    return { path: '/login' }
   }
   return true
 })
