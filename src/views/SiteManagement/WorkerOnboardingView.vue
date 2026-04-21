@@ -86,22 +86,8 @@ const T = {
   excelSoon: '엑셀 일괄 등록 기능을 준비 중입니다.',
 }
 
-const partnerFilterOptions = [
-  { value: '', label: T.partnerAll },
-  { value: '태양건설', label: '태양건설' },
-  { value: '우주산업', label: '우주산업' },
-  { value: '개인', label: '개인' },
-]
-
-const bloodOptions = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
-
-const workerStatusOptions = [
-  { key: 'deployable', label: '투입 가능' },
-  { key: 'review', label: '검토 중' },
-  { key: 'nodoc', label: '서류 미제출' },
-  { key: 'limit', label: '투입 제한' },
-]
-
+// 뱃지의 형식과 각 위치의 뱃지 이름 설정
+// 뱃지 톤 옵션 (상태별로 매핑되는 색상)
 const badgeToneOptions = [
   { value: 'success', label: '성공(녹색)' },
   { value: 'danger', label: '위험(적색)' },
@@ -110,6 +96,31 @@ const badgeToneOptions = [
   { value: 'neutral', label: '중립(회색)' },
 ]
 
+const partnerFilterOptions = [
+  { value: '', label: T.partnerAll },
+  { value: '태양건설', label: '태양건설' },
+  { value: '우주산업', label: '우주산업' },
+  { value: '개인', label: '개인' },
+]
+// 혈액형 타입 select 옵션
+const bloodOptions = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
+
+// 안전 교육 상태 select 옵션
+const safetyCheckOptions = [
+  { key: 'safeCompleted', label: '이수 완료' },
+  { key: 'safeNotCompleted', label: '미이수' },
+]
+
+// 작업자 상태 select 옵션
+const workerStatusOptions = [
+  { key: 'deployable', label: '투입 가능' },
+  { key: 'review', label: '검토 중' },
+  { key: 'nodoc', label: '서류 미제출' },
+  { key: 'limit', label: '투입 제한' },
+]
+
+// 위의 key 부분을 가지고 각 상태에 맞는 텍스트와 톤을 반환하는 함수 
+// 서류 제출에 대한 뱃지의 key에 따른 텍스트와 톤을 반환하는 함수
 function statusMetaFromKey(key) {
   const map = {
     deployable: { text: '투입 가능', tone: 'success' },
@@ -119,6 +130,17 @@ function statusMetaFromKey(key) {
   }
   return map[key] || map.review
 }
+
+// 안전 교육 상태에 대한 뱃지의 key에 따른 텍스트와 톤을 반환하는 함수
+function safetyMetaFromKey(key) {
+  const map = {
+    safeCompleted: { text: '이수 완료', tone: 'success' },
+    safeNotCompleted: { text: '미이수', tone: 'danger' },
+  }
+  // 키가 없으면 기본적으로 '미이수' 처리를 하거나 기존 값을 유지
+  return map[key] || { text: '미이수', tone: 'danger' }
+}
+
 
 function emptyEditForm() {
   return {
@@ -131,7 +153,7 @@ function emptyEditForm() {
     birth: '',
     joinDate: '',
     emergency: '',
-    safetyText: '',
+    safetyKey: 'safeNotCompleted',
     safetyTone: 'success',
     docsText: '',
     docsTone: 'neutral',
@@ -139,6 +161,7 @@ function emptyEditForm() {
   }
 }
 
+// 작업자의 더미 데이터
 const workers = ref([
   {
     id: 1,
@@ -371,7 +394,7 @@ function openEditWorkerModal(worker) {
     birth: worker.birth,
     joinDate: worker.joinDate,
     emergency: worker.emergency,
-    safetyText: worker.safety.text,
+    safetyKey: worker.safety.key,
     safetyTone: worker.safety.tone,
     docsText: worker.docs.text,
     docsTone: worker.docs.tone,
@@ -390,7 +413,14 @@ function submitEditWorker() {
     window.alert(T.alertEditRequired)
     return
   }
+
+  // 뱃지를 수정하면 자동으로 텍스트와 톤이 결정되도록 메타 함수 호출
+  // 작업자의 상태에 대한 함수
   const st = statusMetaFromKey(f.statusKey)
+  // 안전 교육 상태에 대한 함수
+  const sa = safetyMetaFromKey(f.safetyKey)
+
+
   const updated = {
     id: f.id,
     name: f.name.trim(),
@@ -401,7 +431,7 @@ function submitEditWorker() {
     birth: (f.birth || '').trim() || '—',
     joinDate: (f.joinDate || '').trim() || '—',
     emergency: (f.emergency || '').trim() || '—',
-    safety: { text: (f.safetyText || '').trim() || '—', tone: f.safetyTone },
+    safety: { text: sa.text, tone: sa.tone },
     docs: { text: (f.docsText || '').trim() || '—', tone: f.docsTone },
     status: { text: st.text, tone: st.tone },
     statusKey: f.statusKey,
@@ -1219,26 +1249,15 @@ function submitOnboard() {
                     <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
                       T.labelSafetyState
                     }}</label>
-                    <input
-                      v-model="editForm.safetyText"
-                      type="text"
-                      class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm text-forena-900 outline-none transition focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
-                    />
-                  </div>
-                  <div>
-                    <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
-                      T.labelBadgeTone
-                    }}</label>
                     <select
-                      v-model="editForm.safetyTone"
-                      class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm font-semibold text-forena-900 outline-none focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
-                    >
-                      <option v-for="t in badgeToneOptions" :key="t.value" :value="t.value">
-                        {{ t.label }}
-                      </option>
-                    </select>
+                    v-model="editForm.safetyKey"
+                    class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm font-semibold text-forena-900 outline-none focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
+                  >
+                    <option v-for="s in safetyCheckOptions" :key="s.key" :value="s.key">
+                      {{ s.label }}
+                    </option>
+                  </select>
                   </div>
-                </div>
                 <div class="grid gap-3 sm:grid-cols-2">
                   <div class="sm:col-span-2">
                     <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
@@ -1249,19 +1268,6 @@ function submitOnboard() {
                       type="text"
                       class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm text-forena-900 outline-none transition focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
                     />
-                  </div>
-                  <div>
-                    <label class="mb-1.5 block text-[11px] font-bold text-forena-600">{{
-                      T.labelBadgeTone
-                    }}</label>
-                    <select
-                      v-model="editForm.docsTone"
-                      class="w-full rounded-xl border border-forena-200 bg-forena-50/30 px-3 py-2.5 text-sm font-semibold text-forena-900 outline-none focus:border-flare-400 focus:bg-white focus:ring-2 focus:ring-flare-400/20"
-                    >
-                      <option v-for="t in badgeToneOptions" :key="t.value" :value="t.value">
-                        {{ t.label }}
-                      </option>
-                    </select>
                   </div>
                 </div>
               </div>
@@ -1288,6 +1294,7 @@ function submitOnboard() {
             </button>
           </div>
         </div>
+      </div>
       </div>
     </Teleport>
   </div>
